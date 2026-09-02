@@ -7,38 +7,43 @@ const COLUMNS: { heading: string; links: { to: string; label: string }[] }[] = [
     links: [
       { to: "/how-it-works", label: "How it works" },
       { to: "/onboarding", label: "Build my plan" },
-      { to: "/dashboard", label: "Dashboard" },
-      { to: "/platform-matcher", label: "Platform matcher" },
-    ],
-  },
-  {
-    heading: "Guides",
-    links: [
-      { to: "/learn", label: "Learning library" },
-      { to: "/glossary", label: "Glossary" },
-      { to: "/connect-domain", label: "Connect your domain" },
-      { to: "/business-email", label: "Business email" },
-    ],
-  },
-  {
-    heading: "Get going",
-    links: [
       { to: "/checklist", label: "Launch checklist" },
-      { to: "/maintenance", label: "Maintenance center" },
+      { to: "/learn", label: "Learning library" },
+      { to: "/help", label: "Help centre" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
+      { to: "/domains", label: "Domain guide" },
+      { to: "/platform-matcher", label: "Platform matcher" },
+      { to: "/connect-domain", label: "DNS connection guide" },
+      { to: "/business-email", label: "Business email guide" },
       { to: "/get-found", label: "Get found" },
-      { to: "/account", label: "My saved plan" },
+      { to: "/troubleshooting", label: "Troubleshooting" },
+      { to: "/glossary", label: "Glossary" },
+      { to: "/hire-help", label: "Hire a professional" },
     ],
   },
   {
     heading: "Company",
     links: [
+      { to: "/contact", label: "Contact" },
+      { to: "/changelog", label: "Changelog" },
+      { to: "/status", label: "Status" },
+      { to: "/ownership-record", label: "Ownership record" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
       { to: "/privacy", label: "Privacy" },
       { to: "/terms", label: "Terms" },
-      { to: "/contact", label: "Contact" },
       { to: "/accessibility", label: "Accessibility" },
     ],
   },
 ];
+
 
 export function SiteFooter() {
   return (

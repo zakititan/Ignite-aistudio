@@ -10,25 +10,51 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
+import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as BusinessEmailRouteImport } from './routes/business-email'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContentRouteImport } from './routes/content'
+import { Route as CreateAccountRouteImport } from './routes/create-account'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DeleteAccountRouteImport } from './routes/delete-account'
 import { Route as DomainsRouteImport } from './routes/domains'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GetFoundRouteImport } from './routes/get-found'
+import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as HireHelpRouteImport } from './routes/hire-help'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as OwnershipRecordRouteImport } from './routes/ownership-record'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TroubleshootingRouteImport } from './routes/troubleshooting'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessibilityRoute = AccessibilityRouteImport.update({
+  id: '/accessibility',
+  path: '/accessibility',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountRoute = AccountRouteImport.update({
@@ -41,6 +67,11 @@ const BusinessEmailRoute = BusinessEmailRouteImport.update({
   path: '/business-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChecklistRoute = ChecklistRouteImport.update({
   id: '/checklist',
   path: '/checklist',
@@ -51,9 +82,19 @@ const ConnectDomainRoute = ConnectDomainRouteImport.update({
   path: '/connect-domain',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContentRoute = ContentRouteImport.update({
   id: '/content',
   path: '/content',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateAccountRoute = CreateAccountRouteImport.update({
+  id: '/create-account',
+  path: '/create-account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -61,14 +102,39 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeleteAccountRoute = DeleteAccountRouteImport.update({
+  id: '/delete-account',
+  path: '/delete-account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DomainsRoute = DomainsRouteImport.update({
   id: '/domains',
   path: '/domains',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GetFoundRoute = GetFoundRouteImport.update({
   id: '/get-found',
   path: '/get-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HireHelpRoute = HireHelpRouteImport.update({
+  id: '/hire-help',
+  path: '/hire-help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -91,9 +157,24 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnershipRecordRoute = OwnershipRecordRouteImport.update({
+  id: '/ownership-record',
+  path: '/ownership-record',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
   id: '/platform-matcher',
   path: '/platform-matcher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -106,136 +187,263 @@ const SignInRoute = SignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TroubleshootingRoute = TroubleshootingRouteImport.update({
+  id: '/troubleshooting',
+  path: '/troubleshooting',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/create-account': typeof CreateAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
+  '/glossary': typeof GlossaryRoute
+  '/help': typeof HelpRoute
+  '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
+  '/terms': typeof TermsRoute
+  '/troubleshooting': typeof TroubleshootingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/create-account': typeof CreateAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
+  '/glossary': typeof GlossaryRoute
+  '/help': typeof HelpRoute
+  '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
+  '/terms': typeof TermsRoute
+  '/troubleshooting': typeof TroubleshootingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/create-account': typeof CreateAccountRoute
   '/dashboard': typeof DashboardRoute
+  '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
+  '/glossary': typeof GlossaryRoute
+  '/help': typeof HelpRoute
+  '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
+  '/terms': typeof TermsRoute
+  '/troubleshooting': typeof TroubleshootingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
+    | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
+    | '/contact'
     | '/content'
+    | '/create-account'
     | '/dashboard'
+    | '/delete-account'
     | '/domains'
+    | '/forgot-password'
     | '/get-found'
+    | '/glossary'
+    | '/help'
+    | '/hire-help'
     | '/how-it-works'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/ownership-record'
     | '/platform-matcher'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
+    | '/terms'
+    | '/troubleshooting'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
+    | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
+    | '/contact'
     | '/content'
+    | '/create-account'
     | '/dashboard'
+    | '/delete-account'
     | '/domains'
+    | '/forgot-password'
     | '/get-found'
+    | '/glossary'
+    | '/help'
+    | '/hire-help'
     | '/how-it-works'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/ownership-record'
     | '/platform-matcher'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
+    | '/terms'
+    | '/troubleshooting'
   id:
     | '__root__'
     | '/'
+    | '/$'
+    | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
+    | '/contact'
     | '/content'
+    | '/create-account'
     | '/dashboard'
+    | '/delete-account'
     | '/domains'
+    | '/forgot-password'
     | '/get-found'
+    | '/glossary'
+    | '/help'
+    | '/hire-help'
     | '/how-it-works'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/ownership-record'
     | '/platform-matcher'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
+    | '/terms'
+    | '/troubleshooting'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
+  AccessibilityRoute: typeof AccessibilityRoute
   AccountRoute: typeof AccountRoute
   BusinessEmailRoute: typeof BusinessEmailRoute
+  ChangelogRoute: typeof ChangelogRoute
   ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
+  ContactRoute: typeof ContactRoute
   ContentRoute: typeof ContentRoute
+  CreateAccountRoute: typeof CreateAccountRoute
   DashboardRoute: typeof DashboardRoute
+  DeleteAccountRoute: typeof DeleteAccountRoute
   DomainsRoute: typeof DomainsRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   GetFoundRoute: typeof GetFoundRoute
+  GlossaryRoute: typeof GlossaryRoute
+  HelpRoute: typeof HelpRoute
+  HireHelpRoute: typeof HireHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
   LearnRoute: typeof LearnRoute
   MaintenanceRoute: typeof MaintenanceRoute
   OnboardingRoute: typeof OnboardingRoute
+  OwnershipRecordRoute: typeof OwnershipRecordRoute
   PlatformMatcherRoute: typeof PlatformMatcherRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
   SignInRoute: typeof SignInRoute
+  StatusRoute: typeof StatusRoute
+  TermsRoute: typeof TermsRoute
+  TroubleshootingRoute: typeof TroubleshootingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -245,6 +453,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accessibility': {
+      id: '/accessibility'
+      path: '/accessibility'
+      fullPath: '/accessibility'
+      preLoaderRoute: typeof AccessibilityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account': {
@@ -261,6 +483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checklist': {
       id: '/checklist'
       path: '/checklist'
@@ -275,11 +504,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConnectDomainRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/content': {
       id: '/content'
       path: '/content'
       fullPath: '/content'
       preLoaderRoute: typeof ContentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create-account': {
+      id: '/create-account'
+      path: '/create-account'
+      fullPath: '/create-account'
+      preLoaderRoute: typeof CreateAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -289,6 +532,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/delete-account': {
+      id: '/delete-account'
+      path: '/delete-account'
+      fullPath: '/delete-account'
+      preLoaderRoute: typeof DeleteAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/domains': {
       id: '/domains'
       path: '/domains'
@@ -296,11 +546,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/get-found': {
       id: '/get-found'
       path: '/get-found'
       fullPath: '/get-found'
       preLoaderRoute: typeof GetFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire-help': {
+      id: '/hire-help'
+      path: '/hire-help'
+      fullPath: '/hire-help'
+      preLoaderRoute: typeof HireHelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -331,11 +609,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ownership-record': {
+      id: '/ownership-record'
+      path: '/ownership-record'
+      fullPath: '/ownership-record'
+      preLoaderRoute: typeof OwnershipRecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/platform-matcher': {
       id: '/platform-matcher'
       path: '/platform-matcher'
       fullPath: '/platform-matcher'
       preLoaderRoute: typeof PlatformMatcherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -352,26 +651,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/troubleshooting': {
+      id: '/troubleshooting'
+      path: '/troubleshooting'
+      fullPath: '/troubleshooting'
+      preLoaderRoute: typeof TroubleshootingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
+  AccessibilityRoute: AccessibilityRoute,
   AccountRoute: AccountRoute,
   BusinessEmailRoute: BusinessEmailRoute,
+  ChangelogRoute: ChangelogRoute,
   ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
+  ContactRoute: ContactRoute,
   ContentRoute: ContentRoute,
+  CreateAccountRoute: CreateAccountRoute,
   DashboardRoute: DashboardRoute,
+  DeleteAccountRoute: DeleteAccountRoute,
   DomainsRoute: DomainsRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   GetFoundRoute: GetFoundRoute,
+  GlossaryRoute: GlossaryRoute,
+  HelpRoute: HelpRoute,
+  HireHelpRoute: HireHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
   LearnRoute: LearnRoute,
   MaintenanceRoute: MaintenanceRoute,
   OnboardingRoute: OnboardingRoute,
+  OwnershipRecordRoute: OwnershipRecordRoute,
   PlatformMatcherRoute: PlatformMatcherRoute,
+  PrivacyRoute: PrivacyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
   SignInRoute: SignInRoute,
+  StatusRoute: StatusRoute,
+  TermsRoute: TermsRoute,
+  TroubleshootingRoute: TroubleshootingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -15,9 +15,12 @@ import {
   UserRound,
   Menu,
   Rocket,
+  ShieldCheck,
+  LifeBuoy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeMenu, ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -31,6 +34,8 @@ const NAV = [
   { to: "/get-found", label: "Get found", icon: Search },
   { to: "/maintenance", label: "Maintenance", icon: Wrench },
   { to: "/learn", label: "Learning library", icon: BookOpen },
+  { to: "/ownership-record", label: "Ownership record", icon: ShieldCheck },
+  { to: "/help", label: "Help centre", icon: LifeBuoy },
   { to: "/account", label: "My plan", icon: UserRound },
   { to: "/settings", label: "Settings & privacy", icon: Settings },
 ] as const;
@@ -99,7 +104,8 @@ export function AppShell({
             </span>
           </Link>
           <NavLinks />
-          <p className="mt-auto px-2 text-xs text-muted-foreground">
+          <ThemeMenu className="mt-auto" />
+          <p className=" px-2 text-xs text-muted-foreground">
             Educational guidance only. Pricing, eligibility and provider features vary.
           </p>
         </aside>
@@ -116,6 +122,7 @@ export function AppShell({
                 <SheetContent side="left" className="w-72 overflow-y-auto bg-sidebar p-4">
                   <SheetTitle className="px-3 pb-4 font-display">Launch My Business Online</SheetTitle>
                   <NavLinks onNavigate={() => setOpen(false)} />
+                  <ThemeMenu className="mt-6" />
                 </SheetContent>
               </Sheet>
               <div className="min-w-0 flex-1">
@@ -124,6 +131,7 @@ export function AppShell({
                   <p className="truncate text-sm text-muted-foreground">{description}</p>
                 ) : null}
               </div>
+              <ThemeToggle />
               {actions}
             </div>
           </header>
