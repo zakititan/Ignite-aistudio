@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Download, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { CalendarPlus, Download, ShieldCheck, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Callout } from "@/components/Callouts";
@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { ThemeSettingsCard } from "@/components/ThemeToggle";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/settings")({
@@ -39,8 +40,9 @@ export const Route = createFileRoute("/settings")({
 });
 
 function Settings() {
-  const { state, loadDemo, resetAll } = useStore();
+  const { state, loadDemo, resetAll, restoreBackup, setLocalInsightsConsent } = useStore();
   const [busy, setBusy] = useState(false);
+  const backupInput = useRef<HTMLInputElement>(null);
 
   const exportPlan = () => {
     setBusy(true);
@@ -58,6 +60,60 @@ function Settings() {
     } finally {
       setBusy(false);
     }
+  };
+
+  const importPlan = async (file: File | undefined) => {
+    if (!file) return;
+    if (file.size > 2_000_000) {
+      toast.error("Choose a backup smaller than 2 MB.");
+      return;
+    }
+    try {
+      const parsed: unknown = JSON.parse(await file.text());
+      if (!restoreBackup(parsed)) throw new Error("invalid backup");
+      toast.success("Your backup has been restored on this device.");
+    } catch {
+      toast.error("That file is not a valid Launch Plan Buddy backup.");
+    } finally {
+      if (backupInput.current) backupInput.current.value = "";
+    }
+  };
+
+  const exportRenewalCalendar = () => {
+    const date = state.ownership.renewalDate.trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      toast.error("Add a domain renewal date (YYYY-MM-DD) in your ownership record first.");
+      return;
+    }
+    const due = date.replaceAll("-", "");
+    const reminder = new Date(`${date}T12:00:00Z`);
+    reminder.setDate(reminder.getDate() - 30);
+    const reminderDay = reminder.toISOString().slice(0, 10).replaceAll("-", "");
+    const domain = state.business.preferredDomain || state.business.ownedDomain || "your domain";
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Launch Plan Buddy//EN",
+      "BEGIN:VEVENT",
+      `UID:domain-renewal-${due}@launch-plan-buddy`,
+      `DTSTART;VALUE=DATE:${due}`,
+      `SUMMARY:Renew ${domain}`,
+      "DESCRIPTION:Confirm auto-renewal and payment details. Never share account credentials.",
+      `BEGIN:VALARM`,
+      `TRIGGER;VALUE=DATE-TIME:${reminderDay}T120000Z`,
+      "ACTION:DISPLAY",
+      "DESCRIPTION:Domain renewal due in 30 days",
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "domain-renewal-reminder.ics";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Calendar reminder downloaded.");
   };
 
   return (
@@ -80,6 +136,49 @@ function Settings() {
             <Download className="size-4" aria-hidden="true" />
             Download my plan
           </Button>
+          <input
+            ref={backupInput}
+            type="file"
+            accept="application/json,.json"
+            className="sr-only"
+            onChange={(e) => void importPlan(e.target.files?.[0])}
+          />
+          <Button variant="outline" onClick={() => backupInput.current?.click()}>
+            <Upload className="size-4" aria-hidden="true" /> Restore a backup
+          </Button>
+          <p className="text-xs text-muted-foreground">
+            Restoring replaces the current device plan. Export first if you want to keep both.
+          </p>
+        </section>
+
+        <section className="surface-panel space-y-3 p-5 sm:p-6">
+          <h2 className="font-display text-xl font-bold">Renewal protection</h2>
+          <p className="text-sm text-muted-foreground">
+            Download a 30-day reminder for your domain expiry date. Add or update the date in your
+            ownership record.
+          </p>
+          <Button variant="outline" onClick={exportRenewalCalendar}>
+            <CalendarPlus className="size-4" aria-hidden="true" /> Add domain renewal reminder
+          </Button>
+        </section>
+
+        <section className="surface-panel space-y-3 p-5 sm:p-6">
+          <h2 className="font-display text-xl font-bold">Private product insights</h2>
+          <p className="text-sm text-muted-foreground">
+            You can allow anonymous completion signals to be kept only in this browser. Nothing is
+            sent to a server or shared with providers.
+          </p>
+          <div className="flex items-start gap-3">
+            <Checkbox
+              id="local-insights"
+              checked={state.localInsightsConsent === true}
+              onCheckedChange={(value) => setLocalInsightsConsent(value === true)}
+            />
+            <label htmlFor="local-insights" className="text-sm leading-relaxed">
+              <ShieldCheck className="mr-1 inline size-4 text-success" aria-hidden="true" />
+              Keep private, on-device improvement signals enabled
+            </label>
+          </div>
         </section>
 
         <section className="surface-panel space-y-3 p-5 sm:p-6">

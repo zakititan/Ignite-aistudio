@@ -65,6 +65,8 @@ interface StoreValue {
   ) => void;
   removeSavedDomain: (id: string) => void;
   setSavedDomainStatus: (id: string, status: DomainShortlistStatus) => void;
+  restoreBackup: (backup: unknown) => boolean;
+  setLocalInsightsConsent: (allowed: boolean) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -267,6 +269,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             ),
           };
         }),
+      restoreBackup: (backup) => {
+        if (!backup || typeof backup !== "object") return false;
+        const candidate = backup as Partial<AppState>;
+        if (!candidate.business || !Array.isArray(candidate.tasks)) return false;
+        const base = emptyState();
+        setState({
+          ...base,
+          ...candidate,
+          business: { ...base.business, ...candidate.business },
+          ownership: { ...base.ownership, ...(candidate.ownership ?? {}) },
+          tasks: candidate.tasks,
+          maintenance: Array.isArray(candidate.maintenance)
+            ? candidate.maintenance
+            : base.maintenance,
+          drafts: candidate.drafts ?? {},
+          savedDomainIdeas: Array.isArray(candidate.savedDomainIdeas)
+            ? candidate.savedDomainIdeas
+            : [],
+        });
+        return true;
+      },
+      setLocalInsightsConsent: (allowed) => patch((s) => ({ ...s, localInsightsConsent: allowed })),
     }),
     [state, hydrated, patch],
   );
