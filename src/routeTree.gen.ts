@@ -18,6 +18,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as GetFoundRouteImport } from './routes/get-found'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 
@@ -66,6 +67,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaintenanceRoute = MaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/domains': typeof DomainsRoute
   '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/domains': typeof DomainsRoute
   '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/domains': typeof DomainsRoute
   '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/domains'
     | '/get-found'
     | '/how-it-works'
+    | '/maintenance'
     | '/onboarding'
     | '/platform-matcher'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/domains'
     | '/get-found'
     | '/how-it-works'
+    | '/maintenance'
     | '/onboarding'
     | '/platform-matcher'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/domains'
     | '/get-found'
     | '/how-it-works'
+    | '/maintenance'
     | '/onboarding'
     | '/platform-matcher'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   DomainsRoute: typeof DomainsRoute
   GetFoundRoute: typeof GetFoundRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  MaintenanceRoute: typeof MaintenanceRoute
   OnboardingRoute: typeof OnboardingRoute
   PlatformMatcherRoute: typeof PlatformMatcherRoute
 }
@@ -238,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/maintenance': {
+      id: '/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/onboarding': {
       id: '/onboarding'
       path: '/onboarding'
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   DomainsRoute: DomainsRoute,
   GetFoundRoute: GetFoundRoute,
   HowItWorksRoute: HowItWorksRoute,
+  MaintenanceRoute: MaintenanceRoute,
   OnboardingRoute: OnboardingRoute,
   PlatformMatcherRoute: PlatformMatcherRoute,
 }
