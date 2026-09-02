@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BusinessEmailRouteImport } from './routes/business-email'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as ContentRouteImport } from './routes/content'
@@ -22,6 +23,11 @@ import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessEmailRoute = BusinessEmailRouteImport.update({
+  id: '/business-email',
+  path: '/business-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChecklistRoute = ChecklistRouteImport.update({
@@ -67,6 +73,7 @@ const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/business-email': typeof BusinessEmailRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/content': typeof ContentRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/business-email': typeof BusinessEmailRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/content': typeof ContentRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/business-email': typeof BusinessEmailRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/content': typeof ContentRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/business-email'
     | '/checklist'
     | '/connect-domain'
     | '/content'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/business-email'
     | '/checklist'
     | '/connect-domain'
     | '/content'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/business-email'
     | '/checklist'
     | '/connect-domain'
     | '/content'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BusinessEmailRoute: typeof BusinessEmailRoute
   ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
   ContentRoute: typeof ContentRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business-email': {
+      id: '/business-email'
+      path: '/business-email'
+      fullPath: '/business-email'
+      preLoaderRoute: typeof BusinessEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checklist': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BusinessEmailRoute: BusinessEmailRoute,
   ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
   ContentRoute: ContentRoute,
