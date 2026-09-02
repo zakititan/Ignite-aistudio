@@ -19,6 +19,9 @@ import {
   LifeBuoy,
   Building2,
   ClipboardCheck,
+  Calculator,
+  Star,
+  ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -29,6 +32,9 @@ const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/launch-wizard", label: "Launch Track Wizard", icon: Rocket },
   { to: "/preflight", label: "Pre-Flight Simulator", icon: ShieldCheck },
+  { to: "/cost-calculator", label: "3-Yr Cost Calculator", icon: Calculator },
+  { to: "/email-signature", label: "Email Signature Generator", icon: Mail },
+  { to: "/review-kit", label: "Google Review QR Kit", icon: Star },
   { to: "/domains", label: "Domain finder", icon: Globe },
   { to: "/platform-matcher", label: "Website & hosting", icon: Blocks },
   { to: "/connect-domain", label: "Connect domain", icon: Network },
@@ -37,6 +43,7 @@ const NAV = [
   { to: "/business-email", label: "Business email", icon: Mail },
   { to: "/get-found", label: "Get found", icon: Search },
   { to: "/launch-dossier", label: "Launch dossier", icon: FileText },
+  { to: "/security-drill", label: "Security & Recovery", icon: ShieldAlert },
   { to: "/maintenance", label: "Maintenance", icon: Wrench },
   { to: "/learn", label: "Learning library", icon: BookOpen },
   { to: "/ownership-record", label: "Ownership record", icon: ShieldCheck },

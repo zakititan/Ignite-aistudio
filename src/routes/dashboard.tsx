@@ -13,6 +13,10 @@ import {
   BookOpen,
   ClipboardCheck,
   Building2,
+  Calculator,
+  Mail,
+  Star,
+  ShieldAlert,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProgressRing } from "@/components/ProgressRing";
@@ -51,6 +55,10 @@ export const Route = createFileRoute("/dashboard")({
 const QUICK_TOOLS = [
   { to: "/launch-wizard", label: "Launch track wizard", icon: Rocket },
   { to: "/preflight", label: "Pre-flight simulator", icon: ClipboardCheck },
+  { to: "/cost-calculator", label: "3-Yr budget calculator", icon: Calculator },
+  { to: "/email-signature", label: "Email signature", icon: Mail },
+  { to: "/review-kit", label: "Review QR kit", icon: Star },
+  { to: "/security-drill", label: "Security & recovery", icon: ShieldAlert },
   { to: "/domains", label: "Domain finder", icon: Globe },
   { to: "/business-profile", label: "Business profile", icon: Building2 },
   { to: "/content", label: "Content builder", icon: FileText },
@@ -246,6 +254,107 @@ function Dashboard() {
             </Link>
           </Button>
         </div>
+
+        {/* Growth & Operations Toolkit */}
+        <section aria-labelledby="growth-toolkit" className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 id="growth-toolkit" className="font-display text-xl font-bold">
+                Launch & Growth Toolkit
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Specialized utilities to protect your budget, brand outgoing emails, get 5-star
+                reviews, and safeguard your domain.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <Link
+              to="/cost-calculator"
+              className="group surface-panel p-4 space-y-2 hover:border-primary/50 transition-all block"
+            >
+              <div className="flex items-center justify-between">
+                <div className="size-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
+                  <Calculator className="size-4" />
+                </div>
+                <Badge variant="outline" className="text-[10px]">
+                  3-Year TCO
+                </Badge>
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                Budget & Cost Calculator
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Calculate true 3-year running costs across domain, email, hosting & payment
+                processing without renewal traps.
+              </p>
+            </Link>
+
+            <Link
+              to="/email-signature"
+              className="group surface-panel p-4 space-y-2 hover:border-primary/50 transition-all block"
+            >
+              <div className="flex items-center justify-between">
+                <div className="size-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
+                  <Mail className="size-4" />
+                </div>
+                <Badge variant="outline" className="text-[10px]">
+                  Client-Safe
+                </Badge>
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                Email Signature Generator
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Generate responsive HTML email signatures with tap-to-call, monogram, and Google
+                Review links for Gmail & Outlook.
+              </p>
+            </Link>
+
+            <Link
+              to="/review-kit"
+              className="group surface-panel p-4 space-y-2 hover:border-primary/50 transition-all block"
+            >
+              <div className="flex items-center justify-between">
+                <div className="size-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+                  <Star className="size-4 fill-amber-500" />
+                </div>
+                <Badge variant="outline" className="text-[10px]">
+                  Printable QR
+                </Badge>
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                Google Review Kit
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Print 5-star tabletop QR counter stands, receipt slips, and copy post-service SMS
+                follow-up templates.
+              </p>
+            </Link>
+
+            <Link
+              to="/security-drill"
+              className="group surface-panel p-4 space-y-2 hover:border-primary/50 transition-all block"
+            >
+              <div className="flex items-center justify-between">
+                <div className="size-8 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
+                  <ShieldAlert className="size-4" />
+                </div>
+                <Badge variant="outline" className="text-[10px]">
+                  Outage Triage
+                </Badge>
+              </div>
+              <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                Security & Recovery Drill
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Interactive outage triage flowchart, 2FA fortress checklist, and 1-click DNS zone
+                backup snapshot vault.
+              </p>
+            </Link>
+          </div>
+        </section>
 
         {/* Next step detail */}
         {nextTask ? (
