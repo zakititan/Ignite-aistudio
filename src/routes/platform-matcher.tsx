@@ -123,7 +123,7 @@ interface Recommendation {
   examples: string;
 }
 
-const RECOMMENDATIONS: Record<string, Recommendation> = {
+const RECOMMENDATIONS = {
   builder: {
     key: "builder",
     title: "Easy all-in-one website builder",
@@ -232,7 +232,7 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
     features: ["Headline", "Services summary", "Contact details", "Map or service area"],
     examples: "Example type: one-page site builders and link pages (examples only).",
   },
-};
+} satisfies Record<string, Recommendation>;
 
 const COMPARISON = [
   {
@@ -287,13 +287,13 @@ const COMPARISON = [
   },
 ];
 
-function recommend(answers: Record<string, string>): Recommendation {
-  if (answers.ecommerce === "yes") return RECOMMENDATIONS.ecommerce;
-  if (answers.growth === "yes" && answers.help !== "no") return RECOMMENDATIONS.cms;
-  if (answers.design === "max" && answers.budget === "high") return RECOMMENDATIONS.pro;
-  if (answers.speed === "yes" && answers.budget === "low" && answers.updates === "rare")
+function recommend(a: Record<string, string | undefined>): Recommendation {
+  if (a["ecommerce"] === "yes") return RECOMMENDATIONS.ecommerce;
+  if (a["growth"] === "yes" && a["help"] !== "no") return RECOMMENDATIONS.cms;
+  if (a["design"] === "max" && a["budget"] === "high") return RECOMMENDATIONS.pro;
+  if (a["speed"] === "yes" && a["budget"] === "low" && a["updates"] === "rare")
     return RECOMMENDATIONS.onepage;
-  if (answers.updates === "weekly" && answers.design !== "template") return RECOMMENDATIONS.cms;
+  if (a["updates"] === "weekly" && a["design"] !== "template") return RECOMMENDATIONS.cms;
   return RECOMMENDATIONS.builder;
 }
 
