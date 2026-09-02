@@ -59,7 +59,7 @@ export function SetupMapPreview({ areas }: { areas: PresenceStatusArea[] }) {
           </p>
         </div>
         <Button asChild variant="outline" size="sm">
-          <Link to={"/online-setup" as never}>View setup map <ArrowRight className="size-4" aria-hidden="true" /></Link>
+          <Link to="/online-setup">View setup map <ArrowRight className="size-4" aria-hidden="true" /></Link>
         </Button>
       </div>
 

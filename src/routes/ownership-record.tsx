@@ -368,6 +368,15 @@ function OwnershipRecordPage() {
       }
     >
       <div className="space-y-6">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-primary/20 bg-primary-soft/30 px-3 py-2 text-sm">
+          <Link
+            to="/online-setup"
+            className="inline-flex items-center gap-1.5 font-medium text-primary underline-offset-4 hover:underline"
+          >
+            View setup map — see domain, website & email dependencies before changes
+          </Link>
+          <span className="text-xs text-muted-foreground">Context workflow</span>
+        </div>
         <OwnershipWarningCard />
 
         <SafetyWarningBanner title="Security Protocol: Record Custody, Never Passwords">
