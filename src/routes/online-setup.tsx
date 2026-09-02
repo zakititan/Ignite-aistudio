@@ -316,6 +316,21 @@ function OnlineSetupPage() {
             Based on <GlossaryTooltip term="DNS">DNS impact preview</GlossaryTooltip> and your saved answers.
             If unsure, choose “unknown” rather than guessing.
           </p>
+
+          {/* Compact DNS impact summary — required spec */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary/20 bg-primary-soft/20 px-4 py-3">
+            <div className="space-y-1">
+              <p className="text-sm font-semibold">
+                DNS impact: {preview.level === "high" ? "High" : preview.level === "medium" ? "Medium" : "Low"} risk
+                {preview.emailAtRisk ? " — Business email may be affected" : " — No email at risk"}
+                {preview.existingWebsiteAtRisk ? " · Existing website at risk" : ""}
+              </p>
+              <p className="text-xs text-muted-foreground line-clamp-2">{preview.summary}</p>
+            </div>
+            <Button asChild size="sm">
+              <Link to="/connect-domain">Review impact and connection plan →</Link>
+            </Button>
+          </div>
         </section>
 
         {/* Visual map */}

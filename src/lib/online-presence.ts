@@ -224,32 +224,32 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
 
   if (isLow) {
     level = "low";
-    title = "Low DNS change risk";
-    summary = "First website and no business email at risk — you have a screenshot and exact provider values. Safe to connect.";
+    title = "You are ready to connect — low DNS risk";
+    summary = "You are ready to connect. First website and no business email at risk — you have a screenshot and exact provider values. Safe to connect.";
     recommendedNextStep = { label: "Connect your website", route: "/connect-domain" };
   } else if (isHigh) {
     level = "high";
-    title = "High DNS change risk";
+    title = "This change needs extra care — high DNS risk";
     summary =
-      "Changing DNS will affect your existing website and business email. Save a screenshot, confirm DNS location, and keep exact mail records before changing anything.";
+      "This change needs extra care — changing DNS will affect your existing website and business email. Save a screenshot, confirm DNS location, and keep exact mail records before changing anything.";
     recommendedNextStep = { label: "Save DNS screenshot first", route: "/connect-domain" };
   } else if (changeType === "replacing" || changeType === "unsure") {
     level = "medium";
-    title = "Medium DNS change risk";
+    title = "Review your current setup — medium DNS risk";
     summary =
-      "Replacing or unsure website setup — verify DNS provider and preserve existing records before updating.";
+      "Review your current setup before changing DNS. Replacing or unsure website setup — verify DNS provider and preserve existing records before updating.";
     recommendedNextStep = { label: "Review DNS guide", route: "/connect-domain" };
   } else {
     // fallback medium if not low/high but missing safeguards
     if (screenshot !== "yes" || hasExact !== "yes") {
       level = "medium";
-      title = "Medium DNS change risk";
-      summary = "Add missing safeguards (screenshot, exact records) before changing DNS.";
+      title = "Review your current setup — medium DNS risk";
+      summary = "Review your current setup before changing DNS. Add missing safeguards (screenshot, exact records) before changing.";
       recommendedNextStep = { label: "Review DNS guide", route: "/connect-domain" };
     } else {
       level = "low";
-      title = "Low DNS change risk";
-      summary = "Safeguards in place — proceed with DNS connection.";
+      title = "You are ready to connect — low DNS risk";
+      summary = "You are ready to connect. Safeguards in place — proceed with DNS connection.";
       recommendedNextStep = { label: "Connect your website", route: "/connect-domain" };
     }
   }
