@@ -18,10 +18,13 @@ import {
   TrendingDown,
   Zap,
   Check,
+  Activity,
+  Globe,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Callout } from "@/components/Callouts";
+import { LiveDnsChecker } from "@/components/LiveDnsChecker";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1130,21 +1133,24 @@ function BusinessEmail() {
 
         {/* Main Tabs Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-1">
-            <TabsTrigger value="generator" className="gap-2 text-xs sm:text-sm">
-              <Sparkles className="size-4" /> DNS Generator
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 p-1">
+            <TabsTrigger value="generator" className="gap-1.5 text-xs">
+              <Sparkles className="size-3.5" /> DNS Generator
             </TabsTrigger>
-            <TabsTrigger value="pricing" className="gap-2 text-xs sm:text-sm">
-              <DollarSign className="size-4" /> Pricing & Plans
+            <TabsTrigger value="live-dns" className="gap-1.5 text-xs">
+              <Activity className="size-3.5" /> Live DNS Check
             </TabsTrigger>
-            <TabsTrigger value="architect" className="gap-2 text-xs sm:text-sm">
-              <Layers className="size-4" /> Address Architect
+            <TabsTrigger value="pricing" className="gap-1.5 text-xs">
+              <DollarSign className="size-3.5" /> Pricing & Plans
             </TabsTrigger>
-            <TabsTrigger value="deliverability" className="gap-2 text-xs sm:text-sm">
-              <ShieldCheck className="size-4" /> Deliverability & Test
+            <TabsTrigger value="architect" className="gap-1.5 text-xs">
+              <Layers className="size-3.5" /> Address Architect
             </TabsTrigger>
-            <TabsTrigger value="migration" className="gap-2 text-xs sm:text-sm">
-              <HelpCircle className="size-4" /> Migration & FAQs
+            <TabsTrigger value="deliverability" className="gap-1.5 text-xs">
+              <ShieldCheck className="size-3.5" /> Deliverability
+            </TabsTrigger>
+            <TabsTrigger value="migration" className="gap-1.5 text-xs">
+              <HelpCircle className="size-3.5" /> Migration & FAQs
             </TabsTrigger>
           </TabsList>
 
@@ -1465,6 +1471,14 @@ function BusinessEmail() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => setActiveTab("live-dns")}
+                    className="gap-1.5 bg-primary text-primary-foreground"
+                  >
+                    <Activity className="size-3.5" /> Check Live DNS Propagation
+                  </Button>
                   <Button variant="outline" size="sm" onClick={copyAllRecords} className="gap-1.5">
                     <Copy className="size-3.5" /> Copy All Records as Text
                   </Button>
@@ -1576,14 +1590,33 @@ function BusinessEmail() {
                 <div className="text-sm">
                   <span className="font-semibold text-foreground">Done adding these records?</span>{" "}
                   <span className="text-muted-foreground">
-                    Next, head to the Deliverability tab to run your live email test.
+                    Next, test live propagation to confirm receiving mail servers can find you.
                   </span>
                 </div>
-                <Button onClick={() => setActiveTab("deliverability")} size="sm" className="gap-2">
-                  Go to Deliverability Test <ArrowRight className="size-4" />
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    onClick={() => setActiveTab("live-dns")}
+                    size="sm"
+                    className="gap-2 bg-primary text-primary-foreground"
+                  >
+                    <Activity className="size-4" /> Check Live DNS Status
+                  </Button>
+                  <Button
+                    onClick={() => setActiveTab("deliverability")}
+                    variant="outline"
+                    size="sm"
+                    className="gap-2"
+                  >
+                    Deliverability Checklist <ArrowRight className="size-4" />
+                  </Button>
+                </div>
               </div>
             </div>
+          </TabsContent>
+
+          {/* TAB: LIVE DNS & EMAIL PROPAGATION CHECKER (DoH) */}
+          <TabsContent value="live-dns" className="space-y-6">
+            <LiveDnsChecker initialDomain={domain} expectedProviderId={activeProvider.id} />
           </TabsContent>
 
           {/* TAB 2: PRICING & COST COMPARISON */}

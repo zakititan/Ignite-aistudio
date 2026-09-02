@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Copy } from "lucide-react";
+import { Copy, Activity } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Callout } from "@/components/Callouts";
 import { GlossaryTooltip } from "@/components/GlossaryTooltip";
+import { LiveDnsChecker } from "@/components/LiveDnsChecker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -378,6 +379,20 @@ function ConnectDomain() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        </section>
+
+        {/* Live DNS Propagation Verification */}
+        <section aria-labelledby="live-check">
+          <div className="flex items-center gap-2 mb-3">
+            <Activity className="size-5 text-primary" />
+            <h2 id="live-check" className="font-display text-xl font-bold">
+              Verify Live DNS Propagation
+            </h2>
+          </div>
+          <LiveDnsChecker
+            initialDomain={domain}
+            className="border-none shadow-none p-0 bg-transparent"
+          />
         </section>
 
         <section aria-labelledby="trouble">
