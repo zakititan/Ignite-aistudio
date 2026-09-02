@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
@@ -19,6 +20,11 @@ import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConnectDomainRoute = ConnectDomainRouteImport.update({
+  id: '/connect-domain',
+  path: '/connect-domain',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -49,6 +55,7 @@ const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/connect-domain'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/connect-domain'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/connect-domain'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConnectDomainRoute: typeof ConnectDomainRoute
   DashboardRoute: typeof DashboardRoute
   DomainsRoute: typeof DomainsRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/connect-domain': {
+      id: '/connect-domain'
+      path: '/connect-domain'
+      fullPath: '/connect-domain'
+      preLoaderRoute: typeof ConnectDomainRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConnectDomainRoute: ConnectDomainRoute,
   DashboardRoute: DashboardRoute,
   DomainsRoute: DomainsRoute,
   HowItWorksRoute: HowItWorksRoute,
