@@ -27,24 +27,67 @@ export const Route = createFileRoute("/account")({
       { property: "og:title", content: "My launch plan" },
       {
         property: "og:description",
-        content: "Progress, business details, and a written record of account ownership you can rely on.",
+        content:
+          "Progress, business details, and a written record of account ownership you can rely on.",
       },
     ],
   }),
   component: Account,
 });
 
-const OWNERSHIP_FIELDS: { id: keyof OwnershipRecord; label: string; help: string; long?: boolean }[] = [
-  { id: "domainRegistrar", label: "Where is your domain registered?", help: "The company you pay each year." },
+const OWNERSHIP_FIELDS: {
+  id: keyof OwnershipRecord;
+  label: string;
+  help: string;
+  long?: boolean;
+}[] = [
+  {
+    id: "domainRegistrar",
+    label: "Where is your domain registered?",
+    help: "The company you pay each year.",
+  },
   { id: "renewalDate", label: "When does it renew?", help: "Put a reminder in your calendar too." },
-  { id: "dnsProvider", label: "Who manages your domain settings?", help: "Often the registrar, sometimes your host." },
-  { id: "websitePlatform", label: "What is your website built on?", help: "The builder, platform or agency." },
-  { id: "emailProvider", label: "Who provides your business email?", help: "Where your mailboxes live." },
-  { id: "analyticsAccount", label: "Whose account holds your analytics?", help: "It should be an account you control." },
-  { id: "paymentProcessor", label: "Who processes your payments?", help: "Registered in your business name." },
-  { id: "socialOwners", label: "Who has admin on your social profiles?", help: "List names, not just roles." },
-  { id: "recoveryOwner", label: "Which email recovers these accounts?", help: "It must be an address you can access." },
-  { id: "notes", label: "Anything else worth recording", help: "Contractor names, contract end dates, passwords manager used.", long: true },
+  {
+    id: "dnsProvider",
+    label: "Who manages your domain settings?",
+    help: "Often the registrar, sometimes your host.",
+  },
+  {
+    id: "websitePlatform",
+    label: "What is your website built on?",
+    help: "The builder, platform or agency.",
+  },
+  {
+    id: "emailProvider",
+    label: "Who provides your business email?",
+    help: "Where your mailboxes live.",
+  },
+  {
+    id: "analyticsAccount",
+    label: "Whose account holds your analytics?",
+    help: "It should be an account you control.",
+  },
+  {
+    id: "paymentProcessor",
+    label: "Who processes your payments?",
+    help: "Registered in your business name.",
+  },
+  {
+    id: "socialOwners",
+    label: "Who has admin on your social profiles?",
+    help: "List names, not just roles.",
+  },
+  {
+    id: "recoveryOwner",
+    label: "Which email recovers these accounts?",
+    help: "It must be an address you can access.",
+  },
+  {
+    id: "notes",
+    label: "Anything else worth recording",
+    help: "Contractor names, contract end dates, passwords manager used.",
+    long: true,
+  },
 ];
 
 function Account() {
@@ -88,17 +131,25 @@ function Account() {
           <Progress value={percent} className="mt-4" />
           <dl className="mt-4 grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-border bg-muted/40 p-4">
-              <dt className="text-xs font-semibold text-muted-foreground uppercase">Current phase</dt>
-              <dd className="mt-1 font-medium">{stage ? `${stage.number}. ${stage.title}` : "Getting started"}</dd>
+              <dt className="text-xs font-semibold text-muted-foreground uppercase">
+                Current phase
+              </dt>
+              <dd className="mt-1 font-medium">
+                {stage ? `${stage.number}. ${stage.title}` : "Getting started"}
+              </dd>
             </div>
             <div className="rounded-xl border border-border bg-muted/40 p-4">
-              <dt className="text-xs font-semibold text-muted-foreground uppercase">Steps remaining</dt>
+              <dt className="text-xs font-semibold text-muted-foreground uppercase">
+                Steps remaining
+              </dt>
               <dd className="mt-1 font-medium">
                 {state.tasks.filter((t) => t.status !== "complete").length}
               </dd>
             </div>
             <div className="rounded-xl border border-border bg-muted/40 p-4">
-              <dt className="text-xs font-semibold text-muted-foreground uppercase">Time left, roughly</dt>
+              <dt className="text-xs font-semibold text-muted-foreground uppercase">
+                Time left, roughly
+              </dt>
               <dd className="mt-1 font-medium">{remainingEffort(state.tasks)}</dd>
             </div>
           </dl>
@@ -118,13 +169,18 @@ function Account() {
           ) : (
             <>
               <Callout tone="info" title="Your plan already saves to this device">
-                Adding your name and email lets us show your plan back to you here. Accounts are stored locally
-                in this demo.
+                Adding your name and email lets us show your plan back to you here. Accounts are
+                stored locally in this demo.
               </Callout>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <Label htmlFor="acc-name">Your name</Label>
-                  <Input id="acc-name" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} />
+                  <Input
+                    id="acc-name"
+                    value={name}
+                    maxLength={100}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="acc-email">Your email</Label>

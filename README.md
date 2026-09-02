@@ -77,13 +77,13 @@ The app does not claim that a domain is available unless a live domain lookup in
 
 An interactive decision tool guides owners toward a category of website setup rather than forcing a provider choice.
 
-| Setup category | Best suited to |
-| --- | --- |
-| Easy all-in-one website builder | Owners who want a straightforward, low-maintenance site quickly |
-| Ecommerce-first platform | Businesses selling products online |
-| Flexible CMS with managed hosting | Businesses needing more flexibility and room to grow |
+| Setup category                        | Best suited to                                                         |
+| ------------------------------------- | ---------------------------------------------------------------------- |
+| Easy all-in-one website builder       | Owners who want a straightforward, low-maintenance site quickly        |
+| Ecommerce-first platform              | Businesses selling products online                                     |
+| Flexible CMS with managed hosting     | Businesses needing more flexibility and room to grow                   |
 | Professional designer/developer build | Businesses with complex requirements or a larger implementation budget |
-| Simple one-page launch site | Owners who need an immediate, focused online presence |
+| Simple one-page launch site           | Owners who need an immediate, focused online presence                  |
 
 The matcher describes the advantages, trade-offs, maintenance expectations, feature fit, and questions owners should ask before purchasing.
 
@@ -154,55 +154,71 @@ The discoverability guide focuses on durable fundamentals rather than ranking pr
 
 The maintenance center helps owners protect their investment after launch, with recurring reminders for reviewing enquiries, testing forms, updating offers and hours, checking analytics, reviewing account access, refreshing content, and monitoring domain renewal.
 
+### Functional growth sprint — five new capabilities
+
+Recent work connects the launch workflow end-to-end. All data stays in local storage and is not sent to a server.
+
+- **Launch readiness scoring and blockers** — Deterministic checks over tasks, business essentials and customer-journey results. Shows overall completion and required-task completion separately (both with semantic color plus text/icons), lists up to 3 blockers with severity badges, plain-English why sentences and route links, filters blockers in the checklist (`/checklist?filter=blockers`), and exposes a next-action button. Guidance only — not a guarantee.
+- **Customer journey tester (`/customer-journey`)** — Five-step flow: choose a goal, prepare, tailored steps, record outcome, summary. Supports 8 journey types (phone, WhatsApp, form, booking, purchase, visit, newsletter, custom) with inferred default from onboarding, 5–6 plain-English hints, per-step Passed / Needs improvement / Blocked / Not tested with notes, mark-all-passed and reset, summary counts with readiness impact, and links to checklist, dashboard and hire-help.
+- **Saved domain shortlist (`/domains` → shortlist)** — Save ideas with normalized deduplication, statuses (Considering / Preferred — only one at a time / Backup / Rejected / Purchased), notes, local 0–10 scores (clarity, memorability, spelling ease, local relevance, brand flexibility), RDAP outcome with checkedAt messaging, table + mobile cards, compare up to 5 side-by-side, and handoff wiring to Business Profile preferred domain, readiness, ownership and hire-help.
+- **Unified business profile workspace (`/business-profile`)** — One place for basics, location/service area, contact & primary customer action, brand & trust, and online setup. Shows completion percentage with per-section progress, essentials banner for readiness, pre-filled from onboarding, and downstream wiring to dashboard greetings, content builder, journey defaults, get-found and hire-help.
+- **Professional handoff brief (`/hire-help`)** — Local-only brief compiled from business profile, onboarding, domain shortlist, launch plan, content drafts, journey test, ownership and readiness. Never sent to a server; user shares via copy, print/Save as PDF or download (.txt/.md). Includes completed/open tasks, blockers, journey status, domain/technical snapshot, no-password ownership checklist and eight questions to ask a professional.
+
+Cross-feature wiring: onboarding → profile prefill; profile → dashboard/content/journey/get-found/handoff; shortlist → profile/readiness/ownership/handoff; journey → readiness/checklist/handoff; readiness → dashboard/checklist/handoff; ownership → domain/handoff; content → journey/handoff. All internal links use `Link` from `@tanstack/react-router` with no `href="#"` placeholders.
+
+> No backend, authentication, PDF service or analytics backend is live in this sprint — storage is local-only and printing uses the browser dialog.
+
 ## Application routes
 
 The product includes guided workflow pages, support resources, account flows, legal information, and a branded fallback for unknown URLs.
 
 ### Planning and launch workflow
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Product landing page and main entry point |
-| `/how-it-works` | Overview of the Launch Plan Buddy process |
-| `/onboarding` | Personalized plan creation flow |
-| `/dashboard` | Plan progress and next actions |
-| `/domains` | Domain guidance and domain-name exploration |
-| `/platform-matcher` | Website setup category recommendations |
-| `/connect-domain` | DNS and domain-connection guidance |
-| `/content` | Guided website-content workspace |
-| `/checklist` | Interactive launch checklist |
-| `/business-email` | Professional business-email planning |
-| `/get-found` | Search and local-presence basics |
-| `/maintenance` | Ongoing website-maintenance guidance |
-| `/ownership-record` | Digital ownership and account-access record |
-| `/hire-help` | Guidance for safely hiring a freelancer or agency |
+| Route               | Purpose                                           |
+| ------------------- | ------------------------------------------------- |
+| `/`                 | Product landing page and main entry point         |
+| `/how-it-works`     | Overview of the Launch Plan Buddy process         |
+| `/onboarding`       | Personalized plan creation flow                   |
+| `/dashboard`        | Plan progress and next actions                    |
+| `/domains`          | Domain guidance and domain-name exploration       |
+| `/platform-matcher` | Website setup category recommendations            |
+| `/connect-domain`   | DNS and domain-connection guidance                |
+| `/content`          | Guided website-content workspace                  |
+| `/checklist`        | Interactive launch checklist                      |
+| `/business-email`   | Professional business-email planning              |
+| `/get-found`        | Search and local-presence basics                  |
+| `/maintenance`      | Ongoing website-maintenance guidance              |
+| `/ownership-record` | Digital ownership and account-access record       |
+| `/hire-help`        | Guidance for safely hiring a freelancer or agency |
+| `/customer-journey` | 5-step tester for your primary customer action    |
+| `/business-profile` | Unified profile workspace for all business details |
 
 ### Learning and support
 
-| Route | Purpose |
-| --- | --- |
-| `/learn` | Learning library |
-| `/help` | Searchable help center |
-| `/troubleshooting` | Guided paths for common domain, website, email, and access issues |
-| `/glossary` | Plain-language technical glossary |
-| `/contact` | Support, feedback, partnership, privacy, and accessibility contact form |
-| `/status` | Service-status page and future incident-history surface |
-| `/changelog` | Product release notes and updates |
+| Route              | Purpose                                                                 |
+| ------------------ | ----------------------------------------------------------------------- |
+| `/learn`           | Learning library                                                        |
+| `/help`            | Searchable help center                                                  |
+| `/troubleshooting` | Guided paths for common domain, website, email, and access issues       |
+| `/glossary`        | Plain-language technical glossary                                       |
+| `/contact`         | Support, feedback, partnership, privacy, and accessibility contact form |
+| `/status`          | Service-status page and future incident-history surface                 |
+| `/changelog`       | Product release notes and updates                                       |
 
 ### Account and legal
 
-| Route | Purpose |
-| --- | --- |
-| `/sign-in` | Existing-user sign-in |
-| `/create-account` | Account creation and plan-saving entry point |
-| `/forgot-password` | Privacy-safe password-reset request flow |
-| `/reset-password` | Password-reset route and invalid/expired-link fallback |
-| `/account` | Account overview |
-| `/settings` | Appearance, privacy, security, and support settings |
-| `/delete-account` | Account-deletion confirmation and request flow |
-| `/privacy` | Privacy information |
-| `/terms` | Terms and educational-guidance disclaimer |
-| `/accessibility` | Accessibility commitment and feedback information |
+| Route              | Purpose                                                |
+| ------------------ | ------------------------------------------------------ |
+| `/sign-in`         | Existing-user sign-in                                  |
+| `/create-account`  | Account creation and plan-saving entry point           |
+| `/forgot-password` | Privacy-safe password-reset request flow               |
+| `/reset-password`  | Password-reset route and invalid/expired-link fallback |
+| `/account`         | Account overview                                       |
+| `/settings`        | Appearance, privacy, security, and support settings    |
+| `/delete-account`  | Account-deletion confirmation and request flow         |
+| `/privacy`         | Privacy information                                    |
+| `/terms`           | Terms and educational-guidance disclaimer              |
+| `/accessibility`   | Accessibility commitment and feedback information      |
 
 ### Unknown paths
 
@@ -344,11 +360,16 @@ Every generated result should offer edit, regenerate, and copy controls, plus a 
 - [x] Add account, support, legal, utility, and fallback routes
 - [x] Add a global light, dark, and system appearance system
 - [x] Add branded route fallback for unknown paths
-- [ ] Add authentication and saved plans backed by a production database
-- [ ] Add real-time domain availability lookup
+- [x] Add launch readiness scoring and blockers (overall + required, top-3 blockers, next action, `?filter=blockers`)
+- [x] Add customer journey tester (5-step flow with 8 journey types and readiness wiring)
+- [x] Add saved domain shortlist (preferred/backup/purchased, scores, RDAP, compare, handoff wiring)
+- [x] Add unified business profile workspace (pre-filled from onboarding, downstream feeds)
+- [x] Add professional handoff brief (local-only, copy/print/download, ownership checklist and questions)
+- [ ] Add authentication and saved plans backed by a production database (not live in this sprint)
+- [ ] Add real-time domain availability lookup via provider integration (RDAP helper present, registrar confirms price)
 - [ ] Add provider-specific DNS setup flows
 - [ ] Add live AI generation and review workflows
-- [ ] Add analytics, search-monitoring, reminder, and PDF-export integrations
+- [ ] Add analytics, search-monitoring, reminder, and PDF-export backend integrations (browser print only today)
 - [ ] Add automated route/link validation and end-to-end theme tests
 
 ## Contributing

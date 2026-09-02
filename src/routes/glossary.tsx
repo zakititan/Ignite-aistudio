@@ -19,7 +19,10 @@ export const Route = createFileRoute("/glossary")({
           "Domain, DNS, hosting, SSL, MX record, SPF and more — explained in everyday language, with why each one matters.",
       },
       { property: "og:title", content: "Plain-English glossary" },
-      { property: "og:description", content: "Every technical word you will meet while getting your business online." },
+      {
+        property: "og:description",
+        content: "Every technical word you will meet while getting your business online.",
+      },
     ],
   }),
   component: GlossaryPage,
@@ -34,7 +37,9 @@ function GlossaryPage() {
     () =>
       GLOSSARY_TERMS.filter((t) => {
         const matchesCategory = category === "All" || t.category === category;
-        const matchesQuery = q ? `${t.term} ${t.definition} ${t.whyItMatters}`.toLowerCase().includes(q) : true;
+        const matchesQuery = q
+          ? `${t.term} ${t.definition} ${t.whyItMatters}`.toLowerCase().includes(q)
+          : true;
         return matchesCategory && matchesQuery;
       }).sort((a, b) => a.term.localeCompare(b.term)),
     [q, category],
@@ -100,7 +105,9 @@ function GlossaryPage() {
         <dl className="grid gap-4 sm:grid-cols-2">
           {terms.map((t) => (
             <div key={t.term} className="surface-panel space-y-2 p-5">
-              <span className="text-xs font-semibold tracking-wide text-primary uppercase">{t.category}</span>
+              <span className="text-xs font-semibold tracking-wide text-primary uppercase">
+                {t.category}
+              </span>
               <dt className="font-display text-lg font-semibold">{t.term}</dt>
               <dd className="space-y-2 text-sm text-muted-foreground">
                 <p>{t.definition}</p>

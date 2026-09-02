@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Launch Plan Buddy</title>
+  <desc id="desc">A compass pointing along a path toward a launched website</desc>
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <path d="M15 45C20 39 23 37 29 37C35 37 36 31 41 27C45 24 49 23 52 23" fill="none" stroke="#D1FAE5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M42 18L54 22L47 32L42 18Z" fill="#FFFFFF"/>
+  <circle cx="22" cy="24" r="10" fill="#FFFFFF" fill-opacity="0.96"/>
+  <path d="M18.5 28L25.5 20.5L23.5 25.5L18.5 28Z" fill="#4F46E5"/>
+  <circle cx="22" cy="24" r="2.4" fill="#0F766E"/>
+</svg>

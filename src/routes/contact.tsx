@@ -2,7 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { BookOpen, LifeBuoy } from "lucide-react";
-import { ContentPageLayout, ContentSection, LinkCard, SafetyWarningBanner } from "@/components/ContentPage";
+import {
+  ContentPageLayout,
+  ContentSection,
+  LinkCard,
+  SafetyWarningBanner,
+} from "@/components/ContentPage";
 import { Callout } from "@/components/Callouts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +27,8 @@ export const Route = createFileRoute("/contact")({
       { title: "Contact us — Launch My Business Online" },
       {
         name: "description",
-        content: "Ask a product question, report a technical issue, share feedback or make a privacy request.",
+        content:
+          "Ask a product question, report a technical issue, share feedback or make a privacy request.",
       },
       { property: "og:title", content: "How can we help?" },
       { property: "og:description", content: "Reach the team behind your launch plan." },
@@ -55,9 +61,11 @@ function ContactPage() {
     e.preventDefault();
     const next: Errors = {};
     if (!name.trim()) next.name = "Please tell us your name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = "Enter a valid email address.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      next.email = "Enter a valid email address.";
     if (!topic) next.topic = "Choose a topic so we can route your message.";
-    if (message.trim().length < 10) next.message = "Please add a little more detail (at least 10 characters).";
+    if (message.trim().length < 10)
+      next.message = "Please add a little more detail (at least 10 characters).";
     setErrors(next);
     if (Object.keys(next).length > 0) {
       toast.error("Please fix the highlighted fields.");
@@ -74,14 +82,15 @@ function ContactPage() {
       description="Tell us what you are trying to do and we will point you to the right guidance."
     >
       <SafetyWarningBanner title="Never send credentials">
-        Do not include passwords, account-recovery codes, DNS control-panel logins or payment details in this form —
-        or in any message to us. We will never ask for them.
+        Do not include passwords, account-recovery codes, DNS control-panel logins or payment
+        details in this form — or in any message to us. We will never ask for them.
       </SafetyWarningBanner>
 
       {sent ? (
         <Callout tone="success" title="Thanks — we have your message">
-          Message sending is not connected to a backend yet, so this is a demo confirmation and nothing was
-          transmitted. Keep a copy of what you wrote, and try the help centre in the meantime.
+          Message sending is not connected to a backend yet, so this is a demo confirmation and
+          nothing was transmitted. Keep a copy of what you wrote, and try the help centre in the
+          meantime.
         </Callout>
       ) : (
         <section className="surface-panel space-y-4 p-5 sm:p-6">
@@ -125,7 +134,10 @@ function ContactPage() {
               <div className="space-y-1.5">
                 <Label htmlFor="c-topic">Topic</Label>
                 <Select value={topic} onValueChange={setTopic}>
-                  <SelectTrigger id="c-topic" aria-describedby={errors.topic ? "c-topic-error" : undefined}>
+                  <SelectTrigger
+                    id="c-topic"
+                    aria-describedby={errors.topic ? "c-topic-error" : undefined}
+                  >
                     <SelectValue placeholder="Choose a topic" />
                   </SelectTrigger>
                   <SelectContent>
@@ -144,7 +156,11 @@ function ContactPage() {
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="c-business">Business name (optional)</Label>
-                <Input id="c-business" value={business} onChange={(e) => setBusiness(e.target.value)} />
+                <Input
+                  id="c-business"
+                  value={business}
+                  onChange={(e) => setBusiness(e.target.value)}
+                />
               </div>
             </div>
 
@@ -192,7 +208,11 @@ function ContactPage() {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        Privacy requests can also be reviewed on the <Link to="/privacy" className="text-primary underline">privacy page</Link>.
+        Privacy requests can also be reviewed on the{" "}
+        <Link to="/privacy" className="text-primary underline">
+          privacy page
+        </Link>
+        .
       </p>
     </ContentPageLayout>
   );

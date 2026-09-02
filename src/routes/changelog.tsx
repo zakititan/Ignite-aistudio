@@ -9,10 +9,14 @@ export const Route = createFileRoute("/changelog")({
       { title: "What's new — Launch My Business Online" },
       {
         name: "description",
-        content: "Recent improvements to the launch roadmap, guides, appearance settings and mobile experience.",
+        content:
+          "Recent improvements to the launch roadmap, guides, appearance settings and mobile experience.",
       },
       { property: "og:title", content: "What's new" },
-      { property: "og:description", content: "A running list of improvements to your launch guidance." },
+      {
+        property: "og:description",
+        content: "A running list of improvements to your launch guidance.",
+      },
     ],
   }),
   component: ChangelogPage,

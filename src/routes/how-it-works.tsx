@@ -18,7 +18,8 @@ export const Route = createFileRoute("/how-it-works")({
       { property: "og:title", content: "How Launch My Business Online works" },
       {
         property: "og:description",
-        content: "Answer a few questions, get a phased roadmap, and complete one clear task at a time.",
+        content:
+          "Answer a few questions, get a phased roadmap, and complete one clear task at a time.",
       },
     ],
   }),
@@ -32,13 +33,13 @@ function HowItWorks() {
       <main className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:py-20">
         <h1 className="text-4xl font-extrabold sm:text-5xl">How it works</h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          You answer questions about your business. We turn those answers into a phased roadmap with tasks
-          sized in minutes, not weeks. Nothing is hidden behind jargon.
+          You answer questions about your business. We turn those answers into a phased roadmap with
+          tasks sized in minutes, not weeks. Nothing is hidden behind jargon.
         </p>
 
         <Callout tone="info" title="You can use everything without signing in" className="mt-8">
-          Your answers are saved in this browser. Create an account later if you want to continue on another
-          device.
+          Your answers are saved in this browser. Create an account later if you want to continue on
+          another device.
         </Callout>
 
         <h2 className="mt-12 font-display text-2xl font-bold">The seven phases</h2>

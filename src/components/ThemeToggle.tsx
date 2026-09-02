@@ -59,8 +59,14 @@ export function ThemeMenu({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
   return (
     <div className={cn("space-y-2", className)}>
-      <p className="px-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">Color theme</p>
-      <div role="radiogroup" aria-label="Color theme" className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
+      <p className="px-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+        Color theme
+      </p>
+      <div
+        role="radiogroup"
+        aria-label="Color theme"
+        className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1"
+      >
         {THEME_OPTIONS.map((o) => {
           const active = theme === o.value;
           return (
@@ -94,7 +100,9 @@ export function ThemeSettingsCard() {
     <section className="surface-panel space-y-4 p-5 sm:p-6">
       <div>
         <h2 className="font-display text-xl font-bold">Appearance</h2>
-        <p className="text-sm text-muted-foreground">Choose how Launch Plan Buddy looks on this device.</p>
+        <p className="text-sm text-muted-foreground">
+          Choose how Launch Plan Buddy looks on this device.
+        </p>
       </div>
       <div role="radiogroup" aria-label="Appearance" className="grid gap-3 sm:grid-cols-3">
         {THEME_OPTIONS.map((o) => {
@@ -118,14 +126,16 @@ export function ThemeSettingsCard() {
                 {o.label}
               </span>
               <span className="text-xs text-muted-foreground">{o.hint}</span>
-              <span className="text-xs font-medium text-primary">{active ? "Selected" : "\u00a0"}</span>
+              <span className="text-xs font-medium text-primary">
+                {active ? "Selected" : "\u00a0"}
+              </span>
             </button>
           );
         })}
       </div>
       <p className="text-xs text-muted-foreground">
-        Currently showing the {resolvedTheme === "dark" ? "dark" : "light"} theme. Your choice is saved on this
-        device only.
+        Currently showing the {resolvedTheme === "dark" ? "dark" : "light"} theme. Your choice is
+        saved on this device only.
       </p>
     </section>
   );

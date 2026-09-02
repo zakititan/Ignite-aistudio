@@ -14,7 +14,8 @@ export const Route = createFileRoute("/create-account")({
       { title: "Create your account — Launch My Business Online" },
       {
         name: "description",
-        content: "Name your launch plan so it is easy to pick up again. No card details, no spam, delete any time.",
+        content:
+          "Name your launch plan so it is easy to pick up again. No card details, no spam, delete any time.",
       },
       { property: "og:title", content: "Create your account" },
       { property: "og:description", content: "Save and label your launch plan in seconds." },
@@ -67,7 +68,12 @@ function CreateAccountPage() {
           >
             <div className="space-y-1.5">
               <Label htmlFor="ca-name">Your name</Label>
-              <Input id="ca-name" autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <Input
+                id="ca-name"
+                autoComplete="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="ca-email">Email address</Label>
@@ -100,9 +106,19 @@ function CreateAccountPage() {
                 onCheckedChange={(v) => setAgreed(v === true)}
                 className="mt-0.5"
               />
-              <Label htmlFor="ca-terms" className="text-sm leading-relaxed font-normal text-muted-foreground">
-                I agree to the <Link to="/terms" className="text-primary underline">terms of use</Link> and the{" "}
-                <Link to="/privacy" className="text-primary underline">privacy notice</Link>.
+              <Label
+                htmlFor="ca-terms"
+                className="text-sm leading-relaxed font-normal text-muted-foreground"
+              >
+                I agree to the{" "}
+                <Link to="/terms" className="text-primary underline">
+                  terms of use
+                </Link>{" "}
+                and the{" "}
+                <Link to="/privacy" className="text-primary underline">
+                  privacy notice
+                </Link>
+                .
               </Label>
             </div>
             <Button type="submit" className="w-full sm:w-auto">
@@ -110,7 +126,10 @@ function CreateAccountPage() {
             </Button>
           </form>
           <p className="text-sm text-muted-foreground">
-            Already started? <Link to="/sign-in" className="text-primary underline">Sign in</Link>
+            Already started?{" "}
+            <Link to="/sign-in" className="text-primary underline">
+              Sign in
+            </Link>
           </p>
         </section>
 

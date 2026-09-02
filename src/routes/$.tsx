@@ -11,7 +11,8 @@ export const Route = createFileRoute("/$")({
       { title: "Page not found — Launch My Business Online" },
       {
         name: "description",
-        content: "That address does not exist. Jump back to your dashboard, the help centre or the learning library.",
+        content:
+          "That address does not exist. Jump back to your dashboard, the help centre or the learning library.",
       },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Page not found" },
@@ -26,11 +27,15 @@ function CatchAllNotFound() {
     <div className="flex min-h-screen flex-col bg-background">
       <MarketingNavbar />
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-16 sm:px-6">
-        <p className="font-display text-sm font-semibold tracking-wide text-primary uppercase">Error 404</p>
-        <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">We can't find that page</h1>
+        <p className="font-display text-sm font-semibold tracking-wide text-primary uppercase">
+          Error 404
+        </p>
+        <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">
+          We can't find that page
+        </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          The address may have changed, or the link that brought you here might be out of date. Nothing in your plan
-          has been lost — it is saved on this device.
+          The address may have changed, or the link that brought you here might be out of date.
+          Nothing in your plan has been lost — it is saved on this device.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button asChild>

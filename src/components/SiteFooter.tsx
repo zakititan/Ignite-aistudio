@@ -44,7 +44,6 @@ const COLUMNS: { heading: string; links: { to: string; label: string }[] }[] = [
   },
 ];
 
-
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-surface">
@@ -80,10 +79,11 @@ export function SiteFooter() {
           ))}
         </div>
         <p className="mt-10 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
-          Educational guidance only; pricing, eligibility and provider features vary. Domain availability,
-          technical requirements, legal obligations, accessibility requirements, tax obligations, privacy
-          requirements and search visibility differ by location, platform and business type. Review provider
-          documentation and seek qualified professional advice when needed.
+          Educational guidance only; pricing, eligibility and provider features vary. Domain
+          availability, technical requirements, legal obligations, accessibility requirements, tax
+          obligations, privacy requirements and search visibility differ by location, platform and
+          business type. Review provider documentation and seek qualified professional advice when
+          needed.
         </p>
       </div>
     </footer>

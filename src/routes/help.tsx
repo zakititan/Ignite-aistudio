@@ -14,10 +14,14 @@ export const Route = createFileRoute("/help")({
       { title: "Help centre — Launch My Business Online" },
       {
         name: "description",
-        content: "Search beginner-friendly answers about domains, platforms, DNS, business email and launching.",
+        content:
+          "Search beginner-friendly answers about domains, platforms, DNS, business email and launching.",
       },
       { property: "og:title", content: "Help centre" },
-      { property: "og:description", content: "Search plain-English answers for getting your business online." },
+      {
+        property: "og:description",
+        content: "Search plain-English answers for getting your business online.",
+      },
     ],
   }),
   component: HelpPage,
@@ -29,7 +33,9 @@ function ArticleCard({ article }: { article: HelpArticle }) {
       to={article.to}
       className="surface-panel flex flex-col gap-1.5 p-4 transition-colors hover:bg-muted"
     >
-      <span className="text-xs font-semibold tracking-wide text-primary uppercase">{article.category}</span>
+      <span className="text-xs font-semibold tracking-wide text-primary uppercase">
+        {article.category}
+      </span>
       <span className="font-display text-base font-semibold">{article.title}</span>
       <span className="text-sm text-muted-foreground">{article.summary}</span>
       <span className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -77,7 +83,9 @@ function HelpPage() {
           />
         </div>
         <p className="text-xs text-muted-foreground" aria-live="polite">
-          {q ? `${results.length} result${results.length === 1 ? "" : "s"} for “${query.trim()}”` : `${HELP_ARTICLES.length} articles available`}
+          {q
+            ? `${results.length} result${results.length === 1 ? "" : "s"} for “${query.trim()}”`
+            : `${HELP_ARTICLES.length} articles available`}
         </p>
       </section>
 
@@ -141,6 +149,17 @@ function HelpPage() {
             <Link to="/troubleshooting">Troubleshoot an issue</Link>
           </Button>
         </div>
+      </section>
+
+      <section className="surface-panel p-5">
+        <h2 className="font-display text-base font-bold">Test your customer journey</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          If a customer cannot call, submit a form, book or buy, use the 5-step journey tester to
+          record what happened. Blocked steps show as a critical launch blocker.
+        </p>
+        <Button asChild size="sm" className="mt-3">
+          <Link to="/customer-journey">Open journey tester →</Link>
+        </Button>
       </section>
     </ContentPageLayout>
   );

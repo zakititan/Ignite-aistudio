@@ -14,28 +14,37 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as BusinessEmailRouteImport } from './routes/business-email'
+import { Route as BusinessProfileRouteImport } from './routes/business-profile'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContentRouteImport } from './routes/content'
+import { Route as CostCalculatorRouteImport } from './routes/cost-calculator'
 import { Route as CreateAccountRouteImport } from './routes/create-account'
+import { Route as CustomerJourneyRouteImport } from './routes/customer-journey'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DeleteAccountRouteImport } from './routes/delete-account'
 import { Route as DomainsRouteImport } from './routes/domains'
+import { Route as EmailSignatureRouteImport } from './routes/email-signature'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GetFoundRouteImport } from './routes/get-found'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as HireHelpRouteImport } from './routes/hire-help'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LaunchDossierRouteImport } from './routes/launch-dossier'
+import { Route as LaunchWizardRouteImport } from './routes/launch-wizard'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OwnershipRecordRouteImport } from './routes/ownership-record'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
+import { Route as PreflightRouteImport } from './routes/preflight'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReviewKitRouteImport } from './routes/review-kit'
+import { Route as SecurityDrillRouteImport } from './routes/security-drill'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as StatusRouteImport } from './routes/status'
@@ -67,6 +76,11 @@ const BusinessEmailRoute = BusinessEmailRouteImport.update({
   path: '/business-email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BusinessProfileRoute = BusinessProfileRouteImport.update({
+  id: '/business-profile',
+  path: '/business-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChangelogRoute = ChangelogRouteImport.update({
   id: '/changelog',
   path: '/changelog',
@@ -92,9 +106,19 @@ const ContentRoute = ContentRouteImport.update({
   path: '/content',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CostCalculatorRoute = CostCalculatorRouteImport.update({
+  id: '/cost-calculator',
+  path: '/cost-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CreateAccountRoute = CreateAccountRouteImport.update({
   id: '/create-account',
   path: '/create-account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerJourneyRoute = CustomerJourneyRouteImport.update({
+  id: '/customer-journey',
+  path: '/customer-journey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -110,6 +134,11 @@ const DeleteAccountRoute = DeleteAccountRouteImport.update({
 const DomainsRoute = DomainsRouteImport.update({
   id: '/domains',
   path: '/domains',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailSignatureRoute = EmailSignatureRouteImport.update({
+  id: '/email-signature',
+  path: '/email-signature',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -142,6 +171,16 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LaunchDossierRoute = LaunchDossierRouteImport.update({
+  id: '/launch-dossier',
+  path: '/launch-dossier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LaunchWizardRoute = LaunchWizardRouteImport.update({
+  id: '/launch-wizard',
+  path: '/launch-wizard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
@@ -167,6 +206,11 @@ const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
   path: '/platform-matcher',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PreflightRoute = PreflightRouteImport.update({
+  id: '/preflight',
+  path: '/preflight',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -175,6 +219,16 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewKitRoute = ReviewKitRouteImport.update({
+  id: '/review-kit',
+  path: '/review-kit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityDrillRoute = SecurityDrillRouteImport.update({
+  id: '/security-drill',
+  path: '/security-drill',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -209,28 +263,37 @@ export interface FileRoutesByFullPath {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/business-profile': typeof BusinessProfileRoute
   '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/cost-calculator': typeof CostCalculatorRoute
   '/create-account': typeof CreateAccountRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/email-signature': typeof EmailSignatureRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/launch-dossier': typeof LaunchDossierRoute
+  '/launch-wizard': typeof LaunchWizardRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/preflight': typeof PreflightRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/review-kit': typeof ReviewKitRoute
+  '/security-drill': typeof SecurityDrillRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
   '/status': typeof StatusRoute
@@ -243,28 +306,37 @@ export interface FileRoutesByTo {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/business-profile': typeof BusinessProfileRoute
   '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/cost-calculator': typeof CostCalculatorRoute
   '/create-account': typeof CreateAccountRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/email-signature': typeof EmailSignatureRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/launch-dossier': typeof LaunchDossierRoute
+  '/launch-wizard': typeof LaunchWizardRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/preflight': typeof PreflightRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/review-kit': typeof ReviewKitRoute
+  '/security-drill': typeof SecurityDrillRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
   '/status': typeof StatusRoute
@@ -278,28 +350,37 @@ export interface FileRoutesById {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/business-profile': typeof BusinessProfileRoute
   '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
   '/content': typeof ContentRoute
+  '/cost-calculator': typeof CostCalculatorRoute
   '/create-account': typeof CreateAccountRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/delete-account': typeof DeleteAccountRoute
   '/domains': typeof DomainsRoute
+  '/email-signature': typeof EmailSignatureRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/launch-dossier': typeof LaunchDossierRoute
+  '/launch-wizard': typeof LaunchWizardRoute
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
+  '/preflight': typeof PreflightRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/review-kit': typeof ReviewKitRoute
+  '/security-drill': typeof SecurityDrillRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
   '/status': typeof StatusRoute
@@ -314,28 +395,37 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/business-profile'
     | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
     | '/content'
+    | '/cost-calculator'
     | '/create-account'
+    | '/customer-journey'
     | '/dashboard'
     | '/delete-account'
     | '/domains'
+    | '/email-signature'
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
+    | '/launch-dossier'
+    | '/launch-wizard'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
     | '/ownership-record'
     | '/platform-matcher'
+    | '/preflight'
     | '/privacy'
     | '/reset-password'
+    | '/review-kit'
+    | '/security-drill'
     | '/settings'
     | '/sign-in'
     | '/status'
@@ -348,28 +438,37 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/business-profile'
     | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
     | '/content'
+    | '/cost-calculator'
     | '/create-account'
+    | '/customer-journey'
     | '/dashboard'
     | '/delete-account'
     | '/domains'
+    | '/email-signature'
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
+    | '/launch-dossier'
+    | '/launch-wizard'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
     | '/ownership-record'
     | '/platform-matcher'
+    | '/preflight'
     | '/privacy'
     | '/reset-password'
+    | '/review-kit'
+    | '/security-drill'
     | '/settings'
     | '/sign-in'
     | '/status'
@@ -382,28 +481,37 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/business-profile'
     | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
     | '/content'
+    | '/cost-calculator'
     | '/create-account'
+    | '/customer-journey'
     | '/dashboard'
     | '/delete-account'
     | '/domains'
+    | '/email-signature'
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
+    | '/launch-dossier'
+    | '/launch-wizard'
     | '/learn'
     | '/maintenance'
     | '/onboarding'
     | '/ownership-record'
     | '/platform-matcher'
+    | '/preflight'
     | '/privacy'
     | '/reset-password'
+    | '/review-kit'
+    | '/security-drill'
     | '/settings'
     | '/sign-in'
     | '/status'
@@ -417,28 +525,37 @@ export interface RootRouteChildren {
   AccessibilityRoute: typeof AccessibilityRoute
   AccountRoute: typeof AccountRoute
   BusinessEmailRoute: typeof BusinessEmailRoute
+  BusinessProfileRoute: typeof BusinessProfileRoute
   ChangelogRoute: typeof ChangelogRoute
   ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
   ContactRoute: typeof ContactRoute
   ContentRoute: typeof ContentRoute
+  CostCalculatorRoute: typeof CostCalculatorRoute
   CreateAccountRoute: typeof CreateAccountRoute
+  CustomerJourneyRoute: typeof CustomerJourneyRoute
   DashboardRoute: typeof DashboardRoute
   DeleteAccountRoute: typeof DeleteAccountRoute
   DomainsRoute: typeof DomainsRoute
+  EmailSignatureRoute: typeof EmailSignatureRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   GetFoundRoute: typeof GetFoundRoute
   GlossaryRoute: typeof GlossaryRoute
   HelpRoute: typeof HelpRoute
   HireHelpRoute: typeof HireHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  LaunchDossierRoute: typeof LaunchDossierRoute
+  LaunchWizardRoute: typeof LaunchWizardRoute
   LearnRoute: typeof LearnRoute
   MaintenanceRoute: typeof MaintenanceRoute
   OnboardingRoute: typeof OnboardingRoute
   OwnershipRecordRoute: typeof OwnershipRecordRoute
   PlatformMatcherRoute: typeof PlatformMatcherRoute
+  PreflightRoute: typeof PreflightRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ReviewKitRoute: typeof ReviewKitRoute
+  SecurityDrillRoute: typeof SecurityDrillRoute
   SettingsRoute: typeof SettingsRoute
   SignInRoute: typeof SignInRoute
   StatusRoute: typeof StatusRoute
@@ -483,6 +600,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/business-profile': {
+      id: '/business-profile'
+      path: '/business-profile'
+      fullPath: '/business-profile'
+      preLoaderRoute: typeof BusinessProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/changelog': {
       id: '/changelog'
       path: '/changelog'
@@ -518,11 +642,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cost-calculator': {
+      id: '/cost-calculator'
+      path: '/cost-calculator'
+      fullPath: '/cost-calculator'
+      preLoaderRoute: typeof CostCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/create-account': {
       id: '/create-account'
       path: '/create-account'
       fullPath: '/create-account'
       preLoaderRoute: typeof CreateAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer-journey': {
+      id: '/customer-journey'
+      path: '/customer-journey'
+      fullPath: '/customer-journey'
+      preLoaderRoute: typeof CustomerJourneyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -544,6 +682,13 @@ declare module '@tanstack/react-router' {
       path: '/domains'
       fullPath: '/domains'
       preLoaderRoute: typeof DomainsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/email-signature': {
+      id: '/email-signature'
+      path: '/email-signature'
+      fullPath: '/email-signature'
+      preLoaderRoute: typeof EmailSignatureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -588,6 +733,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/launch-dossier': {
+      id: '/launch-dossier'
+      path: '/launch-dossier'
+      fullPath: '/launch-dossier'
+      preLoaderRoute: typeof LaunchDossierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/launch-wizard': {
+      id: '/launch-wizard'
+      path: '/launch-wizard'
+      fullPath: '/launch-wizard'
+      preLoaderRoute: typeof LaunchWizardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
@@ -623,6 +782,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformMatcherRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/preflight': {
+      id: '/preflight'
+      path: '/preflight'
+      fullPath: '/preflight'
+      preLoaderRoute: typeof PreflightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -635,6 +801,20 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review-kit': {
+      id: '/review-kit'
+      path: '/review-kit'
+      fullPath: '/review-kit'
+      preLoaderRoute: typeof ReviewKitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security-drill': {
+      id: '/security-drill'
+      path: '/security-drill'
+      fullPath: '/security-drill'
+      preLoaderRoute: typeof SecurityDrillRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -681,28 +861,37 @@ const rootRouteChildren: RootRouteChildren = {
   AccessibilityRoute: AccessibilityRoute,
   AccountRoute: AccountRoute,
   BusinessEmailRoute: BusinessEmailRoute,
+  BusinessProfileRoute: BusinessProfileRoute,
   ChangelogRoute: ChangelogRoute,
   ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
   ContactRoute: ContactRoute,
   ContentRoute: ContentRoute,
+  CostCalculatorRoute: CostCalculatorRoute,
   CreateAccountRoute: CreateAccountRoute,
+  CustomerJourneyRoute: CustomerJourneyRoute,
   DashboardRoute: DashboardRoute,
   DeleteAccountRoute: DeleteAccountRoute,
   DomainsRoute: DomainsRoute,
+  EmailSignatureRoute: EmailSignatureRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   GetFoundRoute: GetFoundRoute,
   GlossaryRoute: GlossaryRoute,
   HelpRoute: HelpRoute,
   HireHelpRoute: HireHelpRoute,
   HowItWorksRoute: HowItWorksRoute,
+  LaunchDossierRoute: LaunchDossierRoute,
+  LaunchWizardRoute: LaunchWizardRoute,
   LearnRoute: LearnRoute,
   MaintenanceRoute: MaintenanceRoute,
   OnboardingRoute: OnboardingRoute,
   OwnershipRecordRoute: OwnershipRecordRoute,
   PlatformMatcherRoute: PlatformMatcherRoute,
+  PreflightRoute: PreflightRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ReviewKitRoute: ReviewKitRoute,
+  SecurityDrillRoute: SecurityDrillRoute,
   SettingsRoute: SettingsRoute,
   SignInRoute: SignInRoute,
   StatusRoute: StatusRoute,

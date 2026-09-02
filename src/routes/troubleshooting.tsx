@@ -24,7 +24,10 @@ export const Route = createFileRoute("/troubleshooting")({
           "Fix the most common launch problems: site not loading, old website showing, email in spam, missing padlock.",
       },
       { property: "og:title", content: "Troubleshooting common launch problems" },
-      { property: "og:description", content: "Step-by-step checks for domains, DNS, websites and email." },
+      {
+        property: "og:description",
+        content: "Step-by-step checks for domains, DNS, websites and email.",
+      },
     ],
   }),
   component: TroubleshootingPage,
@@ -49,8 +52,8 @@ function TroubleshootingPage() {
       description="Work through the checks in order. Most launch problems are caused by caching, a missing record, or a change that has not finished spreading yet."
     >
       <SafetyWarningBanner>
-        Before editing DNS, save a copy of your current records. Changes can take up to 48 hours to spread, so make
-        one change at a time and wait before making another.
+        Before editing DNS, save a copy of your current records. Changes can take up to 48 hours to
+        spread, so make one change at a time and wait before making another.
       </SafetyWarningBanner>
 
       <section className="surface-panel space-y-3 p-5 sm:p-6">
@@ -84,7 +87,11 @@ function TroubleshootingPage() {
           actionTo="/contact"
         />
       ) : (
-        <Accordion type="single" collapsible className="surface-panel divide-y divide-border px-5 sm:px-6">
+        <Accordion
+          type="single"
+          collapsible
+          className="surface-panel divide-y divide-border px-5 sm:px-6"
+        >
           {flows.map((f) => (
             <AccordionItem key={f.id} value={f.id} className="border-b-0">
               <AccordionTrigger className="text-left font-display text-base font-semibold">
@@ -101,7 +108,9 @@ function TroubleshootingPage() {
                   ))}
                 </ol>
                 {f.warning ? (
-                  <p className="rounded-lg border border-warning/40 bg-warning-soft p-3 text-sm">{f.warning}</p>
+                  <p className="rounded-lg border border-warning/40 bg-warning-soft p-3 text-sm">
+                    {f.warning}
+                  </p>
                 ) : null}
                 <Button asChild variant="outline" size="sm">
                   <Link to={f.relatedTo}>{f.relatedLabel}</Link>
@@ -111,6 +120,17 @@ function TroubleshootingPage() {
           ))}
         </Accordion>
       )}
+
+      <section className="surface-panel p-5">
+        <h2 className="font-display text-base font-bold">Customer action still failing?</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          If a phone call, form, booking or purchase does not work on a real phone, record it with
+          the journey tester. Blocked steps appear as a critical blocker in your readiness.
+        </p>
+        <Button asChild size="sm" className="mt-3">
+          <Link to="/customer-journey">Open journey tester →</Link>
+        </Button>
+      </section>
 
       <section className="surface-panel flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div>

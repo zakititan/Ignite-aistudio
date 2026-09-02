@@ -77,7 +77,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch {
       /* storage unavailable */
     }
-    const resolved: ResolvedTheme = next === "system" ? (systemPrefersDark() ? "dark" : "light") : next;
+    const resolved: ResolvedTheme =
+      next === "system" ? (systemPrefersDark() ? "dark" : "light") : next;
     setResolvedTheme(resolved);
     applyTheme(resolved);
   }, []);

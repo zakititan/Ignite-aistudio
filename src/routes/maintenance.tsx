@@ -24,7 +24,8 @@ export const Route = createFileRoute("/maintenance")({
       { property: "og:title", content: "Keep your website running" },
       {
         property: "og:description",
-        content: "Small recurring habits that prevent expired domains, broken forms and lost access.",
+        content:
+          "Small recurring habits that prevent expired domains, broken forms and lost access.",
       },
     ],
   }),
@@ -32,10 +33,26 @@ export const Route = createFileRoute("/maintenance")({
 });
 
 const GROUPS: { key: MaintenanceTask["recurrence"]; label: string; blurb: string }[] = [
-  { key: "weekly", label: "Every week", blurb: "Ten minutes. Mostly checking that enquiries are reaching you." },
-  { key: "monthly", label: "Every month", blurb: "Half an hour. Keep details current and confirm nothing is broken." },
-  { key: "quarterly", label: "Every quarter", blurb: "An hour. Refresh what visitors see and review who has access." },
-  { key: "yearly", label: "Every year", blurb: "The big ones: renewals, recovery details and legal pages." },
+  {
+    key: "weekly",
+    label: "Every week",
+    blurb: "Ten minutes. Mostly checking that enquiries are reaching you.",
+  },
+  {
+    key: "monthly",
+    label: "Every month",
+    blurb: "Half an hour. Keep details current and confirm nothing is broken.",
+  },
+  {
+    key: "quarterly",
+    label: "Every quarter",
+    blurb: "An hour. Refresh what visitors see and review who has access.",
+  },
+  {
+    key: "yearly",
+    label: "Every year",
+    blurb: "The big ones: renewals, recovery details and legal pages.",
+  },
 ];
 
 function Maintenance() {
@@ -66,9 +83,12 @@ function Maintenance() {
     >
       <div className="space-y-6">
         {overdue.length ? (
-          <Callout tone="warning" title={`${overdue.length} item${overdue.length > 1 ? "s" : ""} due now`}>
-            Nothing here is an emergency, but a domain renewal you miss can take your site offline. Start with
-            the oldest.
+          <Callout
+            tone="warning"
+            title={`${overdue.length} item${overdue.length > 1 ? "s" : ""} due now`}
+          >
+            Nothing here is an emergency, but a domain renewal you miss can take your site offline.
+            Start with the oldest.
           </Callout>
         ) : (
           <Callout tone="success" title="Nothing overdue">
@@ -107,7 +127,10 @@ function Maintenance() {
                       />
                       <Label
                         htmlFor={`m-item-${m.id}`}
-                        className={cn("flex-1 text-sm font-medium", done && "line-through opacity-70")}
+                        className={cn(
+                          "flex-1 text-sm font-medium",
+                          done && "line-through opacity-70",
+                        )}
                       >
                         {m.title}
                       </Label>
@@ -130,7 +153,11 @@ function Maintenance() {
                         </Button>
                       ) : null}
                       {m.status === "snoozed" ? (
-                        <Button size="sm" variant="ghost" onClick={() => updateMaintenance(m.id, { status: "pending" })}>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => updateMaintenance(m.id, { status: "pending" })}
+                        >
                           Unsnooze
                         </Button>
                       ) : null}
@@ -145,10 +172,20 @@ function Maintenance() {
         <section className="surface-panel p-5 sm:p-6">
           <h2 className="font-display text-xl font-bold">What happens if you ignore this</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>• A missed domain renewal can take your website and email offline, and recovery can be costly.</li>
-            <li>• A broken contact form loses enquiries silently — nobody tells you they could not reach you.</li>
-            <li>• Outdated hours and prices cost you trust with the customers who were ready to buy.</li>
-            <li>• Lost account access is the hardest problem to fix, and the easiest to prevent.</li>
+            <li>
+              • A missed domain renewal can take your website and email offline, and recovery can be
+              costly.
+            </li>
+            <li>
+              • A broken contact form loses enquiries silently — nobody tells you they could not
+              reach you.
+            </li>
+            <li>
+              • Outdated hours and prices cost you trust with the customers who were ready to buy.
+            </li>
+            <li>
+              • Lost account access is the hardest problem to fix, and the easiest to prevent.
+            </li>
           </ul>
         </section>
       </div>

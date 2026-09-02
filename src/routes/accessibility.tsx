@@ -18,7 +18,11 @@ export const Route = createFileRoute("/accessibility")({
           "Our accessibility commitment: keyboard operation, readable contrast, light and dark themes, and a feedback path.",
       },
       { property: "og:title", content: "Accessibility commitment" },
-      { property: "og:description", content: "How we build for keyboard, screen reader and low-vision use — and how to report a problem." },
+      {
+        property: "og:description",
+        content:
+          "How we build for keyboard, screen reader and low-vision use — and how to report a problem.",
+      },
     ],
   }),
   component: AccessibilityPage,
@@ -49,9 +53,10 @@ function AccessibilityPage() {
 
       <ContentSection title="Known limitations">
         <p>
-          Some longer guides use wide tables of DNS records that require horizontal scrolling on small screens. A few
-          illustrative demo screens are placeholders while features are still being built. We are working through
-          these; this list is a placeholder and will be updated as issues are resolved.
+          Some longer guides use wide tables of DNS records that require horizontal scrolling on
+          small screens. A few illustrative demo screens are placeholders while features are still
+          being built. We are working through these; this list is a placeholder and will be updated
+          as issues are resolved.
         </p>
       </ContentSection>
 
@@ -64,8 +69,8 @@ function AccessibilityPage() {
         </div>
         {sent ? (
           <Callout tone="success" title="Thank you — your report has been noted">
-            This is a demo form, so nothing was transmitted. Until submissions are connected, please also send the
-            details through the contact page so we definitely receive them.
+            This is a demo form, so nothing was transmitted. Until submissions are connected, please
+            also send the details through the contact page so we definitely receive them.
           </Callout>
         ) : (
           <form

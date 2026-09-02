@@ -13,7 +13,8 @@ export const Route = createFileRoute("/forgot-password")({
       { title: "Reset your password — Launch My Business Online" },
       {
         name: "description",
-        content: "Request a password reset link, and learn how to recover access to your registrar or email accounts.",
+        content:
+          "Request a password reset link, and learn how to recover access to your registrar or email accounts.",
       },
       { property: "og:title", content: "Forgot your password?" },
       { property: "og:description", content: "Request a reset link and recover access safely." },
@@ -34,8 +35,8 @@ function ForgotPasswordPage() {
     >
       {sent ? (
         <Callout tone="success" title="If that address has an account, a reset link is on its way">
-          For your security we show the same message whether or not the address is registered. Check your inbox and
-          spam folder. Accounts are not connected yet, so no email was actually sent.
+          For your security we show the same message whether or not the address is registered. Check
+          your inbox and spam folder. Accounts are not connected yet, so no email was actually sent.
         </Callout>
       ) : (
         <section className="surface-panel space-y-4 p-5 sm:p-6">
@@ -65,14 +66,17 @@ function ForgotPasswordPage() {
             <Button type="submit">Send reset link</Button>
           </form>
           <p className="text-sm text-muted-foreground">
-            Remembered it? <Link to="/sign-in" className="text-primary underline">Back to sign in</Link>
+            Remembered it?{" "}
+            <Link to="/sign-in" className="text-primary underline">
+              Back to sign in
+            </Link>
           </p>
         </section>
       )}
 
       <SafetyWarningBanner title="Stay safe while recovering access">
-        We will never ask for your password, recovery codes, or your registrar or DNS logins. If a message claiming
-        to be from us asks for those, it is not from us.
+        We will never ask for your password, recovery codes, or your registrar or DNS logins. If a
+        message claiming to be from us asks for those, it is not from us.
       </SafetyWarningBanner>
 
       <ComingSoonCard

@@ -12,7 +12,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useStore } from "@/lib/store";
 import { CATEGORIES, GOALS, START_POINTS, WEBSITE_NEEDS, demoBusiness } from "@/lib/plan";
@@ -30,7 +36,8 @@ export const Route = createFileRoute("/onboarding")({
       { property: "og:title", content: "Build your personalized launch plan" },
       {
         property: "og:description",
-        content: "Seven short steps. No technical questions. Your answers save automatically in this browser.",
+        content:
+          "Seven short steps. No technical questions. Your answers save automatically in this browser.",
       },
     ],
   }),
@@ -123,7 +130,9 @@ function ChoiceList({
           htmlFor={`${name}-${opt}`}
           className={cn(
             "flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm font-medium transition-colors",
-            value === opt ? "border-primary bg-primary-soft" : "border-border bg-card hover:bg-muted",
+            value === opt
+              ? "border-primary bg-primary-soft"
+              : "border-border bg-card hover:bg-muted",
           )}
         >
           <RadioGroupItem id={`${name}-${opt}`} value={opt} />
@@ -156,10 +165,13 @@ function Onboarding() {
   function validate(current: number) {
     const e: FieldErrors = {};
     if (current === 0) {
-      if (!b.businessName.trim()) e.businessName = "Please tell us your business name so we can personalize your plan.";
+      if (!b.businessName.trim())
+        e.businessName = "Please tell us your business name so we can personalize your plan.";
       if (!b.category) e.category = "Choose the closest category. You can change it later.";
-      if (!b.location.trim()) e.location = "Add at least a city or region so we can tailor local guidance.";
-      if (!b.customerModel) e.customerModel = "Let us know whether you serve customers locally, online, or both.";
+      if (!b.location.trim())
+        e.location = "Add at least a city or region so we can tailor local guidance.";
+      if (!b.customerModel)
+        e.customerModel = "Let us know whether you serve customers locally, online, or both.";
     }
     if (current === 1 && !b.primaryGoal) {
       e.primaryGoal = "Please choose at least one main website goal so we can tailor your plan.";
@@ -167,9 +179,11 @@ function Onboarding() {
     if (current === 2) {
       if (!b.currentStatus) e.currentStatus = "Pick the option closest to your situation.";
       if (b.currentStatus === "I already own a domain") {
-        if (!b.ownedDomain.trim()) e.ownedDomain = "Enter your web address so we can include it in your plan.";
+        if (!b.ownedDomain.trim())
+          e.ownedDomain = "Enter your web address so we can include it in your plan.";
         else if (!/^[a-z0-9][a-z0-9-]*(\.[a-z0-9-]+)+$/i.test(b.ownedDomain.trim()))
-          e.ownedDomain = "That does not look like a valid domain format. Try something like yourbusiness.com.";
+          e.ownedDomain =
+            "That does not look like a valid domain format. Try something like yourbusiness.com.";
       }
     }
     if (current === 3 && b.needs.length === 0) {
@@ -179,7 +193,8 @@ function Onboarding() {
       if (!b.timeline) e.timeline = "Choose a timeline, even a rough one.";
     }
     if (current === 5 && !b.techComfort) {
-      e.techComfort = "Tell us how comfortable you feel with technology so we can pitch the guidance correctly.";
+      e.techComfort =
+        "Tell us how comfortable you feel with technology so we can pitch the guidance correctly.";
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -205,7 +220,9 @@ function Onboarding() {
   };
 
   const toggleNeed = (need: string) =>
-    setBusiness({ needs: b.needs.includes(need) ? b.needs.filter((n) => n !== need) : [...b.needs, need] });
+    setBusiness({
+      needs: b.needs.includes(need) ? b.needs.filter((n) => n !== need) : [...b.needs, need],
+    });
 
   const percent = Math.round(((step + 1) / 7) * 100);
 
@@ -218,7 +235,11 @@ function Onboarding() {
             <h1 className="font-display text-2xl font-bold sm:text-3xl">{STEP_TITLES[step]}</h1>
             <p className="text-sm font-medium text-muted-foreground">Step {step + 1} of 7</p>
           </div>
-          <Progress value={percent} className="mt-3" aria-label={`Onboarding ${percent}% complete`} />
+          <Progress
+            value={percent}
+            className="mt-3"
+            aria-label={`Onboarding ${percent}% complete`}
+          />
           <p className="mt-2 text-sm text-muted-foreground">
             Your answers save automatically in this browser. You do not need to finish today.
           </p>
@@ -284,7 +305,10 @@ function Onboarding() {
               <div className="space-y-3 rounded-xl border border-border bg-muted/40 p-4">
                 {[
                   { key: "hasPhysicalLocation", label: "Customers visit a physical location" },
-                  { key: "servesAtCustomerLocation", label: "You serve customers at their location" },
+                  {
+                    key: "servesAtCustomerLocation",
+                    label: "You serve customers at their location",
+                  },
                   { key: "hasBusinessHours", label: "You have set business hours" },
                 ].map((row) => (
                   <div key={row.key} className="flex items-center justify-between gap-4">
@@ -331,7 +355,11 @@ function Onboarding() {
 
               {b.currentStatus === "I already own a domain" && (
                 <div className="space-y-6 rounded-xl border border-primary/25 bg-primary-soft/40 p-5">
-                  <Field label="Your web address (domain)" error={errors.ownedDomain} htmlFor="ownedDomain">
+                  <Field
+                    label="Your web address (domain)"
+                    error={errors.ownedDomain}
+                    htmlFor="ownedDomain"
+                  >
                     <Input
                       id="ownedDomain"
                       value={b.ownedDomain}
@@ -357,7 +385,8 @@ function Onboarding() {
                       }
                       onChange={(v) =>
                         setBusiness({
-                          hasRegistrarAccess: YES_NO_UNSURE.find((o) => o.label === v)?.value as never,
+                          hasRegistrarAccess: YES_NO_UNSURE.find((o) => o.label === v)
+                            ?.value as never,
                         })
                       }
                       columns={2}
@@ -372,7 +401,8 @@ function Onboarding() {
                       }
                       onChange={(v) =>
                         setBusiness({
-                          hasRecoveryEmailAccess: YES_NO_UNSURE.find((o) => o.label === v)?.value as never,
+                          hasRecoveryEmailAccess: YES_NO_UNSURE.find((o) => o.label === v)
+                            ?.value as never,
                         })
                       }
                       columns={2}
@@ -383,8 +413,9 @@ function Onboarding() {
 
               {b.currentStatus === "Someone else manages my website/domain" && (
                 <Callout tone="warning" title="Confirm ownership before making changes">
-                  Before making changes, confirm who owns the domain, hosting account, website platform account
-                  and business email account. Your plan will include a recovery and access checklist.
+                  Before making changes, confirm who owns the domain, hosting account, website
+                  platform account and business email account. Your plan will include a recovery and
+                  access checklist.
                 </Callout>
               )}
             </>
@@ -422,10 +453,19 @@ function Onboarding() {
 
           {step === 4 && (
             <>
-              <Field label="One-time setup budget" hint="A rough range is fine. Currency is up to you.">
+              <Field
+                label="One-time setup budget"
+                hint="A rough range is fine. Currency is up to you."
+              >
                 <ChoiceList
                   name="setupBudget"
-                  options={["Under 10,000", "10,000 – 40,000", "40,000 – 100,000", "Over 100,000", "Not sure yet"]}
+                  options={[
+                    "Under 10,000",
+                    "10,000 – 40,000",
+                    "40,000 – 100,000",
+                    "Over 100,000",
+                    "Not sure yet",
+                  ]}
                   value={b.setupBudget}
                   onChange={(v) => setBusiness({ setupBudget: v })}
                   columns={2}
@@ -434,7 +474,12 @@ function Onboarding() {
               <Field label="Comfortable ongoing monthly cost">
                 <ChoiceList
                   name="monthlyBudget"
-                  options={["Under 1,000 per month", "1,000 – 3,000 per month", "3,000+ per month", "Not sure yet"]}
+                  options={[
+                    "Under 1,000 per month",
+                    "1,000 – 3,000 per month",
+                    "3,000+ per month",
+                    "Not sure yet",
+                  ]}
                   value={b.monthlyBudget}
                   onChange={(v) => setBusiness({ monthlyBudget: v })}
                   columns={2}
@@ -477,7 +522,9 @@ function Onboarding() {
                   options={YES_NO_UNSURE.map((o) => o.label)}
                   value={YES_NO_UNSURE.find((o) => o.value === b.wantsSelfUpdate)?.label ?? ""}
                   onChange={(v) =>
-                    setBusiness({ wantsSelfUpdate: YES_NO_UNSURE.find((o) => o.label === v)?.value as never })
+                    setBusiness({
+                      wantsSelfUpdate: YES_NO_UNSURE.find((o) => o.label === v)?.value as never,
+                    })
                   }
                   columns={2}
                 />
@@ -515,7 +562,9 @@ function Onboarding() {
                 <ChoiceList
                   name="contentHelp"
                   options={["Yes", "No"]}
-                  value={b.needsContentHelp === "yes" ? "Yes" : b.needsContentHelp === "no" ? "No" : ""}
+                  value={
+                    b.needsContentHelp === "yes" ? "Yes" : b.needsContentHelp === "no" ? "No" : ""
+                  }
                   onChange={(v) => setBusiness({ needsContentHelp: v === "Yes" ? "yes" : "no" })}
                   columns={2}
                 />
@@ -526,7 +575,9 @@ function Onboarding() {
                   options={YES_NO_UNSURE.map((o) => o.label)}
                   value={YES_NO_UNSURE.find((o) => o.value === b.needsBusinessEmail)?.label ?? ""}
                   onChange={(v) =>
-                    setBusiness({ needsBusinessEmail: YES_NO_UNSURE.find((o) => o.label === v)?.value as never })
+                    setBusiness({
+                      needsBusinessEmail: YES_NO_UNSURE.find((o) => o.label === v)?.value as never,
+                    })
                   }
                   columns={2}
                 />
@@ -574,9 +625,25 @@ function Onboarding() {
                     Generate my launch roadmap
                   </Button>
                   <p className="text-xs text-muted-foreground">
-                    Your roadmap is general educational guidance. Review provider documentation and seek
-                    qualified professional advice when needed.
+                    Your roadmap is general educational guidance. Review provider documentation and
+                    seek qualified professional advice when needed.
                   </p>
+                  <div className="rounded-xl border border-border bg-muted/30 p-3 text-sm">
+                    <p className="font-medium">Next: fine-tune your business profile</p>
+                    <p className="text-muted-foreground">
+                      After generation you can refine everything in one place — basics, location,
+                      contact, brand and online setup — and it stays in sync with content, journey
+                      and handoff.
+                    </p>
+                    <p className="mt-1">
+                      <Link
+                        to="/business-profile"
+                        className="font-medium text-primary underline underline-offset-4"
+                      >
+                        Open business profile →
+                      </Link>
+                    </p>
+                  </div>
                 </>
               )}
             </div>

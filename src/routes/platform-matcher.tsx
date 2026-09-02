@@ -7,7 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/platform-matcher")({
@@ -22,7 +29,8 @@ export const Route = createFileRoute("/platform-matcher")({
       { property: "og:title", content: "Find the right way to build your website" },
       {
         property: "og:description",
-        content: "A neutral recommendation category based on ecommerce, booking, budget and how often you update.",
+        content:
+          "A neutral recommendation category based on ecommerce, booking, budget and how often you update.",
       },
     ],
   }),
@@ -173,7 +181,8 @@ const RECOMMENDATIONS = {
   cms: {
     key: "cms",
     title: "Flexible content system with managed hosting",
-    bestFor: "Businesses publishing regularly or needing plugins for booking, membership or multiple languages.",
+    bestFor:
+      "Businesses publishing regularly or needing plugins for booking, membership or multiple languages.",
     advantages: [
       "Large plugin ecosystem for almost any need",
       "Full control over content structure and design",
@@ -196,7 +205,8 @@ const RECOMMENDATIONS = {
   pro: {
     key: "pro",
     title: "Professional designer or developer build",
-    bestFor: "Businesses with distinctive requirements, a real budget, and no time to build themselves.",
+    bestFor:
+      "Businesses with distinctive requirements, a real budget, and no time to build themselves.",
     advantages: [
       "Tailored design and functionality",
       "Someone else carries the technical work",
@@ -309,14 +319,15 @@ function PlatformMatcher() {
     >
       <div className="space-y-8">
         <Callout tone="info" title="We do not sell or promote any provider">
-          Answer at least four questions to see a recommendation. Compare current plan pricing, transaction
-          fees, included email, storage, support and renewal terms before buying anything.
+          Answer at least four questions to see a recommendation. Compare current plan pricing,
+          transaction fees, included email, storage, support and renewal terms before buying
+          anything.
         </Callout>
 
         <Callout tone="success" title="Hosting is often included — but email may not be">
-          An all-in-one website builder normally includes hosting, so you do not need to buy separate hosting.
-          Your domain and business email can still be separate services. Check exactly what is included before
-          you pay.
+          An all-in-one website builder normally includes hosting, so you do not need to buy
+          separate hosting. Your domain and business email can still be separate services. Check
+          exactly what is included before you pay.
         </Callout>
 
         <section className="grid gap-4 md:grid-cols-2">
@@ -388,7 +399,9 @@ function PlatformMatcher() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-display text-sm font-semibold">Questions to ask before choosing</h4>
+                  <h4 className="font-display text-sm font-semibold">
+                    Questions to ask before choosing
+                  </h4>
                   <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
                     {result.questions.map((a) => (
                       <li key={a}>• {a}</li>
@@ -409,11 +422,15 @@ function PlatformMatcher() {
 
               <dl className="mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-xl border border-border bg-muted/40 p-4">
-                  <dt className="text-xs font-semibold text-muted-foreground uppercase">Setup complexity</dt>
+                  <dt className="text-xs font-semibold text-muted-foreground uppercase">
+                    Setup complexity
+                  </dt>
                   <dd className="mt-1 font-medium">{result.complexity}</dd>
                 </div>
                 <div className="rounded-xl border border-border bg-muted/40 p-4">
-                  <dt className="text-xs font-semibold text-muted-foreground uppercase">Ongoing maintenance</dt>
+                  <dt className="text-xs font-semibold text-muted-foreground uppercase">
+                    Ongoing maintenance
+                  </dt>
                   <dd className="mt-1 font-medium">{result.maintenance}</dd>
                 </div>
               </dl>

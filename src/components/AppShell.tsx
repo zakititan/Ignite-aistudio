@@ -17,6 +17,11 @@ import {
   Rocket,
   ShieldCheck,
   LifeBuoy,
+  Building2,
+  ClipboardCheck,
+  Calculator,
+  Star,
+  ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -25,6 +30,11 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/launch-wizard", label: "Launch Track Wizard", icon: Rocket },
+  { to: "/preflight", label: "Pre-Flight Simulator", icon: ShieldCheck },
+  { to: "/cost-calculator", label: "3-Yr Cost Calculator", icon: Calculator },
+  { to: "/email-signature", label: "Email Signature Generator", icon: Mail },
+  { to: "/review-kit", label: "Google Review QR Kit", icon: Star },
   { to: "/domains", label: "Domain finder", icon: Globe },
   { to: "/platform-matcher", label: "Website & hosting", icon: Blocks },
   { to: "/connect-domain", label: "Connect domain", icon: Network },
@@ -32,6 +42,8 @@ const NAV = [
   { to: "/content", label: "Content builder", icon: FileText },
   { to: "/business-email", label: "Business email", icon: Mail },
   { to: "/get-found", label: "Get found", icon: Search },
+  { to: "/launch-dossier", label: "Launch dossier", icon: FileText },
+  { to: "/security-drill", label: "Security & Recovery", icon: ShieldAlert },
   { to: "/maintenance", label: "Maintenance", icon: Wrench },
   { to: "/learn", label: "Learning library", icon: BookOpen },
   { to: "/ownership-record", label: "Ownership record", icon: ShieldCheck },
@@ -104,6 +116,31 @@ export function AppShell({
             </span>
           </Link>
           <NavLinks />
+          <div
+            aria-label="Quick actions"
+            className="rounded-xl border border-sidebar-border bg-sidebar-accent/20 p-2"
+          >
+            <p className="px-2 pb-1 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+              Quick actions
+            </p>
+            <Link
+              to="/business-profile"
+              className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/60"
+            >
+              <Building2 className="size-4" aria-hidden="true" />
+              Business profile
+            </Link>
+            <Link
+              to="/customer-journey"
+              className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/60"
+            >
+              <ClipboardCheck className="size-4" aria-hidden="true" />
+              Journey tester
+            </Link>
+            <p className="px-2 pt-1 text-[11px] leading-relaxed text-muted-foreground">
+              Also in Dashboard quick tools.
+            </p>
+          </div>
           <ThemeMenu className="mt-auto" />
           <p className=" px-2 text-xs text-muted-foreground">
             Educational guidance only. Pricing, eligibility and provider features vary.
@@ -115,13 +152,41 @@ export function AppShell({
             <div className="flex items-center gap-3 px-4 py-4 sm:px-6">
               <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open navigation menu">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="lg:hidden"
+                    aria-label="Open navigation menu"
+                  >
                     <Menu className="size-5" aria-hidden="true" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-72 overflow-y-auto bg-sidebar p-4">
-                  <SheetTitle className="px-3 pb-4 font-display">Launch My Business Online</SheetTitle>
+                  <SheetTitle className="px-3 pb-4 font-display">
+                    Launch My Business Online
+                  </SheetTitle>
                   <NavLinks onNavigate={() => setOpen(false)} />
+                  <div className="mt-4 rounded-xl border border-sidebar-border bg-sidebar-accent/20 p-2">
+                    <p className="px-2 pb-1 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+                      Quick actions
+                    </p>
+                    <Link
+                      to="/business-profile"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium"
+                    >
+                      <Building2 className="size-4" aria-hidden="true" />
+                      Business profile
+                    </Link>
+                    <Link
+                      to="/customer-journey"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium"
+                    >
+                      <ClipboardCheck className="size-4" aria-hidden="true" />
+                      Journey tester
+                    </Link>
+                  </div>
                   <ThemeMenu className="mt-6" />
                 </SheetContent>
               </Sheet>

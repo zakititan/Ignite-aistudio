@@ -15,7 +15,12 @@ export const HELP_CATEGORIES: { id: string; label: string; description: string; 
     description: "Build your plan and understand the seven launch phases.",
     to: "/how-it-works",
   },
-  { id: "domains", label: "Domains", description: "Choosing, checking and renewing your web address.", to: "/domains" },
+  {
+    id: "domains",
+    label: "Domains",
+    description: "Choosing, checking and renewing your web address.",
+    to: "/domains",
+  },
   {
     id: "platforms",
     label: "Website platforms",
@@ -34,8 +39,18 @@ export const HELP_CATEGORIES: { id: string; label: string; description: string; 
     description: "Set up name@yourbusiness.com and keep it deliverable.",
     to: "/business-email",
   },
-  { id: "content", label: "Website content", description: "Write pages that answer customer questions.", to: "/content" },
-  { id: "checklist", label: "Launch checklist", description: "Track every task from plan to live.", to: "/checklist" },
+  {
+    id: "content",
+    label: "Website content",
+    description: "Write pages that answer customer questions.",
+    to: "/content",
+  },
+  {
+    id: "checklist",
+    label: "Launch checklist",
+    description: "Track every task from plan to live.",
+    to: "/checklist",
+  },
   {
     id: "visibility",
     label: "Search and local visibility",
@@ -73,7 +88,8 @@ export const HELP_ARTICLES: HelpArticle[] = [
     slug: "who-owns-domain",
     title: "How do I check who owns my domain?",
     category: "Domains",
-    summary: "Look for renewal receipts, then confirm the registrar account holder before making changes.",
+    summary:
+      "Look for renewal receipts, then confirm the registrar account holder before making changes.",
     minutes: 4,
     to: "/ownership-record",
   },
@@ -99,7 +115,8 @@ export const HELP_ARTICLES: HelpArticle[] = [
     slug: "dns-propagation",
     title: "Why does my site still show the old page?",
     category: "DNS and domain connection",
-    summary: "Changes can take up to 48 hours to spread. Check in a private window before panicking.",
+    summary:
+      "Changes can take up to 48 hours to spread. Check in a private window before panicking.",
     minutes: 4,
     to: "/troubleshooting",
   },
@@ -200,7 +217,8 @@ export const TROUBLESHOOTING_FLOWS: TroubleshootingFlow[] = [
       "Add the website records your platform provided.",
       "Remove only the registrar's own placeholder record — nothing else.",
     ],
-    warning: "Do not delete records you do not recognise. Mail records often look unfamiliar but are essential.",
+    warning:
+      "Do not delete records you do not recognise. Mail records often look unfamiliar but are essential.",
     relatedTo: "/connect-domain",
     relatedLabel: "DNS connection guide",
   },
@@ -287,7 +305,8 @@ export const TROUBLESHOOTING_FLOWS: TroubleshootingFlow[] = [
   {
     id: "cannot-sign-in",
     title: "I cannot sign in to Launch Plan Buddy",
-    likelyCause: "Your plan is stored in this browser, so a different device or cleared data looks empty.",
+    likelyCause:
+      "Your plan is stored in this browser, so a different device or cleared data looks empty.",
     steps: [
       "Open the app in the same browser you used before.",
       "Check whether browsing data was cleared recently.",
@@ -312,8 +331,10 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: "Domain",
     category: "Domains",
-    definition: "Your web address, such as yourbusiness.com. You rent it yearly rather than owning it forever.",
-    whyItMatters: "It is the name customers type, share and remember. Losing it means losing your online front door.",
+    definition:
+      "Your web address, such as yourbusiness.com. You rent it yearly rather than owning it forever.",
+    whyItMatters:
+      "It is the name customers type, share and remember. Losing it means losing your online front door.",
     relatedTo: "/domains",
     relatedLabel: "Domain finder",
   },
@@ -321,7 +342,8 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: "Registrar",
     category: "Domains",
     definition: "The company where you register and renew your web address.",
-    whyItMatters: "The registrar account is the master key to your domain. It must be in your business's name.",
+    whyItMatters:
+      "The registrar account is the master key to your domain. It must be in your business's name.",
     relatedTo: "/ownership-record",
     relatedLabel: "Ownership record",
   },
@@ -345,7 +367,8 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     term: "Nameserver",
     category: "DNS",
     definition: "The service that answers questions about your domain's settings.",
-    whyItMatters: "Changing nameservers moves all of your settings at once — a bigger change than editing one record.",
+    whyItMatters:
+      "Changing nameservers moves all of your settings at once — a bigger change than editing one record.",
     relatedTo: "/connect-domain",
     relatedLabel: "Connect your domain",
   },
@@ -392,7 +415,8 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: "HTTPS",
     category: "Website",
-    definition: "The padlock in the address bar. It means the connection to your site is encrypted.",
+    definition:
+      "The padlock in the address bar. It means the connection to your site is encrypted.",
     whyItMatters: "Customers trust it, and search engines expect it.",
     relatedTo: "/get-found",
     relatedLabel: "Get found",
@@ -489,10 +513,30 @@ export interface ServiceStatus {
 }
 
 export const SERVICE_STATUSES: ServiceStatus[] = [
-  { id: "website", name: "Website", description: "Marketing pages and guides.", status: "operational" },
-  { id: "sign-in", name: "Sign in", description: "Labelling your plan with your details.", status: "operational" },
-  { id: "plan-saving", name: "Plan saving", description: "Saving your roadmap on this device.", status: "operational" },
-  { id: "library", name: "Learning library", description: "Articles, glossary and guides.", status: "operational" },
+  {
+    id: "website",
+    name: "Website",
+    description: "Marketing pages and guides.",
+    status: "operational",
+  },
+  {
+    id: "sign-in",
+    name: "Sign in",
+    description: "Labelling your plan with your details.",
+    status: "operational",
+  },
+  {
+    id: "plan-saving",
+    name: "Plan saving",
+    description: "Saving your roadmap on this device.",
+    status: "operational",
+  },
+  {
+    id: "library",
+    name: "Learning library",
+    description: "Articles, glossary and guides.",
+    status: "operational",
+  },
   {
     id: "notifications",
     name: "Notifications",

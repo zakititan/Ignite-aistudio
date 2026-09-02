@@ -21,11 +21,15 @@ export function PageHero({
     <section className="bg-hero-wash border-b border-border">
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
         {eyebrow ? (
-          <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">{eyebrow}</p>
+          <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
+            {eyebrow}
+          </p>
         ) : null}
         <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl">{title}</h1>
         {description ? (
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">{description}</p>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {description}
+          </p>
         ) : null}
         {children ? <div className="mt-6 flex flex-wrap gap-3">{children}</div> : null}
       </div>
@@ -90,7 +94,9 @@ export function ContentSection({
 export function InPageTableOfContents({ items }: { items: { id: string; label: string }[] }) {
   return (
     <nav aria-label="On this page" className="lg:sticky lg:top-24">
-      <p className="px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">On this page</p>
+      <p className="px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+        On this page
+      </p>
       <ul className="mt-2 space-y-0.5">
         {items.map((i) => (
           <li key={i.id}>
@@ -117,7 +123,10 @@ export function SafetyWarningBanner({
   return (
     <div role="note" className="rounded-xl border border-warning/40 bg-warning-soft p-4 sm:p-5">
       <div className="flex gap-3">
-        <AlertTriangle className="mt-0.5 size-5 shrink-0 text-warning-foreground" aria-hidden="true" />
+        <AlertTriangle
+          className="mt-0.5 size-5 shrink-0 text-warning-foreground"
+          aria-hidden="true"
+        />
         <div className="space-y-1.5">
           <p className="font-semibold">{title}</p>
           <div className="text-sm leading-relaxed text-muted-foreground">{children}</div>

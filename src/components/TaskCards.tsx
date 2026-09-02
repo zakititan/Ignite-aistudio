@@ -17,7 +17,11 @@ export function TaskStatusBadge({ status }: { status: TaskStatus }) {
     complete: { label: "Complete", className: "bg-success-soft text-success" },
   };
   const s = map[status];
-  return <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold", s.className)}>{s.label}</span>;
+  return (
+    <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold", s.className)}>
+      {s.label}
+    </span>
+  );
 }
 
 export function ImportanceBadge({ importance }: { importance: Importance }) {
@@ -60,7 +64,9 @@ export function LaunchTaskCard({
           checked={done}
           onCheckedChange={(checked) => {
             onStatus(checked ? "complete" : "todo");
-            toast.success(checked ? "Task marked complete. One completed task is progress." : "Task reopened.");
+            toast.success(
+              checked ? "Task marked complete. One completed task is progress." : "Task reopened.",
+            );
           }}
           className="mt-1"
           aria-label={`Mark "${task.title}" complete`}
@@ -69,7 +75,10 @@ export function LaunchTaskCard({
           <div className="flex flex-wrap items-center gap-2">
             <Label
               htmlFor={`task-${task.id}`}
-              className={cn("font-display text-base font-semibold", done && "line-through opacity-70")}
+              className={cn(
+                "font-display text-base font-semibold",
+                done && "line-through opacity-70",
+              )}
             >
               {task.title}
             </Label>
@@ -137,7 +146,9 @@ export function LaunchTaskCard({
               </Button>
             </div>
           ) : task.notes ? (
-            <p className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-sm">{task.notes}</p>
+            <p className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-sm">
+              {task.notes}
+            </p>
           ) : null}
         </div>
       </div>

@@ -7,7 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES } from "@/lib/library";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -95,7 +100,9 @@ function Learn() {
         <section aria-labelledby="articles">
           <h2 id="articles" className="font-display text-xl font-bold">
             Explainers
-            <span className="ml-2 text-sm font-normal text-muted-foreground">({articles.length})</span>
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
+              ({articles.length})
+            </span>
           </h2>
           <div className="mt-4 grid gap-4 lg:grid-cols-2">
             {articles.map((a) => {
@@ -103,7 +110,10 @@ function Learn() {
               return (
                 <article
                   key={a.slug}
-                  className={cn("surface-panel p-5", read && "border-success/35 bg-success-soft/30")}
+                  className={cn(
+                    "surface-panel p-5",
+                    read && "border-success/35 bg-success-soft/30",
+                  )}
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="outline">{a.category}</Badge>
@@ -146,7 +156,11 @@ function Learn() {
                     variant={read ? "secondary" : "outline"}
                     onClick={() => toggleArticle(a.slug)}
                   >
-                    {read ? <Check className="size-4" aria-hidden="true" /> : <BookOpen className="size-4" aria-hidden="true" />}
+                    {read ? (
+                      <Check className="size-4" aria-hidden="true" />
+                    ) : (
+                      <BookOpen className="size-4" aria-hidden="true" />
+                    )}
                     {read ? "Marked as read" : "Mark as read"}
                   </Button>
                 </article>
@@ -167,7 +181,9 @@ function Learn() {
           <Accordion type="single" collapsible className="surface-panel mt-4 px-5">
             {glossaryEntries.map(([term, def]) => (
               <AccordionItem key={term} value={term}>
-                <AccordionTrigger className="text-left font-display font-semibold">{term}</AccordionTrigger>
+                <AccordionTrigger className="text-left font-display font-semibold">
+                  {term}
+                </AccordionTrigger>
                 <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
                   {def}
                 </AccordionContent>

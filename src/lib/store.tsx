@@ -1,14 +1,29 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import type {
   AppState,
   BusinessProfile,
   ContentDraft,
+  CustomerJourneyTest,
+  DomainShortlistStatus,
   LaunchTask,
   MaintenanceTask,
   OwnershipRecord,
+  SavedDomainIdea,
   TaskStatus,
 } from "./types";
 import { demoState, emptyState, generateTasks } from "./plan";
+
+function normaliseDomain(value: string) {
+  return value.trim().toLowerCase().replace(/\.$/, "");
+}
 
 const STORAGE_KEY = "lmbo.state.v1";
 
@@ -30,6 +45,26 @@ interface StoreValue {
   toggleArticle: (slug: string) => void;
   signIn: (fullName: string, email: string) => void;
   signOut: () => void;
+  setCustomerJourneyTest: (test: CustomerJourneyTest | undefined) => void;
+  updateCustomerJourneyStep: (
+    id: string,
+    patch: Partial<import("./types").CustomerJourneyStepResult>,
+  ) => void;
+  upsertSavedDomain: (
+    domain: string,
+    opts?: {
+      score?: SavedDomainIdea["score"];
+      availability?: SavedDomainIdea["availability"];
+      note?: string;
+      status?: DomainShortlistStatus;
+    },
+  ) => void;
+  updateSavedDomain: (
+    id: string,
+    patch: Partial<Omit<SavedDomainIdea, "id" | "createdAt">>,
+  ) => void;
+  removeSavedDomain: (id: string) => void;
+  setSavedDomainStatus: (id: string, status: DomainShortlistStatus) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -41,7 +76,24 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setState({ ...emptyState(), ...(JSON.parse(raw) as AppState) });
+      if (raw) {
+        const parsed = JSON.parse(raw) as Partial<AppState> & {
+          domainShortlist?: SavedDomainIdea[];
+        };
+        const base = emptyState();
+        const merged: AppState = {
+          ...base,
+          ...parsed,
+          business: { ...base.business, ...(parsed.business ?? {}) },
+          ownership: { ...base.ownership, ...(parsed.ownership ?? {}) },
+          // support legacy key domainShortlist and ensure default
+          savedDomainIdeas:
+            parsed.savedDomainIdeas ?? parsed.domainShortlist ?? base.savedDomainIdeas ?? [],
+        } as AppState;
+        // ensure array
+        if (!Array.isArray(merged.savedDomainIdeas)) merged.savedDomainIdeas = [];
+        setState(merged);
+      }
     } catch {
       /* ignore corrupt storage */
     }
@@ -79,7 +131,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           ...s,
           tasks: s.tasks.map((t) =>
             t.id === id
-              ? { ...t, status, completedAt: status === "complete" ? new Date().toISOString() : null }
+              ? {
+                  ...t,
+                  status,
+                  completedAt: status === "complete" ? new Date().toISOString() : null,
+                }
               : t,
           ),
         })),
@@ -110,7 +166,107 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         })),
       signIn: (fullName, email) =>
         patch((s) => ({ ...s, account: { signedIn: true, fullName, email } })),
-      signOut: () => patch((s) => ({ ...s, account: { signedIn: false, fullName: "", email: "" } })),
+      signOut: () =>
+        patch((s) => ({ ...s, account: { signedIn: false, fullName: "", email: "" } })),
+      setCustomerJourneyTest: (test) => patch((s) => ({ ...s, customerJourneyTest: test })),
+      updateCustomerJourneyStep: (id, p) =>
+        patch((s) => {
+          if (!s.customerJourneyTest) return s;
+          return {
+            ...s,
+            customerJourneyTest: {
+              ...s.customerJourneyTest,
+              steps: s.customerJourneyTest.steps.map((st) => (st.id === id ? { ...st, ...p } : st)),
+              lastUpdatedAt: new Date().toISOString(),
+            },
+          };
+        }),
+      upsertSavedDomain: (domain, opts) =>
+        patch((s) => {
+          const normalised = normaliseDomain(domain);
+          const now = new Date().toISOString();
+          const existingIndex = s.savedDomainIdeas.findIndex(
+            (d) => normaliseDomain(d.domain) === normalised,
+          );
+          if (existingIndex >= 0) {
+            const existing = s.savedDomainIdeas[existingIndex];
+            if (!existing) return s;
+            const updated: SavedDomainIdea = {
+              ...existing,
+              domain: normalised,
+              score: opts?.score ?? existing.score,
+              availability: opts?.availability ?? existing.availability,
+              note: opts?.note ?? existing.note,
+              status: opts?.status ?? existing.status,
+              updatedAt: now,
+            };
+            const next = [...s.savedDomainIdeas];
+            next[existingIndex] = updated;
+            // if status is preferred, demote others
+            if (updated.status === "preferred") {
+              for (let i = 0; i < next.length; i++) {
+                const item = next[i];
+                if (item && item.id !== updated.id && item.status === "preferred") {
+                  next[i] = { ...item, status: "considering", updatedAt: now };
+                }
+              }
+            }
+            return { ...s, savedDomainIdeas: next };
+          }
+          const newIdea: SavedDomainIdea = {
+            id: `domain-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+            domain: normalised,
+            status: opts?.status ?? "considering",
+            note: opts?.note,
+            score: opts?.score,
+            availability: opts?.availability,
+            createdAt: now,
+            updatedAt: now,
+          };
+          let next = [...s.savedDomainIdeas, newIdea];
+          if (newIdea.status === "preferred") {
+            next = next.map((item) =>
+              item.id !== newIdea.id && item.status === "preferred"
+                ? { ...item, status: "considering" as const, updatedAt: now }
+                : item,
+            );
+          }
+          return { ...s, savedDomainIdeas: next };
+        }),
+      updateSavedDomain: (id, p) =>
+        patch((s) => ({
+          ...s,
+          savedDomainIdeas: s.savedDomainIdeas.map((d) =>
+            d.id === id ? { ...d, ...p, updatedAt: new Date().toISOString() } : d,
+          ),
+        })),
+      removeSavedDomain: (id) =>
+        patch((s) => ({
+          ...s,
+          savedDomainIdeas: s.savedDomainIdeas.filter((d) => d.id !== id),
+        })),
+      setSavedDomainStatus: (id, status) =>
+        patch((s) => {
+          const now = new Date().toISOString();
+          if (status === "preferred") {
+            return {
+              ...s,
+              savedDomainIdeas: s.savedDomainIdeas.map((d) =>
+                d.id === id
+                  ? { ...d, status, updatedAt: now }
+                  : d.status === "preferred"
+                    ? { ...d, status: "considering" as const, updatedAt: now }
+                    : d,
+              ),
+            };
+          }
+          return {
+            ...s,
+            savedDomainIdeas: s.savedDomainIdeas.map((d) =>
+              d.id === id ? { ...d, status, updatedAt: now } : d,
+            ),
+          };
+        }),
     }),
     [state, hydrated, patch],
   );

@@ -13,7 +13,10 @@ export const Route = createFileRoute("/privacy")({
           "What we store when you build a launch plan, what we never ask for, and how to delete your data at any time.",
       },
       { property: "og:title", content: "Privacy at Launch My Business Online" },
-      { property: "og:description", content: "Plain-English privacy: local plans, no passwords, easy deletion." },
+      {
+        property: "og:description",
+        content: "Plain-English privacy: local plans, no passwords, easy deletion.",
+      },
     ],
   }),
   component: PrivacyPage,
@@ -36,17 +39,21 @@ function PrivacyPage() {
       description="Your launch plan belongs to you. Here is exactly what is stored, where it lives, and how to remove it."
       aside={<InPageTableOfContents items={TOC} />}
     >
-      <p className="text-sm text-muted-foreground">Last updated: 2 September 2026 (placeholder date).</p>
+      <p className="text-sm text-muted-foreground">
+        Last updated: 2 September 2026 (placeholder date).
+      </p>
 
       <ContentSection id="collect" title="What we collect">
         <p>
-          <strong className="text-foreground">Guest / demo mode:</strong> everything you type — business details,
-          checklist progress, page drafts and ownership notes — is saved in your own browser. It is not sent to us.
+          <strong className="text-foreground">Guest / demo mode:</strong> everything you type —
+          business details, checklist progress, page drafts and ownership notes — is saved in your
+          own browser. It is not sent to us.
         </p>
         <p>
-          <strong className="text-foreground">Signed-in mode:</strong> when account sync is enabled, we would store
-          your name, email address and the plan content you choose to save, so you can continue on another device.
-          Account sync is not live yet; today the sign-in screen only labels the plan stored on this device.
+          <strong className="text-foreground">Signed-in mode:</strong> when account sync is enabled,
+          we would store your name, email address and the plan content you choose to save, so you
+          can continue on another device. Account sync is not live yet; today the sign-in screen
+          only labels the plan stored on this device.
         </p>
       </ContentSection>
 
@@ -62,24 +69,25 @@ function PrivacyPage() {
 
       <ContentSection id="use" title="How your business profile and checklist are used">
         <p>
-          Your answers are used to generate your roadmap, tailor guidance, and track progress. They are not sold, and
-          we do not use them to advertise providers to you. We are not paid to recommend registrars, platforms or
-          email providers.
+          Your answers are used to generate your roadmap, tailor guidance, and track progress. They
+          are not sold, and we do not use them to advertise providers to you. We are not paid to
+          recommend registrars, platforms or email providers.
         </p>
       </ContentSection>
 
       <ContentSection id="local" title="Guest plans and local storage">
         <p>
-          Guest plans live in your browser's local storage under a single key. Clearing your browsing data, using a
-          different browser, or private browsing will make the plan appear empty. Export a copy from Settings if the
-          plan matters to you.
+          Guest plans live in your browser's local storage under a single key. Clearing your
+          browsing data, using a different browser, or private browsing will make the plan appear
+          empty. Export a copy from Settings if the plan matters to you.
         </p>
       </ContentSection>
 
       <ContentSection id="delete" title="Deleting your data">
         <p>
-          You can delete everything at any time from Settings, or request deletion of a future synced account from
-          the delete-account page. Deletion of local data is immediate and cannot be undone.
+          You can delete everything at any time from Settings, or request deletion of a future
+          synced account from the delete-account page. Deletion of local data is immediate and
+          cannot be undone.
         </p>
         <div className="flex flex-wrap gap-3 pt-1">
           <Button asChild variant="outline">
@@ -93,8 +101,8 @@ function PrivacyPage() {
 
       <ContentSection id="contact" title="Privacy questions">
         <p>
-          Send privacy questions through the contact form and choose the “Privacy request” topic. A dedicated privacy
-          contact address will be published here when account sync launches.
+          Send privacy questions through the contact form and choose the “Privacy request” topic. A
+          dedicated privacy contact address will be published here when account sync launches.
         </p>
         <div className="flex flex-wrap gap-3 pt-1">
           <Button asChild>
@@ -107,8 +115,8 @@ function PrivacyPage() {
       </ContentSection>
 
       <Callout tone="info" title="Educational guidance only">
-        This page describes how the product handles information. It is not legal advice about your own privacy
-        obligations to your customers.
+        This page describes how the product handles information. It is not legal advice about your
+        own privacy obligations to your customers.
       </Callout>
     </ContentPageLayout>
   );

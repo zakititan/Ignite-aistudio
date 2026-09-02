@@ -13,10 +13,14 @@ export const Route = createFileRoute("/reset-password")({
       { title: "Choose a new password — Launch My Business Online" },
       {
         name: "description",
-        content: "Set a new password for your launch plan account, with guidance on strong passphrases.",
+        content:
+          "Set a new password for your launch plan account, with guidance on strong passphrases.",
       },
       { property: "og:title", content: "Choose a new password" },
-      { property: "og:description", content: "Set a strong new password and get back to your launch plan." },
+      {
+        property: "og:description",
+        content: "Set a strong new password and get back to your launch plan.",
+      },
     ],
   }),
   component: ResetPasswordPage,
@@ -48,8 +52,8 @@ function ResetPasswordPage() {
     >
       {done ? (
         <Callout tone="success" title="Password updated (demo)">
-          Accounts are not connected yet, so nothing was changed on a server. When account sync launches you will be
-          returned to sign in automatically.
+          Accounts are not connected yet, so nothing was changed on a server. When account sync
+          launches you will be returned to sign in automatically.
           <div className="mt-3">
             <Button asChild size="sm">
               <Link to="/sign-in">Go to sign in</Link>
@@ -104,8 +108,9 @@ function ResetPasswordPage() {
       )}
 
       <SafetyWarningBanner title="Password tips that actually help">
-        Use three or four unrelated words, never reuse the password from your email or registrar account, and turn on
-        two-step verification wherever it is offered. A password manager is the easiest way to keep this simple.
+        Use three or four unrelated words, never reuse the password from your email or registrar
+        account, and turn on two-step verification wherever it is offered. A password manager is the
+        easiest way to keep this simple.
       </SafetyWarningBanner>
 
       <ComingSoonCard

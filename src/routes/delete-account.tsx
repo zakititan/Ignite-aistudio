@@ -25,10 +25,14 @@ export const Route = createFileRoute("/delete-account")({
       { title: "Delete your data — Launch My Business Online" },
       {
         name: "description",
-        content: "Permanently remove your launch plan, drafts and ownership record from this device. Export first if you need a copy.",
+        content:
+          "Permanently remove your launch plan, drafts and ownership record from this device. Export first if you need a copy.",
       },
       { property: "og:title", content: "Delete your data" },
-      { property: "og:description", content: "What deletion removes, what it does not touch, and how to export first." },
+      {
+        property: "og:description",
+        content: "What deletion removes, what it does not touch, and how to export first.",
+      },
     ],
   }),
   component: DeleteAccountPage,
@@ -61,15 +65,16 @@ function DeleteAccountPage() {
       description="This removes everything this app has stored about your business on this device."
     >
       <SafetyWarningBanner title="This cannot be undone">
-        Deleting removes your business profile, roadmap progress, page drafts, maintenance reminders and ownership
-        record. Export a copy first if there is any chance you will want it back.
+        Deleting removes your business profile, roadmap progress, page drafts, maintenance reminders
+        and ownership record. Export a copy first if there is any chance you will want it back.
       </SafetyWarningBanner>
 
       <ContentSection title="What deletion does not touch">
         <p>
-          Your domain, hosting, website, business email and social accounts are held by other companies. Deleting your
-          data here does <strong className="text-foreground">not</strong> cancel or delete any of them. To close those,
-          sign in to each provider directly — and remember that letting a domain lapse can mean losing it permanently.
+          Your domain, hosting, website, business email and social accounts are held by other
+          companies. Deleting your data here does <strong className="text-foreground">not</strong>{" "}
+          cancel or delete any of them. To close those, sign in to each provider directly — and
+          remember that letting a domain lapse can mean losing it permanently.
         </p>
       </ContentSection>
 
@@ -109,7 +114,8 @@ function DeleteAccountPage() {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete all of your data?</AlertDialogTitle>
               <AlertDialogDescription>
-                Your plan, progress, drafts and ownership record will be permanently removed from this device.
+                Your plan, progress, drafts and ownership record will be permanently removed from
+                this device.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -127,7 +133,10 @@ function DeleteAccountPage() {
           </AlertDialogContent>
         </AlertDialog>
         <p className="text-sm text-muted-foreground">
-          Changed your mind? <Link to="/settings" className="text-primary underline">Return to settings</Link>
+          Changed your mind?{" "}
+          <Link to="/settings" className="text-primary underline">
+            Return to settings
+          </Link>
         </p>
       </section>
     </ContentPageLayout>

@@ -18,7 +18,10 @@ export const Route = createFileRoute("/sign-in")({
         content: "Come back to your saved launch plan and pick up where you left off.",
       },
       { property: "og:title", content: "Sign in to your launch plan" },
-      { property: "og:description", content: "Return to your personalised roadmap for getting your business online." },
+      {
+        property: "og:description",
+        content: "Return to your personalised roadmap for getting your business online.",
+      },
     ],
   }),
   component: SignIn,
@@ -86,7 +89,10 @@ function SignIn() {
 
           <p className="mt-6 text-sm text-muted-foreground">
             No plan yet?{" "}
-            <Link to="/onboarding" className="font-medium text-primary underline underline-offset-4">
+            <Link
+              to="/onboarding"
+              className="font-medium text-primary underline underline-offset-4"
+            >
               Create your free plan
             </Link>
             .

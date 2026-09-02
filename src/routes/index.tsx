@@ -21,7 +21,12 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { OnlinePresenceMap } from "@/components/OnlinePresenceMap";
 import { OwnershipWarningCard } from "@/components/Callouts";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -85,14 +90,46 @@ const STEPS = [
 ];
 
 const FEATURES = [
-  { icon: Sparkles, title: "Personalized setup plan", body: "A roadmap shaped by your business type and goal, not a generic listicle." },
-  { icon: Globe, title: "Domain name guidance", body: "Name ideas, a clarity score, and safety steps so the address stays yours." },
-  { icon: Layout, title: "Website platform recommendations", body: "A recommended category of tool, with honest trade-offs — never a sales pitch." },
-  { icon: Network, title: "DNS connection walkthroughs", body: "Plain-English instructions with warnings before anything risky." },
-  { icon: FileText, title: "Website content prompts", body: "Fill-in-the-blank prompts for every page, so you never face a blank screen." },
-  { icon: ListChecks, title: "Launch readiness checklist", body: "Required, recommended and optional tasks with progress you can see." },
-  { icon: Search, title: "Local visibility and SEO basics", body: "Practical steps that help customers and search engines understand you." },
-  { icon: Wrench, title: "Maintenance reminders", body: "Weekly, monthly, quarterly and yearly care in a simple calendar." },
+  {
+    icon: Sparkles,
+    title: "Personalized setup plan",
+    body: "A roadmap shaped by your business type and goal, not a generic listicle.",
+  },
+  {
+    icon: Globe,
+    title: "Domain name guidance",
+    body: "Name ideas, a clarity score, and safety steps so the address stays yours.",
+  },
+  {
+    icon: Layout,
+    title: "Website platform recommendations",
+    body: "A recommended category of tool, with honest trade-offs — never a sales pitch.",
+  },
+  {
+    icon: Network,
+    title: "DNS connection walkthroughs",
+    body: "Plain-English instructions with warnings before anything risky.",
+  },
+  {
+    icon: FileText,
+    title: "Website content prompts",
+    body: "Fill-in-the-blank prompts for every page, so you never face a blank screen.",
+  },
+  {
+    icon: ListChecks,
+    title: "Launch readiness checklist",
+    body: "Required, recommended and optional tasks with progress you can see.",
+  },
+  {
+    icon: Search,
+    title: "Local visibility and SEO basics",
+    body: "Practical steps that help customers and search engines understand you.",
+  },
+  {
+    icon: Wrench,
+    title: "Maintenance reminders",
+    body: "Weekly, monthly, quarterly and yearly care in a simple calendar.",
+  },
 ];
 
 const TESTIMONIALS = [
@@ -109,12 +146,14 @@ const TESTIMONIALS = [
     role: "Freelance designer",
   },
   {
-    quote: "I finally understood what DNS actually does. Connected the domain myself in an afternoon.",
+    quote:
+      "I finally understood what DNS actually does. Connected the domain myself in an afternoon.",
     name: "Tom R.",
     role: "Plumbing company owner",
   },
   {
-    quote: "The homepage prompts helped me say what I do in one sentence. Enquiries went up straight away.",
+    quote:
+      "The homepage prompts helped me say what I do in one sentence. Enquiries went up straight away.",
     name: "Aisha K.",
     role: "Wellness coach",
   },
@@ -175,8 +214,8 @@ function LandingPage() {
                   <span className="text-gradient-brand">confidence.</span>
                 </h1>
                 <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-                  Get a personalized, step-by-step plan to choose a domain, build a website, set up business
-                  email and launch online — without the technical confusion.
+                  Get a personalized, step-by-step plan to choose a domain, build a website, set up
+                  business email and launch online — without the technical confusion.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button asChild size="lg" className="text-base">
@@ -246,8 +285,8 @@ function LandingPage() {
               Starting a website should not require speaking tech.
             </h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">
-              These are the questions almost every first-time website owner asks. We answer each one inside
-              your plan, at the moment it matters.
+              These are the questions almost every first-time website owner asks. We answer each one
+              inside your plan, at the moment it matters.
             </p>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {WORRIES.map((w) => (
@@ -283,7 +322,9 @@ function LandingPage() {
         {/* Features */}
         <section className="border-t border-border bg-surface">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-            <h2 className="text-3xl font-bold sm:text-4xl">Everything you need, in one calm place</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl">
+              Everything you need, in one calm place
+            </h2>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {FEATURES.map((f) => (
                 <div key={f.title} className="surface-panel p-5">
@@ -310,8 +351,8 @@ function LandingPage() {
                   Your business should own its online home.
                 </h2>
                 <p className="mt-3 text-muted-foreground">
-                  Keep this account in your control. It is part of your business infrastructure — as real as
-                  your lease or your phone number.
+                  Keep this account in your control. It is part of your business infrastructure — as
+                  real as your lease or your phone number.
                 </p>
               </div>
               <OwnershipWarningCard />
@@ -362,7 +403,9 @@ function LandingPage() {
         {/* Final CTA */}
         <section className="border-t border-border bg-hero-wash">
           <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
-            <h2 className="text-3xl font-bold sm:text-4xl">Your business deserves a home online.</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl">
+              Your business deserves a home online.
+            </h2>
             <p className="mt-3 text-muted-foreground">
               Start free, work at your own pace, and keep every account in your own name.
             </p>
