@@ -20,6 +20,10 @@ import {
   Check,
   RefreshCw,
   Zap,
+  Shield,
+  Scale,
+  Building,
+  HelpCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
@@ -36,14 +40,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -51,21 +47,21 @@ export const Route = createFileRoute("/content")({
   head: () => ({
     meta: [
       {
-        title: "Website Content Draft Generator & Live Preview — High-Converting Copy",
+        title: "Website Starter Copy & Page Content Builder — 7 Core Pages",
       },
       {
         name: "description",
         content:
-          "Generate high-converting website copy drafts for Home, About, Services, Contact, and FAQ pages with real-time visual mockups, HTML/Markdown exports, and industry templates.",
+          "Generate high-converting website copy drafts for Home, About, Services, Contact, FAQ, Privacy Policy, and Terms of Service with real-time visual mockups and one-click exports.",
       },
       {
         property: "og:title",
-        content: "Website Content Draft Generator & Live Preview",
+        content: "Website Starter Copy & Page Content Builder",
       },
       {
         property: "og:description",
         content:
-          "Interactive draft writer with real-time preview, industry starter templates, clarity checks, and one-click HTML/Markdown exports.",
+          "Interactive draft writer with real-time preview, industry starter templates, auto-fill from Business Profile, clarity checks, and one-click HTML/Markdown exports.",
       },
     ],
   }),
@@ -240,6 +236,101 @@ const PAGES: Page[] = [
       },
     ],
   },
+  {
+    id: "privacy",
+    name: "Privacy Policy",
+    purpose:
+      "Plain-language disclosure of how customer data, contact info, and analytics are handled.",
+    fields: [
+      {
+        id: "controller",
+        label: "Business Name & Data Controller Details",
+        help: "Who operates this website and who to contact for data inquiries.",
+        example:
+          "Harbor & Hearth LLC, 412 Harbor Street, Portland OR. Data contact: privacy@harborhearthbakery.com",
+        rows: 2,
+      },
+      {
+        id: "collection",
+        label: "What customer data do you collect?",
+        help: "Contact form entries, order details, newsletter emails, website cookies/analytics.",
+        example:
+          "We only collect information you voluntarily provide: your name, email address, phone number, and delivery address when ordering or submitting inquiries. We also use standard anonymous website analytics.",
+        rows: 3,
+      },
+      {
+        id: "usage",
+        label: "How do you use this information?",
+        help: "Fulfilling orders, responding to inquiries, sending receipts, and service updates.",
+        example:
+          "Your data is used solely to respond to inquiries, process bakery orders, and deliver catering services. We never sell, rent, or trade customer contact details to third parties.",
+        rows: 3,
+      },
+      {
+        id: "thirdparties",
+        label: "Third-party tools and processors",
+        help: "Payment processors (Stripe, Square), hosting, email delivery.",
+        example:
+          "Payments are processed securely via Stripe. We do not store raw credit card numbers on our servers. Anonymous web traffic is analyzed via Google Analytics.",
+        rows: 3,
+      },
+      {
+        id: "rights",
+        label: "Customer rights & deletion requests",
+        help: "How visitors can request access, corrections, or deletion of their information.",
+        example:
+          "You have the right to request a copy of the personal data we hold about you or ask us to delete your details at any time by emailing privacy@harborhearthbakery.com.",
+        rows: 2,
+      },
+    ],
+  },
+  {
+    id: "terms",
+    name: "Terms of Service",
+    purpose: "Clear expectations on bookings, pricing, cancellations, refunds, and liability.",
+    fields: [
+      {
+        id: "acceptance",
+        label: "Agreement & Service Overview",
+        help: "State what services you provide and that website visitors agree to these terms.",
+        example:
+          "By accessing this website and ordering services from Harbor & Hearth LLC, you agree to these clear terms of service.",
+        rows: 2,
+      },
+      {
+        id: "pricing_payment",
+        label: "Pricing, Quotes & Payment Terms",
+        help: "Deposits, quote validity, payment due dates, and accepted payment methods.",
+        example:
+          "All listed prices are in USD. Custom event orders require a 50% non-refundable deposit to secure the date, with full payment due 48 hours prior to delivery.",
+        rows: 3,
+      },
+      {
+        id: "cancellation_refunds",
+        label: "Cancellation, Rescheduling & Refund Policy",
+        help: "Clear rules prevent awkward disputes before they occur.",
+        example:
+          "Standard orders may be cancelled up to 24 hours in advance for a full refund. Custom wedding and catering cakes require 7 days notice for a date reschedule.",
+        rows: 3,
+      },
+      {
+        id: "liability",
+        label: "Limitation of Liability & Allergens/Disclaimers",
+        help: "Disclaimers regarding allergy warnings, third-party delays, or service limitations.",
+        example:
+          "While we take cross-contamination precautions, our facility processes nuts, gluten, and dairy. Products are provided on an 'as is' basis without warranties beyond our quality guarantee.",
+        rows: 3,
+      },
+      {
+        id: "jurisdiction",
+        label: "Governing Law & Contact Channel",
+        help: "Which state/country laws apply and where legal questions can be sent.",
+        example:
+          "These terms are governed by the laws of the State of Oregon. Questions regarding these terms may be sent to legal@harborhearthbakery.com.",
+        rows: 2,
+      },
+    ],
+  },
 ];
 
 interface IndustryTemplate {
@@ -290,6 +381,29 @@ const INDUSTRY_TEMPLATES: IndustryTemplate[] = [
         answers:
           "Yes! We bake vegan cinnamon rolls and gluten-friendly seed loaves every Thursday.\nPlease order custom event cakes at least 3 business days in advance.\nYes, our naturally leavened bread freezes wonderfully for up to 3 months when sliced.",
       },
+      privacy: {
+        controller:
+          "Harbor & Hearth Bakery LLC, 412 Harbor Street, Portland OR. Contact: privacy@harborhearthbakery.com",
+        collection:
+          "We collect customer names, phone numbers, and email addresses when you place an order or message us via our contact form.",
+        usage:
+          "Data is used strictly to prepare orders, process payments, and coordinate delivery.",
+        thirdparties:
+          "Credit card payments are handled securely through Square/Stripe. We do not store financial account numbers.",
+        rights:
+          "You can request deletion of your contact information anytime by emailing privacy@harborhearthbakery.com.",
+      },
+      terms: {
+        acceptance:
+          "By ordering from Harbor & Hearth Bakery, you agree to our standard order and service terms.",
+        pricing_payment:
+          "Full payment is required at time of online order. Custom event catering requires a 50% deposit.",
+        cancellation_refunds:
+          "Standard pastry orders can be cancelled up to 24 hours prior. Custom cakes require 3 business days notice.",
+        liability:
+          "Our kitchen processes nuts, dairy, wheat, and sesame. Please notify us of severe allergies prior to ordering.",
+        jurisdiction: "Governed by the laws of the State of Oregon.",
+      },
     },
   },
   {
@@ -331,6 +445,28 @@ const INDUSTRY_TEMPLATES: IndustryTemplate[] = [
           "When should a company hire a Fractional CFO versus a full-time CFO?\nWhat accounting software do you work with?\nHow quickly can we onboard?",
         answers:
           "Fractional CFOs are ideal for companies generating between $500k and $10M in revenue who need senior expertise without a $300k+ executive salary.\nWe specialize in QuickBooks Online, Xero, Stripe, Ramp, and NetSuite.\nStandard onboarding takes 5 business days to integrate data and deliver your first cash forecast.",
+      },
+      privacy: {
+        controller: "Vance Financial Advisory Group Inc. Contact: legal@vancefinancial.com",
+        collection:
+          "We collect client executive names, corporate emails, and financial metrics shared during advisory engagements.",
+        usage:
+          "Client data is processed exclusively for delivering strategic financial models and compliance deliverables.",
+        thirdparties:
+          "All data storage adheres to SOC-2 compliant cloud infrastructure and encrypted vault services.",
+        rights:
+          "Clients maintain total ownership of their financial records and may request data export or shredding at any time.",
+      },
+      terms: {
+        acceptance:
+          "Engagement with Vance Financial Advisory is governed by our master service agreement and statement of work.",
+        pricing_payment:
+          "Retainer invoices are billed monthly in advance and payable via ACH / wire within 15 days.",
+        cancellation_refunds:
+          "Retainers may be cancelled with 30 days written notice. Prepaid unearned retainers are refunded pro-rata.",
+        liability:
+          "Advisory services provide strategic analysis and do not constitute formal statutory audit certifications.",
+        jurisdiction: "Governed by the laws of the State of Delaware.",
       },
     },
   },
@@ -376,6 +512,29 @@ const INDUSTRY_TEMPLATES: IndustryTemplate[] = [
         answers:
           "No hidden weekend surcharges for standard scheduled bookings.\nYes, 100% of our technicians are state-licensed, background-checked, and carry full liability insurance.\nWe offer a 1-year unconditional labor guarantee on all plumbing installations.",
       },
+      privacy: {
+        controller:
+          "Miller Plumbing & Mechanical Services LLC, Austin TX. Contact: dispatch@millerplumbingtx.com",
+        collection:
+          "We collect homeowner names, service addresses, phone numbers, and job notes for dispatch scheduling.",
+        usage:
+          "Used solely to route field technicians, send appointment SMS notifications, and provide written warranties.",
+        thirdparties:
+          "SMS notifications are routed via Twilio. Invoicing is processed through Housecall Pro / Stripe.",
+        rights:
+          "You may opt out of promotional service reminders at any time by replying STOP to SMS or emailing us.",
+      },
+      terms: {
+        acceptance:
+          "By approving an on-site estimate or dispatch, customers agree to our standard trade terms.",
+        pricing_payment:
+          "Payment is due upon completion of services. We accept all major cards, checks, and financing.",
+        cancellation_refunds:
+          "No fee for cancellations made 2 hours prior to scheduled technician arrival.",
+        liability:
+          "All labor is backed by our 1-year workmanship warranty. Manufacturer warranties apply to hardware.",
+        jurisdiction: "Governed by the laws of the State of Texas.",
+      },
     },
   },
   {
@@ -418,6 +577,28 @@ const INDUSTRY_TEMPLATES: IndustryTemplate[] = [
         answers:
           "Standard brand & Shopify projects take between 4 to 8 weeks from kickoff to launch.\nYes! We build using intuitive drag-and-drop sections and record custom video walkthrough tutorials for your team.\nYes, we offer monthly growth retainers for ongoing conversion optimization and campaign assets.",
       },
+      privacy: {
+        controller: "Lumin Design Studio LLC, Seattle WA. Contact: privacy@lumindesign.co",
+        collection:
+          "We collect client contact information, project brief details, and asset files uploaded for design reviews.",
+        usage:
+          "Data is used solely to execute creative design deliverables and maintain client project communication.",
+        thirdparties:
+          "Design files are hosted via Figma and Google Drive. Invoices are managed via Stripe.",
+        rights:
+          "Clients may request complete archival or deletion of past project briefs after final handover.",
+      },
+      terms: {
+        acceptance:
+          "Design and development projects are governed by our custom proposal and statement of work.",
+        pricing_payment:
+          "Projects are structured with a 50% deposit upon kickoff and 50% upon final launch approval.",
+        cancellation_refunds:
+          "Deposits cover preliminary discovery and concept phases and are non-refundable once design begins.",
+        liability:
+          "Upon final invoice settlement, full intellectual property rights for delivered custom designs transfer to the client.",
+        jurisdiction: "Governed by the laws of the State of Washington.",
+      },
     },
   },
 ];
@@ -459,7 +640,7 @@ export function ContentBuilder() {
 
   const setField = (page: string, field: string, value: string) => {
     setValues((v) => {
-      const next = { ...v, [page]: { ...v[page], [field]: value.slice(0, 3000) } };
+      const next = { ...v, [page]: { ...v[page], [field]: value.slice(0, 4000) } };
       saveDraft(page, next[page] || {});
       return next;
     });
@@ -471,35 +652,79 @@ export function ContentBuilder() {
     for (const [pageId, fields] of Object.entries(template.data)) {
       saveDraft(pageId, fields);
     }
-    toast.success(`Loaded "${template.name}" starter copy into all pages!`);
+    toast.success(`Loaded "${template.name}" starter copy into all 7 pages!`);
   };
 
-  // Pre-fill from business profile
+  // Smart Pre-fill from Business Profile
   const prefillFromProfile = () => {
-    const next = { ...values };
     const p = state.business;
+    const bName = businessName;
+    const category = p.category || "Professional Services";
+    const loc = p.location || p.address || "Local and regional service";
+    const contactEmail = p.businessEmail || p.ownerContact || `hello@${domain}`;
+    const contactPhone = p.phone || p.whatsappNumber || "(555) 123-4567";
+    const hours = p.hoursDetail || p.openingHours || "Monday – Friday: 9:00 AM – 5:00 PM";
+    const desc = p.description || `${category} dedicated to dependable, high-quality service.`;
+    const services =
+      p.servicesOffered ||
+      "Consultation & Tailored Solutions\nOn-site Delivery\nCustom Project Execution";
+    const targetCust = p.targetCustomers || "Local homeowners, professionals, and businesses.";
+    const diff =
+      p.differentiator ||
+      p.qualifications ||
+      "Over a decade of industry expertise, transparent pricing, and 100% satisfaction guarantee.";
 
-    if (!next.home) next.home = {};
-    if (p.description && !next.home.headline) {
-      next.home.headline = p.description;
-    }
-    if (p.businessType && !next.home.audience) {
-      next.home.audience = `Clients and customers seeking dependable ${p.businessType} services.`;
-    }
+    const generated: Record<string, Record<string, string>> = {
+      home: {
+        headline: desc.length > 20 ? desc : `${bName} — Trusted ${category} in ${loc}.`,
+        audience: targetCust,
+        proof: diff,
+        cta:
+          p.primaryCustomerAction === "phone_call"
+            ? `Call ${contactPhone} for immediate assistance.`
+            : `Book an appointment online or contact ${contactEmail} today.`,
+      },
+      about: {
+        story: `${bName} was founded with a straightforward mission: to provide dependable, transparent, and top-tier ${category.toLowerCase()} without the headaches.`,
+        values: `We prioritize transparent pricing, prompt communication, and exceptional craftsmanship on every project.`,
+        team: `Led by our experienced founders and dedicated customer support specialists ready to assist you.`,
+      },
+      services: {
+        list: services,
+        detail: `Every service is executed with rigorous attention to detail, clear turnaround times, and upfront estimates before work begins.`,
+        pricing: `Clear and transparent rates. Contact us for a personalized estimate tailored to your exact scope.`,
+      },
+      contact: {
+        methods: `Phone: ${contactPhone} | Email: ${contactEmail}`,
+        hours: hours,
+        response: `We respond to all phone calls and web inquiries within 1 business day.`,
+        location: loc,
+      },
+      faq: {
+        questions: `What areas do you serve?\nHow do I get an estimate or quote?\nWhat payment methods do you accept?`,
+        answers: `We proudly serve ${loc} and surrounding communities.\nYou can request an estimate by calling ${contactPhone} or submitting our online contact form.\nWe accept all major credit cards, bank transfers, and electronic payments.`,
+      },
+      privacy: {
+        controller: `${bName} (${loc}). Primary Data Contact: ${contactEmail}`,
+        collection: `We collect contact details (name, email, phone number, and address) provided voluntarily through our website inquiry forms, orders, or booking requests.`,
+        usage: `Your information is used strictly to fulfill service requests, provide customer support, and communicate important updates regarding your account or appointments.`,
+        thirdparties: `We use trusted, industry-standard third-party providers for web hosting, email communication, and secure payment processing. We never sell your personal information.`,
+        rights: `You may request access to, correction of, or deletion of your personal data at any time by contacting ${contactEmail}.`,
+      },
+      terms: {
+        acceptance: `By accessing and using this website or engaging services from ${bName}, you agree to abide by these Terms of Service.`,
+        pricing_payment: `All quotes provided are valid for 30 days. Payment terms, deposits, and accepted methods will be confirmed prior to commencement of work.`,
+        cancellation_refunds: `Appointments or bookings may be rescheduled or cancelled up to 24 hours in advance. Refund terms for specialized materials or custom labor are specified in your service agreement.`,
+        liability: `Services and website content are provided on an 'as is' basis. To the maximum extent permitted by law, ${bName} is not liable for indirect or consequential damages.`,
+        jurisdiction: `These terms are governed by the local laws applicable to ${loc}. Inquiries may be addressed to ${contactEmail}.`,
+      },
+    };
 
-    if (!next.contact) next.contact = {};
-    if (p.ownerContact && !next.contact.methods) {
-      next.contact.methods = `Email: ${p.ownerContact} | Address: ${p.location || "Local service"}`;
-    }
-    if (p.openingHours && !next.contact.hours) {
-      next.contact.hours = p.openingHours;
-    }
-
-    setValues(next);
-    for (const [pageId, fields] of Object.entries(next)) {
+    setValues(generated);
+    for (const [pageId, fields] of Object.entries(generated)) {
       saveDraft(pageId, fields);
     }
-    toast.success("Imported details from your Business Profile!");
+    toast.success("Generated tailored copy for all 7 website pages from your Business Profile!");
   };
 
   const activePage = PAGES.find((p) => p.id === activePageId) || PAGES[0];
@@ -636,6 +861,56 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
 </section>`;
     }
 
+    if (pageId === "privacy") {
+      return `<!-- ${bName} - Privacy Policy -->
+<section class="legal-page privacy-policy">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p class="policy-updated">Last Updated: ${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+    
+    <h2>1. Data Controller & Overview</h2>
+    <p>${d.controller || bName}</p>
+
+    <h2>2. Information We Collect</h2>
+    <p>${d.collection || "We collect information voluntarily submitted via forms."}</p>
+
+    <h2>3. How We Use Your Information</h2>
+    <p>${d.usage || "Information is used exclusively to fulfill customer services."}</p>
+
+    <h2>4. Third-Party Service Providers</h2>
+    <p>${d.thirdparties || "Standard hosting and payment processors only."}</p>
+
+    <h2>5. Your Rights & Contact Details</h2>
+    <p>${d.rights || "You may contact us anytime to request data correction or deletion."}</p>
+  </div>
+</section>`;
+    }
+
+    if (pageId === "terms") {
+      return `<!-- ${bName} - Terms of Service -->
+<section class="legal-page terms-of-service">
+  <div class="container">
+    <h1>Terms of Service</h1>
+    <p class="terms-updated">Last Updated: ${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>${d.acceptance || "By using our services, you agree to these terms."}</p>
+
+    <h2>2. Pricing & Payment</h2>
+    <p>${d.pricing_payment || "Payment terms and rates agreed upon prior to project start."}</p>
+
+    <h2>3. Cancellation & Refunds</h2>
+    <p>${d.cancellation_refunds || "Cancellations subject to reasonable advance notice."}</p>
+
+    <h2>4. Limitation of Liability</h2>
+    <p>${d.liability || "Services provided on standard commercial terms."}</p>
+
+    <h2>5. Governing Law</h2>
+    <p>${d.jurisdiction || "Governed by local jurisdiction laws."}</p>
+  </div>
+</section>`;
+    }
+
     return "";
   };
 
@@ -684,7 +959,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
     }
   };
 
-  // Download All 5 Pages Master Bundle
+  // Download All 7 Pages Master Bundle
   const downloadMasterBundle = () => {
     const allHtml = PAGES.map((p) => generateHtmlForPage(p.id)).join(
       '\n\n<hr class="page-divider" />\n\n',
@@ -693,15 +968,15 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `website-copy-bundle-${domain.replace(/[^a-z0-9]/gi, "-")}.html`;
+    a.download = `website-copy-bundle-all-7-pages-${domain.replace(/[^a-z0-9]/gi, "-")}.html`;
     a.click();
     URL.revokeObjectURL(url);
-    toast.success("Downloaded All 5 Website Pages in Master HTML Bundle!");
+    toast.success("Downloaded All 7 Website Pages in Master HTML Bundle!");
   };
 
   return (
     <AppShell
-      title="Website Content Draft Generator & Live Preview"
+      title="Website Starter Copy & Page Content Builder"
       description="Write high-converting, professional copy without the blank page. Preview live in browser and export to any website builder."
       actions={
         <div className="flex flex-wrap items-center gap-2">
@@ -711,10 +986,10 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
             onClick={prefillFromProfile}
             className="text-xs gap-1.5"
           >
-            <Sparkles className="size-3.5 text-primary" /> Auto-Fill from Profile
+            <Sparkles className="size-3.5 text-primary" /> Auto-Fill All 7 Pages from Profile
           </Button>
           <Button size="sm" onClick={downloadMasterBundle} className="text-xs gap-1.5">
-            <Download className="size-3.5" /> Download All Pages Bundle
+            <Download className="size-3.5" /> Download All 7 Pages Bundle
           </Button>
         </div>
       }
@@ -738,7 +1013,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
               </h3>
             </div>
             <span className="text-xs text-muted-foreground">
-              Select a template to pre-fill all 5 pages
+              Select a template to pre-fill all 7 core pages
             </span>
           </div>
 
@@ -770,13 +1045,13 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
         {/* Page Selector Tabs */}
         <div className="flex flex-col gap-4">
           <Tabs value={activePageId} onValueChange={setActivePageId} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 p-1">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 p-1">
               {PAGES.map((p) => {
                 const isFilled =
                   Object.values(values[p.id] || {}).filter((v) => v.trim().length > 0).length > 0;
                 return (
                   <TabsTrigger key={p.id} value={p.id} className="gap-1.5 text-xs font-semibold">
-                    <span>{p.name}</span>
+                    <span className="truncate">{p.name}</span>
                     {isFilled && <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />}
                   </TabsTrigger>
                 );
@@ -787,7 +1062,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
 
         {/* Interactive Workspace: Split Screen Editor + Live Mockup */}
         <div className="grid gap-6 lg:grid-cols-12 items-start">
-          {/* LEFT SIDE: Structured Guided Prompts (7 cols) */}
+          {/* LEFT SIDE: Structured Guided Prompts (6 cols) */}
           <div className="lg:col-span-6 space-y-4">
             <div className="surface-panel p-5 space-y-2">
               <div className="flex items-center justify-between">
@@ -824,7 +1099,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
                     {f.label}
                   </Label>
                   <span className="text-[10px] text-muted-foreground font-mono">
-                    {(activePageData[f.id] || "").length}/3000
+                    {(activePageData[f.id] || "").length}/4000
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">{f.help}</p>
@@ -836,7 +1111,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
                     onChange={(e) => setField(activePage.id, f.id, e.target.value)}
                     placeholder={`e.g. ${f.example}`}
                     className="text-sm font-medium"
-                    maxLength={3000}
+                    maxLength={4000}
                   />
                 ) : (
                   <Textarea
@@ -846,7 +1121,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
                     onChange={(e) => setField(activePage.id, f.id, e.target.value)}
                     placeholder={`e.g. ${f.example}`}
                     className="text-sm font-medium leading-relaxed"
-                    maxLength={3000}
+                    maxLength={4000}
                   />
                 )}
 
@@ -862,7 +1137,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
             ))}
           </div>
 
-          {/* RIGHT SIDE: Live Customer Website Mockup Preview & Code Export (5 cols) */}
+          {/* RIGHT SIDE: Live Customer Website Mockup Preview & Code Export (6 cols) */}
           <div className="lg:col-span-6 space-y-4 lg:sticky lg:top-4">
             {/* Viewport & Format Selector Header */}
             <div className="surface-panel p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1162,6 +1437,125 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
                     </Accordion>
                   </div>
                 )}
+
+                {/* PRIVACY POLICY VIEW */}
+                {activePageId === "privacy" && (
+                  <div className="space-y-4">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary flex items-center gap-1">
+                        <Shield className="size-3" /> Legal & Transparency
+                      </span>
+                      <h2 className="font-display font-bold text-lg text-foreground">
+                        Privacy Policy
+                      </h2>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">1. Data Controller</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.controller ||
+                          `${businessName} operates this website and is responsible for your personal data.`}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        2. Information We Collect & How
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.collection ||
+                          "We collect information voluntarily submitted via inquiry forms or orders."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        3. Purpose of Processing
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.usage ||
+                          "Your data is used solely to provide customer services and fulfill orders."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        4. Third-Party Processors & Security
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.thirdparties ||
+                          "We use encrypted payment processors (Stripe/Square) and reputable hosting."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-primary/20 bg-primary-soft/20 p-3 space-y-1">
+                      <h4 className="text-xs font-bold text-primary">5. Your Privacy Rights</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.rights ||
+                          "You have the right to request deletion of your information anytime."}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* TERMS OF SERVICE VIEW */}
+                {activePageId === "terms" && (
+                  <div className="space-y-4">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary flex items-center gap-1">
+                        <Scale className="size-3" /> Service Agreements
+                      </span>
+                      <h2 className="font-display font-bold text-lg text-foreground">
+                        Terms of Service
+                      </h2>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">1. Acceptance of Terms</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.acceptance ||
+                          `By using this website, you agree to these standard terms provided by ${businessName}.`}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        2. Pricing, Invoicing & Payments
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.pricing_payment ||
+                          "Prices are transparent and agreed upon before work begins."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        3. Cancellation & Refunds
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.cancellation_refunds ||
+                          "Cancellations must be communicated in advance according to our notice policy."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-border bg-card p-3.5 space-y-2">
+                      <h4 className="text-xs font-bold text-foreground">
+                        4. Limitation of Liability
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.liability ||
+                          "Services are provided with standard commercial warranties."}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border border-primary/20 bg-primary-soft/20 p-3 space-y-1">
+                      <h4 className="text-xs font-bold text-primary">5. Governing Law</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {activePageData.jurisdiction || "Governed by local state and country laws."}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Mockup Footer */}
@@ -1241,7 +1635,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
                 <Link to="/customer-journey">Open Journey Tester →</Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="shrink-0">
-                <Link to="/hire-help">Hire Help Handoff →</Link>
+                <Link to="/launch-wizard">Launch Wizard →</Link>
               </Button>
             </div>
           </div>

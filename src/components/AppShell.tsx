@@ -27,6 +27,8 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/launch-wizard", label: "Launch Track Wizard", icon: Rocket },
+  { to: "/preflight", label: "Pre-Flight Simulator", icon: ShieldCheck },
   { to: "/domains", label: "Domain finder", icon: Globe },
   { to: "/platform-matcher", label: "Website & hosting", icon: Blocks },
   { to: "/connect-domain", label: "Connect domain", icon: Network },
@@ -34,6 +36,7 @@ const NAV = [
   { to: "/content", label: "Content builder", icon: FileText },
   { to: "/business-email", label: "Business email", icon: Mail },
   { to: "/get-found", label: "Get found", icon: Search },
+  { to: "/launch-dossier", label: "Launch dossier", icon: FileText },
   { to: "/maintenance", label: "Maintenance", icon: Wrench },
   { to: "/learn", label: "Learning library", icon: BookOpen },
   { to: "/ownership-record", label: "Ownership record", icon: ShieldCheck },

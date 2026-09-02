@@ -49,12 +49,14 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const QUICK_TOOLS = [
+  { to: "/launch-wizard", label: "Launch track wizard", icon: Rocket },
+  { to: "/preflight", label: "Pre-flight simulator", icon: ClipboardCheck },
   { to: "/domains", label: "Domain finder", icon: Globe },
   { to: "/business-profile", label: "Business profile", icon: Building2 },
-  { to: "/customer-journey", label: "Journey tester", icon: ClipboardCheck },
-  { to: "/connect-domain", label: "Connect domain", icon: Network },
   { to: "/content", label: "Content builder", icon: FileText },
+  { to: "/connect-domain", label: "Connect domain", icon: Network },
   { to: "/checklist", label: "Launch checklist", icon: ListChecks },
+  { to: "/launch-dossier", label: "Launch dossier", icon: FileText },
 ];
 
 function Dashboard() {
@@ -196,6 +198,32 @@ function Dashboard() {
             <p className="mt-1 text-sm text-muted-foreground">
               {readiness.completedRequiredTasks} of {readiness.totalRequiredTasks} required done
             </p>
+          </div>
+        </div>
+
+        <div className="surface-panel flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between border-primary/30 bg-primary-soft/20">
+          <div className="space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+              Linear 6-Step Roadmap
+            </span>
+            <p className="font-display text-base font-bold text-foreground flex items-center gap-2">
+              <Rocket className="size-4.5 text-primary" aria-hidden="true" /> Guided Launch Setup
+              Wizard
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Sequential track: 1. Secure Domain → 2. Business Email → 3. Build Site → 4. Connect
+              DNS → 5. Google Business → 6. Pre-Flight Test.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <Button asChild size="sm" className="gap-1.5 shadow">
+              <Link to="/launch-wizard">
+                Open Launch Wizard <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="gap-1.5">
+              <Link to="/preflight">Pre-Flight Simulator</Link>
+            </Button>
           </div>
         </div>
 
