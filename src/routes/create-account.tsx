@@ -44,11 +44,22 @@ function CreateAccountPage() {
             noValidate
             onSubmit={(e) => {
               e.preventDefault();
-              if (!fullName.trim()) return toast.error("Please enter your name.");
-              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
-                return toast.error("Enter a valid email address.");
-              if (password.length < 8) return toast.error("Use at least 8 characters for your password.");
-              if (!agreed) return toast.error("Please accept the terms and privacy notice.");
+              if (!fullName.trim()) {
+                toast.error("Please enter your name.");
+                return;
+              }
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+                toast.error("Enter a valid email address.");
+                return;
+              }
+              if (password.length < 8) {
+                toast.error("Use at least 8 characters for your password.");
+                return;
+              }
+              if (!agreed) {
+                toast.error("Please accept the terms and privacy notice.");
+                return;
+              }
               signIn(fullName.trim(), email.trim());
               toast.success("Your plan is now labelled with your details.");
               navigate({ to: "/dashboard" });
