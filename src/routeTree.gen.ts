@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as BusinessEmailRouteImport } from './routes/business-email'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -58,6 +59,11 @@ const AccountRoute = AccountRouteImport.update({
 const BusinessEmailRoute = BusinessEmailRouteImport.update({
   id: '/business-email',
   path: '/business-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChecklistRoute = ChecklistRouteImport.update({
@@ -196,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
@@ -261,6 +269,7 @@ export interface FileRoutesById {
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
+  '/changelog': typeof ChangelogRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/contact': typeof ContactRoute
@@ -295,6 +304,7 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/accessibility'
     | '/account'
     | '/business-email'
+    | '/changelog'
     | '/checklist'
     | '/connect-domain'
     | '/contact'
@@ -392,6 +404,7 @@ export interface RootRouteChildren {
   AccessibilityRoute: typeof AccessibilityRoute
   AccountRoute: typeof AccountRoute
   BusinessEmailRoute: typeof BusinessEmailRoute
+  ChangelogRoute: typeof ChangelogRoute
   ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
   ContactRoute: typeof ContactRoute
@@ -448,6 +461,13 @@ declare module '@tanstack/react-router' {
       path: '/business-email'
       fullPath: '/business-email'
       preLoaderRoute: typeof BusinessEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checklist': {
@@ -640,6 +660,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccessibilityRoute: AccessibilityRoute,
   AccountRoute: AccountRoute,
   BusinessEmailRoute: BusinessEmailRoute,
+  ChangelogRoute: ChangelogRoute,
   ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
   ContactRoute: ContactRoute,
