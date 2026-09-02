@@ -66,6 +66,8 @@ function Settings() {
           anywhere, and clearing your browser data removes them.
         </Callout>
 
+        <ThemeSettingsCard />
+
         <section className="surface-panel space-y-3 p-5 sm:p-6">
           <h2 className="font-display text-xl font-bold">Export your plan</h2>
           <p className="text-sm text-muted-foreground">
