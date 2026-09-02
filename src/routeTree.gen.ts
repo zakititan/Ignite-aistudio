@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
+import { Route as ContentRouteImport } from './routes/content'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
@@ -31,6 +32,11 @@ const ChecklistRoute = ChecklistRouteImport.update({
 const ConnectDomainRoute = ConnectDomainRouteImport.update({
   id: '/connect-domain',
   path: '/connect-domain',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContentRoute = ContentRouteImport.update({
+  id: '/content',
+  path: '/content',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checklist'
     | '/connect-domain'
+    | '/content'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checklist'
     | '/connect-domain'
+    | '/content'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/checklist'
     | '/connect-domain'
+    | '/content'
     | '/dashboard'
     | '/domains'
     | '/how-it-works'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
+  ContentRoute: typeof ContentRoute
   DashboardRoute: typeof DashboardRoute
   DomainsRoute: typeof DomainsRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/connect-domain'
       fullPath: '/connect-domain'
       preLoaderRoute: typeof ConnectDomainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/content': {
+      id: '/content'
+      path: '/content'
+      fullPath: '/content'
+      preLoaderRoute: typeof ContentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
+  ContentRoute: ContentRoute,
   DashboardRoute: DashboardRoute,
   DomainsRoute: DomainsRoute,
   HowItWorksRoute: HowItWorksRoute,
