@@ -131,12 +131,15 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
   const changeType: DnsPlanningState["websiteChangeType"] =
     planning?.websiteChangeType ??
     ((): DnsPlanningState["websiteChangeType"] => {
-      const b = normaliseConfidence(business.websiteChangePlanned ?? business.existingWebsitePresent);
+      const b = normaliseConfidence(
+        business.websiteChangePlanned ?? business.existingWebsitePresent,
+      );
       if (b === "yes") return "replacing";
       if (b === "no") return "first";
       // fallback to existingWebsiteStatus
       const ew = (business.existingWebsiteStatus ?? "").toLowerCase();
-      if (ew.includes("have a website") || ew.includes("improving") || ew.includes("already")) return "replacing";
+      if (ew.includes("have a website") || ew.includes("improving") || ew.includes("already"))
+        return "replacing";
       if (ew.includes("nothing yet") || ew.includes("no domain")) return "first";
       return "unsure";
     })();
@@ -149,7 +152,8 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
       if (v === "no" || v === "not_yet") return "not_yet";
       if (v === "unsure") return "unsure";
       // also check task screenshot complete
-      if (hasTaskComplete(state.tasks, ["take a screenshot of your current domain settings"])) return "yes";
+      if (hasTaskComplete(state.tasks, ["take a screenshot of your current domain settings"]))
+        return "yes";
       return "not_yet";
     })();
 
@@ -169,8 +173,7 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
     business.registrarName ??
     state.ownership.dnsProvider ??
     ""
-  )
-    .trim();
+  ).trim();
   const providerKnown = providerLocation.length > 0;
 
   const emailAtRisk = usesEmailRaw === "yes" || usesEmailRaw === "not_sure";
@@ -212,7 +215,8 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
   let recommendedNextStep: { label: string; route: string };
 
   // low only if first site + no email + screenshot + exact records
-  const isLow = changeType === "first" && usesEmailRaw === "no" && screenshot === "yes" && hasExact === "yes";
+  const isLow =
+    changeType === "first" && usesEmailRaw === "no" && screenshot === "yes" && hasExact === "yes";
   // high if email yes+change, replacing, no screenshot, unknown provider, no exact records
   const isHigh =
     usesEmailRaw === "yes" &&
@@ -225,7 +229,8 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
   if (isLow) {
     level = "low";
     title = "You are ready to connect — low DNS risk";
-    summary = "You are ready to connect. First website and no business email at risk — you have a screenshot and exact provider values. Safe to connect.";
+    summary =
+      "You are ready to connect. First website and no business email at risk — you have a screenshot and exact provider values. Safe to connect.";
     recommendedNextStep = { label: "Connect your website", route: "/connect-domain" };
   } else if (isHigh) {
     level = "high";
@@ -244,7 +249,8 @@ export function getDnsImpactPreview(state: AppState): DnsImpactPreview {
     if (screenshot !== "yes" || hasExact !== "yes") {
       level = "medium";
       title = "Review your current setup — medium DNS risk";
-      summary = "Review your current setup before changing DNS. Add missing safeguards (screenshot, exact records) before changing.";
+      summary =
+        "Review your current setup before changing DNS. Add missing safeguards (screenshot, exact records) before changing.";
       recommendedNextStep = { label: "Review DNS guide", route: "/connect-domain" };
     } else {
       level = "low";
@@ -276,7 +282,8 @@ function domainArea(state: AppState, readiness: LaunchReadiness): PresenceStatus
   const ideas = state.savedDomainIdeas;
 
   const ownedDomain = (business.ownedDomain ?? "").trim();
-  const registrarName = (business.registrarName ?? "").trim() || (ownership.domainRegistrar ?? "").trim();
+  const registrarName =
+    (business.registrarName ?? "").trim() || (ownership.domainRegistrar ?? "").trim();
   const preferredDomain = (business.preferredDomain ?? "").trim();
   const hasIdeas = ideas.length > 0;
   const purchasedIdea = ideas.some((d) => d.status === "purchased");
@@ -336,7 +343,8 @@ function domainArea(state: AppState, readiness: LaunchReadiness): PresenceStatus
   return {
     id: "domain",
     label: "Domain",
-    description: "Your web address — registered in your own account with renewal and recovery saved.",
+    description:
+      "Your web address — registered in your own account with renewal and recovery saved.",
     status,
     statusLabel: STATUS_LABEL[status],
     summary,
@@ -354,7 +362,8 @@ function websiteArea(state: AppState): PresenceStatusArea {
 
   const websiteUrl = (business.websiteUrl ?? "").trim();
   const websiteUrlStatus = (business.websiteUrlStatus ?? "") as string;
-  const provider = (business.websiteProvider ?? "").trim() || (ownership.websitePlatform ?? "").trim();
+  const provider =
+    (business.websiteProvider ?? "").trim() || (ownership.websitePlatform ?? "").trim();
   const approach = (business.websiteApproach ?? "").trim();
   const existingPresent = normaliseConfidence(business.existingWebsitePresent);
   const blockers: string[] = [];
@@ -376,12 +385,16 @@ function websiteArea(state: AppState): PresenceStatusArea {
     }
   } else if (websiteUrlStatus === "draft" || websiteUrl.length > 0) {
     status = "in_progress";
-    summary = websiteUrl ? `Website draft at ${websiteUrl} — finish core pages and connect.` : "Website draft in progress.";
+    summary = websiteUrl
+      ? `Website draft at ${websiteUrl} — finish core pages and connect.`
+      : "Website draft in progress.";
     if (!homeDone) blockers.push("Write Home page");
     if (!httpsDone) blockers.push("Enable HTTPS");
   } else if (provider || approach || existingPresent === "yes") {
     status = "planned";
-    summary = provider ? `Website tool "${provider}" chosen — build core pages.` : "Website setup chosen — start building core pages.";
+    summary = provider
+      ? `Website tool "${provider}" chosen — build core pages.`
+      : "Website setup chosen — start building core pages.";
   } else if (tasks.length === 0) {
     status = "not_started";
     summary = "No website setup yet — choose a website tool to begin.";
@@ -410,7 +423,9 @@ function emailArea(state: AppState, readiness: LaunchReadiness): PresenceStatusA
   const tasks = state.tasks;
   const uses = normaliseConfidence(business.usesBusinessEmail ?? business.needsBusinessEmail);
 
-  const hasEmail = (business.businessEmail ?? "").trim().length > 0 || (state.ownership.emailProvider ?? "").trim().length > 0;
+  const hasEmail =
+    (business.businessEmail ?? "").trim().length > 0 ||
+    (state.ownership.emailProvider ?? "").trim().length > 0;
   const chooseDone = hasTaskComplete(tasks, ["choose your business email provider"]);
   const setupDone = hasTaskComplete(tasks, ["set up your business email address"]);
   const testDone = hasTaskComplete(tasks, ["send and receive a test email"]);
@@ -461,7 +476,9 @@ function emailArea(state: AppState, readiness: LaunchReadiness): PresenceStatusA
 function dnsArea(state: AppState): PresenceStatusArea {
   const tasks = state.tasks;
   const preview = getDnsImpactPreview(state);
-  const screenshotDone = hasTaskComplete(tasks, ["take a screenshot of your current domain settings"]);
+  const screenshotDone = hasTaskComplete(tasks, [
+    "take a screenshot of your current domain settings",
+  ]);
   const pointDone = hasTaskComplete(tasks, ["point your web address at your website"]);
   const httpsDone = hasTaskComplete(tasks, ["turn on https"]);
 
@@ -521,10 +538,13 @@ function ownershipArea(state: AppState, readiness: LaunchReadiness): PresenceSta
   const ownership = state.ownership;
   const tasks = state.tasks;
 
-  const hasRegistrar = (ownership.domainRegistrar ?? "").trim() || (business.registrarName ?? "").trim();
+  const hasRegistrar =
+    (ownership.domainRegistrar ?? "").trim() || (business.registrarName ?? "").trim();
   const hasRenewal = (ownership.renewalDate ?? "").trim();
   const hasDnsProvider = (ownership.dnsProvider ?? "").trim();
-  const hasRecovery = (ownership.recoveryOwner ?? "").trim() || normaliseConfidence(business.hasRecoveryEmailAccess) === "yes";
+  const hasRecovery =
+    (ownership.recoveryOwner ?? "").trim() ||
+    normaliseConfidence(business.hasRecoveryEmailAccess) === "yes";
   const tfaDone = hasTaskComplete(tasks, ["turn on two-step"]);
   const renewalDone = hasTaskComplete(tasks, ["turn on renewal"]);
   const blockers: string[] = [];
@@ -532,9 +552,13 @@ function ownershipArea(state: AppState, readiness: LaunchReadiness): PresenceSta
   let status: PresenceAreaStatus;
   let summary: string;
 
-  const filledCount = [hasRegistrar, hasRenewal, hasDnsProvider, ownership.websitePlatform, ownership.emailProvider].filter(
-    (v) => (v ?? "").trim().length > 0,
-  ).length;
+  const filledCount = [
+    hasRegistrar,
+    hasRenewal,
+    hasDnsProvider,
+    ownership.websitePlatform,
+    ownership.emailProvider,
+  ].filter((v) => (v ?? "").trim().length > 0).length;
 
   const readinessBlocked = readiness.blockers.some((b) => b.id === "domain-ownership");
 
@@ -629,14 +653,22 @@ function localPresenceArea(state: AppState): PresenceStatusArea {
     statusLabel: STATUS_LABEL[status],
     summary,
     relatedRoute: "/get-found",
-    actionLabel: status === "complete" && customerModel !== "online" ? "Review local profile" : "Set up local presence",
+    actionLabel:
+      status === "complete" && customerModel !== "online"
+        ? "Review local profile"
+        : "Set up local presence",
     priority: 7,
     blockers: blockers.length ? blockers : undefined,
   };
 }
 
 export function getOnlinePresenceStatus(state: AppState): PresenceStatusArea[] {
-  const readiness = getReadiness(state.tasks, state.business, state.ownership, state.customerJourneyTest);
+  const readiness = getReadiness(
+    state.tasks,
+    state.business,
+    state.ownership,
+    state.customerJourneyTest,
+  );
 
   const areas: PresenceStatusArea[] = [
     domainArea(state, readiness),

@@ -146,7 +146,12 @@ export function inferDefaultJourney(business: BusinessProfile): CustomerJourneyT
   )
     return "newsletter_signup";
   // Bakery / café / restaurant → Visit/order (prefer visit_location, fallback to online_purchase handled above)
-  if (category.includes("bakery") || category.includes("café") || category.includes("cafe") || category.includes("restaurant"))
+  if (
+    category.includes("bakery") ||
+    category.includes("café") ||
+    category.includes("cafe") ||
+    category.includes("restaurant")
+  )
     return "visit_location";
   // Freelancer / creative / consultant / tutor / coach / agency → Contact/booking
   if (
@@ -183,7 +188,8 @@ export function inferDefaultJourney(business: BusinessProfile): CustomerJourneyT
     if (goal.includes("phone") || goal.includes("call")) return "phone_call";
     if (has("WhatsApp / phone contact button")) return "whatsapp_message";
     // Default local suggestion: Phone call if phone available, else contact form, else visit_location
-    if ((business.phone ?? "").trim() || (business.whatsappNumber ?? "").trim()) return "phone_call";
+    if ((business.phone ?? "").trim() || (business.whatsappNumber ?? "").trim())
+      return "phone_call";
     if (has("Contact form")) return "contact_form";
     return "visit_location";
   }

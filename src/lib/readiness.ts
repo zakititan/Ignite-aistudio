@@ -534,7 +534,8 @@ export function getReadiness(
     if (isBookingRelevant(business)) {
       const bookingMissing = !(business.bookingUrl ?? "").trim();
       const confirmationOutstanding = false; // No dedicated task; use journey test as proxy
-      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const isJourneyObject =
+        typeof customerJourneyTest === "object" && customerJourneyTest !== null;
       const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
       const isBookingJourney = journey?.journeyType === "booking";
       const journeyNotPassed = !journey || !journey.steps.every((s) => s.status === "passed");
@@ -551,7 +552,9 @@ export function getReadiness(
       } else if (isBookingJourney && journeyNotPassed) {
         // Booking URL present but journey not passed — reinforce blocker already exists via journey, but add specific booking confirmation hint
         // Avoid duplicate if journey blocker already present
-        const hasJourneyBlocker = blockers.some((b) => b.id.startsWith("customer-journey") || b.id === "primary-action-test");
+        const hasJourneyBlocker = blockers.some(
+          (b) => b.id.startsWith("customer-journey") || b.id === "primary-action-test",
+        );
         if (!hasJourneyBlocker) {
           blockers.push({
             id: "booking-confirmation",
@@ -570,7 +573,8 @@ export function getReadiness(
   // 13 - Contact-form: form tested or alternate
   {
     if (isContactFormRelevant(business)) {
-      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const isJourneyObject =
+        typeof customerJourneyTest === "object" && customerJourneyTest !== null;
       const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
       const isContactFormJourney = journey?.journeyType === "contact_form";
       const formTested = isContactFormJourney
@@ -628,7 +632,8 @@ export function getReadiness(
         "take a screenshot of your current domain settings",
       ]);
       const pointOutstanding = isTaskOutstanding(tasks, ["point your web address at your website"]);
-      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const isJourneyObject =
+        typeof customerJourneyTest === "object" && customerJourneyTest !== null;
       const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
       const journeyTested = journey ? journey.steps.every((s) => s.status === "passed") : false;
       const journeyHasBlocked = journey ? journey.steps.some((s) => s.status === "blocked") : false;

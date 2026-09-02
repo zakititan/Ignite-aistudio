@@ -9,6 +9,7 @@ import {
   Phone,
   Palette,
   Globe,
+  HardDrive,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
@@ -246,6 +247,19 @@ function BusinessProfilePage() {
       description="One workspace for the details every other page relies on. Changes save automatically and flow to dashboard, content, journey tester and handoff."
     >
       <div className="space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/80 bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <HardDrive className="size-4 text-primary" aria-hidden="true" />
+            <span>
+              <strong className="text-foreground">Data is saved on this device.</strong> Changes
+              save automatically as you type and pre-fill downstream tools.
+            </span>
+          </div>
+          <Badge variant="outline" className="text-[11px] font-normal">
+            Auto-save active
+          </Badge>
+        </div>
+
         {/* Completion header */}
         <section className="surface-panel p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">

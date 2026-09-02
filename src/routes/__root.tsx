@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { ChatbotWidget } from "@/components/ChatbotWidget";
 import { StoreProvider } from "@/lib/store";
 import { ThemeProvider, themeInitScript } from "@/lib/theme";
 
@@ -132,6 +133,7 @@ function RootComponent() {
         <StoreProvider>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
+          <ChatbotWidget />
           <Toaster position="top-center" richColors />
         </StoreProvider>
       </ThemeProvider>

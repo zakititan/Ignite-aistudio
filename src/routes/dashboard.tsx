@@ -1,13 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import {
-  ArrowRight,
-  ChevronDown,
-  Clock,
-  HelpCircle,
-  Building2,
-  Rocket,
-} from "lucide-react";
+import { ArrowRight, ChevronDown, Clock, HelpCircle, Building2, Rocket } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProgressRing } from "@/components/ProgressRing";
 import { EmptyState } from "@/components/EmptyState";
@@ -25,6 +18,8 @@ import { OnlinePresenceStatusGrid } from "@/components/OnlinePresenceStatusGrid"
 import { LaunchReadinessSummary } from "@/components/LaunchReadinessSummary";
 import { SetupMapPreview } from "@/components/SetupMapPreview";
 import { QuickTools } from "@/components/QuickTools";
+import { MilestoneSequence } from "@/components/MilestoneSequence";
+import { getRecentTools } from "@/lib/recent-tools";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/dashboard")({
@@ -59,6 +54,7 @@ function Dashboard() {
   );
   const areas = useMemo(() => getOnlinePresenceStatus(state), [state]);
   const topAction = useMemo(() => getTopPresenceAction(areas, readiness), [areas, readiness]);
+  const recentTools = useMemo(() => getRecentTools(), []);
 
   const recent = useMemo(
     () =>
@@ -98,9 +94,10 @@ function Dashboard() {
                 Start with a few questions — we will build your online presence plan.
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Answer seven short questions about your business and we will create a personalized roadmap
-                plus a seven-area overview (domain, website, business email, DNS connection, customer
-                action, ownership &amp; recovery, local presence) so you know what to do next.
+                Answer seven short questions about your business and we will create a personalized
+                roadmap plus a seven-area overview (domain, website, business email, DNS connection,
+                customer action, ownership &amp; recovery, local presence) so you know what to do
+                next.
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Button asChild>
@@ -190,7 +187,9 @@ function Dashboard() {
             <div className="flex shrink-0 items-center gap-3">
               <ProgressRing value={percent} size={84} label="complete" />
               <div className="text-sm">
-                <p className="font-semibold">{completed} of {tasks.length} tasks done</p>
+                <p className="font-semibold">
+                  {completed} of {tasks.length} tasks done
+                </p>
                 <p className="text-xs text-muted-foreground">Stage: {stageLabel}</p>
                 <div className="mt-1 flex gap-1">
                   {PHASES.map((p) => (
@@ -199,7 +198,9 @@ function Dashboard() {
                       aria-hidden="true"
                       className={cn(
                         "h-1.5 w-5 rounded-full",
-                        tasks.filter((t) => t.phase === p.key).every((t) => t.status === "complete") &&
+                        tasks
+                          .filter((t) => t.phase === p.key)
+                          .every((t) => t.status === "complete") &&
                           tasks.some((t) => t.phase === p.key)
                           ? "bg-success"
                           : p.key === stage
@@ -222,20 +223,46 @@ function Dashboard() {
           </div>
         </section>
 
+        {/* Recently used quick jump bar */}
+        {recentTools.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card/60 p-3 text-xs">
+            <div className="flex items-center gap-1.5 font-medium text-muted-foreground pl-1">
+              <Clock className="size-3.5" />
+              <span>Recently used:</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {recentTools.map((tool) => (
+                <Button
+                  key={tool.path}
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-xs px-2.5"
+                >
+                  <Link to={tool.path as never}>{tool.label}</Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 5-Step Clear Milestone Sequence */}
+        <MilestoneSequence />
+
         {/* B. Next best action card */}
         <NextBestActionCard action={topAction} />
 
-        {/* C. Online Presence overview: 7-area grid */}
+        {/* C. Quick tools consolidated based on stage (3-4 tools + full toggle) */}
+        <QuickTools action={topAction} />
+
+        {/* D. Online Presence overview: 7-area grid */}
         <OnlinePresenceStatusGrid areas={areas} />
 
-        {/* D. Launch readiness summary */}
+        {/* E. Launch readiness summary */}
         <LaunchReadinessSummary readiness={readiness} />
 
-        {/* E. Setup map preview */}
+        {/* F. Setup map preview */}
         <SetupMapPreview areas={areas} />
-
-        {/* F. Quick tools reduced: max 4 context-relevant */}
-        <QuickTools action={topAction} />
 
         {/* Secondary: preserve useful widgets without duplicating primary info */}
 
@@ -285,7 +312,8 @@ function Dashboard() {
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">{phase.why}</p>
                       <p className="mt-2 text-xs text-muted-foreground">
-                        {done}/{phaseTasks.length} tasks · about {Math.round(minutes / 60) || 1} hour
+                        {done}/{phaseTasks.length} tasks · about {Math.round(minutes / 60) || 1}{" "}
+                        hour
                         {Math.round(minutes / 60) === 1 ? "" : "s"}
                       </p>
                     </div>

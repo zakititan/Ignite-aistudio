@@ -7,7 +7,8 @@ import { LaunchBlockerList } from "@/components/LaunchBlockerList";
 import type { LaunchReadiness } from "@/lib/types";
 
 export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadiness }) {
-  const { status, overallCompletionPercent, completedRequiredTasks, totalRequiredTasks, blockers } = readiness;
+  const { status, overallCompletionPercent, completedRequiredTasks, totalRequiredTasks, blockers } =
+    readiness;
 
   if (status === "not_started") {
     return (
@@ -18,7 +19,8 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
               Launch readiness
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Create a plan to see what to review before inviting customers — guidance, not a guarantee.
+              Create a plan to see what to review before inviting customers — guidance, not a
+              guarantee.
             </p>
           </div>
           <ReadinessStatusBadge status={status} />
@@ -50,7 +52,9 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
 
       <div className="mt-5 grid gap-4 sm:grid-cols-3">
         <div>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Overall progress</p>
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+            Overall progress
+          </p>
           <p className="mt-1 text-2xl font-bold font-display">{overallCompletionPercent}%</p>
           <Progress
             value={overallCompletionPercent}
@@ -60,19 +64,33 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
           <p className="mt-1 text-xs text-muted-foreground">All tasks</p>
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Required checks</p>
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+            Required checks
+          </p>
           <p className="mt-1 text-2xl font-bold font-display">
             {completedRequiredTasks} of {totalRequiredTasks}
           </p>
           <Progress
-            value={totalRequiredTasks ? Math.round((completedRequiredTasks / totalRequiredTasks) * 100) : 0}
+            value={
+              totalRequiredTasks
+                ? Math.round((completedRequiredTasks / totalRequiredTasks) * 100)
+                : 0
+            }
             className="mt-2"
             aria-label={`Required tasks ${completedRequiredTasks} of ${totalRequiredTasks}`}
           />
-          <p className="mt-1 text-xs text-muted-foreground">Required checks: {completedRequiredTasks} of {totalRequiredTasks} · {totalRequiredTasks ? Math.round((completedRequiredTasks / totalRequiredTasks) * 100) : 0}%</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Required checks: {completedRequiredTasks} of {totalRequiredTasks} ·{" "}
+            {totalRequiredTasks
+              ? Math.round((completedRequiredTasks / totalRequiredTasks) * 100)
+              : 0}
+            %
+          </p>
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Current blockers</p>
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+            Current blockers
+          </p>
           <p className="mt-1 text-2xl font-bold font-display">{blockers.length}</p>
           <p className="mt-2 text-xs text-muted-foreground">
             {blockers.length
@@ -94,13 +112,20 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
           </h3>
           <LaunchBlockerList blockers={blockers.slice(0, 5)} />
           {blockers.length > 5 ? (
-            <p className="text-xs text-muted-foreground">Showing 5 of {blockers.length} blockers — full list in checklist.</p>
+            <p className="text-xs text-muted-foreground">
+              Showing 5 of {blockers.length} blockers — full list in checklist.
+            </p>
           ) : null}
         </div>
       ) : (
         <div className="mt-5 rounded-xl border border-success/20 bg-success-soft/40 p-4">
-          <p className="text-sm font-medium text-success">No blockers found. Do a final review on a real phone and with a test customer action.</p>
-          <p className="mt-1 text-xs text-muted-foreground">This check is guidance only — review provider documentation and seek qualified advice when needed.</p>
+          <p className="text-sm font-medium text-success">
+            No blockers found. Do a final review on a real phone and with a test customer action.
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            This check is guidance only — review provider documentation and seek qualified advice
+            when needed.
+          </p>
         </div>
       )}
 
@@ -112,14 +137,16 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
         </Button>
         {blockers.length > 0 && blockers[0]?.relatedRoute ? (
           <Button asChild variant="outline" size="sm">
-            <Link to={blockers[0].relatedRoute as never}>{blockers[0].actionLabel ?? "Go to next step"}</Link>
+            <Link to={blockers[0].relatedRoute as never}>
+              {blockers[0].actionLabel ?? "Go to next step"}
+            </Link>
           </Button>
         ) : null}
       </div>
 
       <p className="mt-3 text-xs text-muted-foreground">
-        Educational guidance only — not a guarantee of a successful launch. Prices, eligibility and provider
-        features vary.
+        Educational guidance only — not a guarantee of a successful launch. Prices, eligibility and
+        provider features vary.
       </p>
     </section>
   );

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Activity } from "lucide-react";
+import { Copy, Activity, HardDrive } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Callout } from "@/components/Callouts";
@@ -346,24 +346,42 @@ function ConnectDomain() {
     if (!planning) return;
     const b = state.business;
     const needs = (b.needsBusinessEmail ?? b.usesBusinessEmail ?? "").toString().toLowerCase();
-    const existingPresent = (b.existingWebsitePresent ?? b.existingWebsiteStatus ?? "").toString().toLowerCase();
+    const existingPresent = (b.existingWebsitePresent ?? b.existingWebsiteStatus ?? "")
+      .toString()
+      .toLowerCase();
     const hasExact = (b.hasExactProviderRecords ?? "").toString().toLowerCase();
     const screenshot = (b.dnsScreenshotSaved ?? "").toString().toLowerCase();
 
     // Map business -> planning if planning still at default and business has info
     if (planning.websiteChangeType === "unsure") {
-      if (existingPresent === "yes" || existingPresent.includes("improving") || existingPresent.includes("already") || b.websiteChangePlanned === "yes") {
+      if (
+        existingPresent === "yes" ||
+        existingPresent.includes("improving") ||
+        existingPresent.includes("already") ||
+        b.websiteChangePlanned === "yes"
+      ) {
         updateDnsPlanningField("websiteChangeType", "replacing");
-      } else if (existingPresent === "no" || b.websiteChangePlanned === "no" || existingPresent.includes("nothing")) {
+      } else if (
+        existingPresent === "no" ||
+        b.websiteChangePlanned === "no" ||
+        existingPresent.includes("nothing")
+      ) {
         updateDnsPlanningField("websiteChangeType", "first");
       }
     }
     if (planning.usesBusinessEmail === "not_sure") {
-      if (needs === "yes" || b.businessEmail?.trim()) updateDnsPlanningField("usesBusinessEmail", "yes");
+      if (needs === "yes" || b.businessEmail?.trim())
+        updateDnsPlanningField("usesBusinessEmail", "yes");
       else if (needs === "no") updateDnsPlanningField("usesBusinessEmail", "no");
     }
-    if (!planning.dnsProviderLocation && (b.dnsProvider || b.registrarName || state.ownership.dnsProvider)) {
-      updateDnsPlanningField("dnsProviderLocation", b.dnsProvider || b.registrarName || state.ownership.dnsProvider);
+    if (
+      !planning.dnsProviderLocation &&
+      (b.dnsProvider || b.registrarName || state.ownership.dnsProvider)
+    ) {
+      updateDnsPlanningField(
+        "dnsProviderLocation",
+        b.dnsProvider || b.registrarName || state.ownership.dnsProvider,
+      );
     }
     if (planning.screenshotSaved === "unsure") {
       if (screenshot === "yes") updateDnsPlanningField("screenshotSaved", "yes");
@@ -413,6 +431,19 @@ function ConnectDomain() {
       description="Your domain is registered. Now tell it where your website lives."
     >
       <div className="space-y-8">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/80 bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <HardDrive className="size-4 text-primary" aria-hidden="true" />
+            <span>
+              <strong className="text-foreground">Data is saved on this device.</strong> All
+              planning answers and custom DNS presets are preserved locally in your browser.
+            </span>
+          </div>
+          <Badge variant="outline" className="text-[11px] font-normal">
+            Auto-save active
+          </Badge>
+        </div>
+
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-primary/20 bg-primary-soft/30 px-3 py-2 text-sm">
           <Link
             to="/online-setup"
@@ -435,13 +466,14 @@ function ConnectDomain() {
           </h2>
           <div className="surface-panel space-y-6 p-5 sm:p-6">
             <p className="text-sm text-muted-foreground">
-              Answer these 5 questions to understand what is at risk before you change DNS. These are non-secret
-              planning facts saved locally (manual checks).
+              Answer these 5 questions to understand what is at risk before you change DNS. These
+              are non-secret planning facts saved locally (manual checks).
             </p>
 
             <fieldset>
               <legend className="text-sm font-medium">
-                Are you connecting your domain for the first time, replacing an existing website, or unsure? (manual)
+                Are you connecting your domain for the first time, replacing an existing website, or
+                unsure? (manual)
               </legend>
               <RadioGroup
                 value={planning?.websiteChangeType ?? "unsure"}
@@ -471,7 +503,9 @@ function ConnectDomain() {
             </fieldset>
 
             <fieldset>
-              <legend className="text-sm font-medium">Does business email run on this domain today? (manual)</legend>
+              <legend className="text-sm font-medium">
+                Does business email run on this domain today? (manual)
+              </legend>
               <RadioGroup
                 value={planning?.usesBusinessEmail ?? "not_sure"}
                 onValueChange={(v) => updateDnsPlanningField("usesBusinessEmail", v as never)}
@@ -508,12 +542,15 @@ function ConnectDomain() {
                 placeholder="e.g. Cloudflare, Porkbun, Namecheap, GoDaddy — where you manage DNS"
               />
               <p className="text-xs text-muted-foreground">
-                Check your registrar or look for “DNS”, “Nameservers” in your domain account (manual check).
+                Check your registrar or look for “DNS”, “Nameservers” in your domain account (manual
+                check).
               </p>
             </div>
 
             <fieldset>
-              <legend className="text-sm font-medium">Have you saved a screenshot of current settings? (manual)</legend>
+              <legend className="text-sm font-medium">
+                Have you saved a screenshot of current settings? (manual)
+              </legend>
               <RadioGroup
                 value={planning?.screenshotSaved ?? "unsure"}
                 onValueChange={(v) => updateDnsPlanningField("screenshotSaved", v as never)}
@@ -542,7 +579,9 @@ function ConnectDomain() {
             </fieldset>
 
             <fieldset>
-              <legend className="text-sm font-medium">Do you have the exact records from your website provider? (manual)</legend>
+              <legend className="text-sm font-medium">
+                Do you have the exact records from your website provider? (manual)
+              </legend>
               <RadioGroup
                 value={planning?.hasExactRecords ?? "not_yet"}
                 onValueChange={(v) => updateDnsPlanningField("hasExactRecords", v as never)}
@@ -573,7 +612,10 @@ function ConnectDomain() {
             {state.business.ownedDomain || state.business.preferredDomain ? (
               <p className="text-xs text-muted-foreground">
                 Prefilled from your saved business details — update if anything changed: domain{" "}
-                <span className="font-mono">{domain}</span>, email need: {state.business.needsBusinessEmail || state.business.usesBusinessEmail || "unsure"}, existing site: {state.business.existingWebsitePresent || "unsure"} (manual verification required).
+                <span className="font-mono">{domain}</span>, email need:{" "}
+                {state.business.needsBusinessEmail || state.business.usesBusinessEmail || "unsure"},
+                existing site: {state.business.existingWebsitePresent || "unsure"} (manual
+                verification required).
               </p>
             ) : null}
           </div>
@@ -582,23 +624,29 @@ function ConnectDomain() {
 
           {preview.emailAtRisk ? (
             <Callout tone="warning" title="Protect your email — manual safeguard">
-              Website settings and email settings live in the same place but are not interchangeable. Keep your
-              mail-related records unless you are intentionally changing email providers. Do not delete mail-related
-              records (MX, SPF, DKIM, DMARC) — these settings help your business receive email and prove messages come
-              from you.
+              Website settings and email settings live in the same place but are not
+              interchangeable. Keep your mail-related records unless you are intentionally changing
+              email providers. Do not delete mail-related records (MX, SPF, DKIM, DMARC) — these
+              settings help your business receive email and prove messages come from you.
             </Callout>
           ) : null}
         </section>
 
         {/* 2. Back up */}
         <section aria-labelledby="step2" className="surface-panel p-5 sm:p-6 space-y-4">
-          <h2 id="step2" className="font-display text-xl font-bold">2. Back up — save what you have</h2>
+          <h2 id="step2" className="font-display text-xl font-bold">
+            2. Back up — save what you have
+          </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Before changing these settings, take a screenshot of what is already there (manual). Save the current
-            records, provider names, and renewal dates. This lets you undo mistakes in a minute.
+            Before changing these settings, take a screenshot of what is already there (manual).
+            Save the current records, provider names, and renewal dates. This lets you undo mistakes
+            in a minute.
           </p>
           <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground">
-            <li>Open your DNS manager (see step 3) and screenshot every record — especially MX and TXT (manual).</li>
+            <li>
+              Open your DNS manager (see step 3) and screenshot every record — especially MX and TXT
+              (manual).
+            </li>
             <li>Note the domain registrar and expiry date (manual).</li>
           </ul>
           <DnsPreChangeChecklist />
@@ -609,11 +657,13 @@ function ConnectDomain() {
 
         {/* 3. Confirm provider */}
         <section aria-labelledby="step3" className="surface-panel p-5 sm:p-6 space-y-4">
-          <h2 id="step3" className="font-display text-xl font-bold">3. Confirm provider — where DNS is managed</h2>
+          <h2 id="step3" className="font-display text-xl font-bold">
+            3. Confirm provider — where DNS is managed
+          </h2>
           <p className="text-sm text-muted-foreground">
             Sign in where your web address is registered
-            {planning?.dnsProviderLocation ? ` (${planning.dnsProviderLocation})` : ""}. Look for “DNS”, “Domain settings”, “Manage
-            DNS” or “Advanced settings” (manual).
+            {planning?.dnsProviderLocation ? ` (${planning.dnsProviderLocation})` : ""}. Look for
+            “DNS”, “Domain settings”, “Manage DNS” or “Advanced settings” (manual).
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
@@ -626,7 +676,8 @@ function ConnectDomain() {
               />
               {!providerKnown ? (
                 <p className="text-xs text-warning-foreground">
-                  Confirm where DNS is managed before continuing — check your registrar account or nameservers (manual).
+                  Confirm where DNS is managed before continuing — check your registrar account or
+                  nameservers (manual).
                 </p>
               ) : null}
             </div>
@@ -644,39 +695,49 @@ function ConnectDomain() {
                   </option>
                 ))}
               </select>
-              <p className="text-xs text-muted-foreground">Use the exact values your website provider gives you — the preset below is a starting point only.</p>
+              <p className="text-xs text-muted-foreground">
+                Use the exact values your website provider gives you — the preset below is a
+                starting point only.
+              </p>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">
-            If your domain uses an external DNS host (e.g., Cloudflare), edit records there — not just at the registrar (manual verification).
+            If your domain uses an external DNS host (e.g., Cloudflare), edit records there — not
+            just at the registrar (manual verification).
           </p>
         </section>
 
         {/* 4. Review website records */}
         <section aria-labelledby="step4" className="surface-panel p-5 sm:p-6 space-y-3">
-          <h2 id="step4" className="font-display text-xl font-bold">4. Review website records — what points to your site</h2>
+          <h2 id="step4" className="font-display text-xl font-bold">
+            4. Review website records — what points to your site
+          </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             Website routing uses <GlossaryTooltip term="A record">A record</GlossaryTooltip> and{" "}
-            <GlossaryTooltip term="CNAME">CNAME</GlossaryTooltip> entries for your root domain and www. Review them
-            here before adding — keep anything you do not recognise.
+            <GlossaryTooltip term="CNAME">CNAME</GlossaryTooltip> entries for your root domain and
+            www. Review them here before adding — keep anything you do not recognise.
           </p>
           <p className="text-xs font-medium">
-            Use these as a starting point only — always use the exact values your website provider gives you.
+            Use these as a starting point only — always use the exact values your website provider
+            gives you.
           </p>
           {preview.existingWebsiteAtRisk ? (
             <Callout tone="warning" title="Existing website at risk">
-              You are replacing an existing website. Keep existing A/CNAME records backed up — changing them will
-              replace where visitors are sent.
+              You are replacing an existing website. Keep existing A/CNAME records backed up —
+              changing them will replace where visitors are sent.
             </Callout>
           ) : null}
         </section>
 
         {/* 5. Preserve email */}
         <section aria-labelledby="step5" className="surface-panel p-5 sm:p-6 space-y-3">
-          <h2 id="step5" className="font-display text-xl font-bold">5. Preserve email — protect mail records</h2>
+          <h2 id="step5" className="font-display text-xl font-bold">
+            5. Preserve email — protect mail records
+          </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            These settings help your business receive email and prove messages come from you. Do not delete
-            mail-related records (MX, SPF, DKIM, DMARC) unless your email provider specifically tells you to.
+            These settings help your business receive email and prove messages come from you. Do not
+            delete mail-related records (MX, SPF, DKIM, DMARC) unless your email provider
+            specifically tells you to.
           </p>
           {preview.recordsToPreserve.length > 0 ? (
             <ul className="list-disc space-y-1 pl-4 text-sm">
@@ -686,9 +747,9 @@ function ConnectDomain() {
             </ul>
           ) : null}
           <Callout tone="info" title="How to keep email safe (manual)">
-            Keep MX, SPF, DKIM and DMARC records separate from website records. Website records are A/CNAME; email
-            records are MX/TXT. They live together — do not delete one to add the other. Verify manually in your DNS
-            manager.
+            Keep MX, SPF, DKIM and DMARC records separate from website records. Website records are
+            A/CNAME; email records are MX/TXT. They live together — do not delete one to add the
+            other. Verify manually in your DNS manager.
           </Callout>
           <Button asChild variant="outline" size="sm">
             <Link to="/business-email">Plan business email records →</Link>
@@ -697,11 +758,14 @@ function ConnectDomain() {
 
         {/* 6. Add records */}
         <section aria-labelledby="step6" className="space-y-3">
-          <h2 id="step6" className="font-display text-xl font-bold">6. Add records — your settings for {domain}</h2>
+          <h2 id="step6" className="font-display text-xl font-bold">
+            6. Add records — your settings for {domain}
+          </h2>
           <p className="text-sm text-muted-foreground">
-            Use these as a starting point only — always use the exact values your website provider gives you. Each
-            record is marked as Website routing, Verification, Email, or Redirect. Manually add each row exactly as
-            your provider specified — this app does not change DNS for you.
+            Use these as a starting point only — always use the exact values your website provider
+            gives you. Each record is marked as Website routing, Verification, Email, or Redirect.
+            Manually add each row exactly as your provider specified — this app does not change DNS
+            for you.
           </p>
 
           <div className="surface-panel overflow-x-auto">
@@ -722,7 +786,9 @@ function ConnectDomain() {
                   <TableRow key={r.id} className={cn(added.includes(r.id) && "bg-success-soft/50")}>
                     <TableCell className="font-medium">{r.type}</TableCell>
                     <TableCell className="font-mono text-sm">{r.host}</TableCell>
-                    <TableCell className="max-w-xs font-mono text-sm break-words">{r.value}</TableCell>
+                    <TableCell className="max-w-xs font-mono text-sm break-words">
+                      {r.value}
+                    </TableCell>
                     <TableCell className="hidden max-w-xs text-sm text-muted-foreground lg:table-cell">
                       {r.purpose}
                     </TableCell>
@@ -735,7 +801,9 @@ function ConnectDomain() {
                       <Checkbox
                         checked={added.includes(r.id)}
                         onCheckedChange={() =>
-                          setAdded((a) => (a.includes(r.id) ? a.filter((x) => x !== r.id) : [...a, r.id]))
+                          setAdded((a) =>
+                            a.includes(r.id) ? a.filter((x) => x !== r.id) : [...a, r.id],
+                          )
                         }
                         aria-label={`Manually confirm I added the ${r.type} record`}
                       />
@@ -752,26 +820,32 @@ function ConnectDomain() {
             </Table>
           </div>
           <p className="text-xs text-muted-foreground">
-            Manual step — copy each value exactly; trailing spaces or duplicated host names cause failures. This app
-            does not write DNS records automatically.
+            Manual step — copy each value exactly; trailing spaces or duplicated host names cause
+            failures. This app does not write DNS records automatically.
           </p>
 
           <Accordion type="single" collapsible className="surface-panel px-5">
             <AccordionItem value="where">
-              <AccordionTrigger className="font-display font-semibold">Where do I add these? (manual)</AccordionTrigger>
+              <AccordionTrigger className="font-display font-semibold">
+                Where do I add these? (manual)
+              </AccordionTrigger>
               <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
                 Sign in to the company where your web address is registered
-                {planning?.dnsProviderLocation ? ` (${planning.dnsProviderLocation})` : ""}. Look for “DNS”, “Domain settings”, “Manage
-                DNS” or “Advanced settings”. You will see a list of existing entries and a button to add a new one.
-                Add each row above exactly as written, then save (manual).
+                {planning?.dnsProviderLocation ? ` (${planning.dnsProviderLocation})` : ""}. Look
+                for “DNS”, “Domain settings”, “Manage DNS” or “Advanced settings”. You will see a
+                list of existing entries and a button to add a new one. Add each row above exactly
+                as written, then save (manual).
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="wrong">
-              <AccordionTrigger className="font-display font-semibold">What could go wrong?</AccordionTrigger>
+              <AccordionTrigger className="font-display font-semibold">
+                What could go wrong?
+              </AccordionTrigger>
               <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                The most common problems are typing the value with a trailing space, entering the host as your full
-                domain when the provider only wants “@”, and deleting an existing mail record. Your screenshot lets you
-                undo any of these in a minute (manual verification).
+                The most common problems are typing the value with a trailing space, entering the
+                host as your full domain when the provider only wants “@”, and deleting an existing
+                mail record. Your screenshot lets you undo any of these in a minute (manual
+                verification).
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -779,10 +853,13 @@ function ConnectDomain() {
 
         {/* 7. Propagation */}
         <section aria-labelledby="step7" className="surface-panel p-5 sm:p-6 space-y-3">
-          <h2 id="step7" className="font-display text-xl font-bold">7. Propagation — wait for changes to spread</h2>
+          <h2 id="step7" className="font-display text-xl font-bold">
+            7. Propagation — wait for changes to spread
+          </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Updates to these settings can take time to appear — sometimes minutes, sometimes many hours. Make one
-            change at a time where possible and write down what you changed and when (manual).
+            Updates to these settings can take time to appear — sometimes minutes, sometimes many
+            hours. Make one change at a time where possible and write down what you changed and when
+            (manual).
           </p>
           <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground">
             <li>Do not keep re-saving — wait at least 15–30 minutes.</li>
@@ -799,22 +876,33 @@ function ConnectDomain() {
           <div className="flex items-center gap-2">
             <Activity className="size-5 text-primary" />
             <p className="text-sm text-muted-foreground">
-              Use live DNS propagation check (manual verification) — worldwide resolvers confirm if records are active.
+              Use live DNS propagation check (manual verification) — worldwide resolvers confirm if
+              records are active.
             </p>
           </div>
-          <LiveDnsChecker initialDomain={domain} className="border-none shadow-none p-0 bg-transparent" />
+          <LiveDnsChecker
+            initialDomain={domain}
+            className="border-none shadow-none p-0 bg-transparent"
+          />
           <p className="text-xs text-muted-foreground">
-            Verification is manual — compare live results to what your provider gave you. No automatic fix is performed.
+            Verification is manual — compare live results to what your provider gave you. No
+            automatic fix is performed.
           </p>
         </section>
 
         <section aria-labelledby="trouble">
-          <h2 id="trouble" className="font-display text-xl font-bold">Troubleshooting</h2>
+          <h2 id="trouble" className="font-display text-xl font-bold">
+            Troubleshooting
+          </h2>
           <Accordion type="single" collapsible className="surface-panel mt-4 px-5">
             {TROUBLESHOOTING.map((t) => (
               <AccordionItem key={t.q} value={t.q}>
-                <AccordionTrigger className="text-left font-display font-semibold">{t.q}</AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">{t.a}</AccordionContent>
+                <AccordionTrigger className="text-left font-display font-semibold">
+                  {t.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                  {t.a}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

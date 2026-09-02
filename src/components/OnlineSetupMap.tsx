@@ -1,13 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Globe,
-  Network,
-  Blocks,
-  Mail,
-  Eye,
-  Inbox,
-  ArrowDown,
-} from "lucide-react";
+import { Globe, Network, Blocks, Mail, Eye, Inbox, ArrowDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { GlossaryTooltip } from "@/components/GlossaryTooltip";
 import type { PresenceStatusArea } from "@/lib/types";
@@ -82,13 +74,7 @@ function MiniCard({
   );
 }
 
-function ConnectionLabel({
-  term,
-  children,
-}: {
-  term: string;
-  children: React.ReactNode;
-}) {
+function ConnectionLabel({ term, children }: { term: string; children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center rounded-full border border-border bg-card px-2.5 py-1 text-[11px] font-medium shadow-sm">
       <GlossaryTooltip term={term}>{children}</GlossaryTooltip>
@@ -132,8 +118,8 @@ export function OnlineSetupMap({
       </h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Your domain is the address. <GlossaryTooltip term="DNS">DNS</GlossaryTooltip> is the traffic
-        director that sends visitors to your website and messages to your inbox. Hover underlined labels
-        for plain-English explanations.
+        director that sends visitors to your website and messages to your inbox. Hover underlined
+        labels for plain-English explanations.
       </p>
 
       {/* Mobile vertical flow */}
@@ -172,11 +158,14 @@ export function OnlineSetupMap({
           <div className="flex items-center justify-center gap-2 text-sm font-semibold text-success">
             <Eye className="size-4" aria-hidden="true" /> Visitors see site
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">When DNS points to your host correctly.</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            When DNS points to your host correctly.
+          </p>
         </div>
 
         <div className="my-1 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-          <span className="h-px w-8 bg-border" aria-hidden="true" /> also <span className="h-px w-8 bg-border" aria-hidden="true" />
+          <span className="h-px w-8 bg-border" aria-hidden="true" /> also{" "}
+          <span className="h-px w-8 bg-border" aria-hidden="true" />
         </div>
 
         <VerticalConnector labelTerm="MX record" label="DNS → Business email" />
@@ -241,13 +230,22 @@ export function OnlineSetupMap({
         {/* Branching row */}
         <div className="relative mt-4 grid grid-cols-2 gap-6">
           {/* diagonal lines visual: horizontal connector with vertical drops */}
-          <div className="pointer-events-none absolute left-1/2 top-0 h-6 w-px -translate-x-1/2 bg-border" aria-hidden="true" />
+          <div
+            className="pointer-events-none absolute left-1/2 top-0 h-6 w-px -translate-x-1/2 bg-border"
+            aria-hidden="true"
+          />
           <div
             className="pointer-events-none absolute left-[25%] right-[25%] top-6 h-px bg-border"
             aria-hidden="true"
           />
-          <div className="pointer-events-none absolute left-[25%] top-6 h-6 w-px bg-border" aria-hidden="true" />
-          <div className="pointer-events-none absolute right-[25%] top-6 h-6 w-px bg-border" aria-hidden="true" />
+          <div
+            className="pointer-events-none absolute left-[25%] top-6 h-6 w-px bg-border"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute right-[25%] top-6 h-6 w-px bg-border"
+            aria-hidden="true"
+          />
 
           {/* Left branch: Website */}
           <div className="flex flex-col items-center gap-3 pt-8">

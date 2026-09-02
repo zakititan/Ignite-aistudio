@@ -88,7 +88,9 @@ export function OnlinePresenceStatusCard({ area }: { area: PresenceStatusArea })
 
       <div>
         <h3 className="font-display text-base font-semibold leading-tight">{area.label}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground line-clamp-3">{area.summary}</p>
+        <p className="mt-1 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+          {area.summary}
+        </p>
       </div>
 
       {area.blockers && area.blockers.length > 0 ? (

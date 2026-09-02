@@ -34,21 +34,20 @@ export const Route = createFileRoute("/launch-dossier")({
   head: () => ({
     meta: [
       {
-        title: "Digital Asset Launch Dossier & Handover Certificate",
+        title: "Share your launch plan — Cornerstone",
       },
       {
         name: "description",
         content:
-          "Official, print-ready digital deed, DNS configuration blueprint, ownership ledger, and agency handover document.",
+          "One-page summary, ownership ledger, and handover document to share with team members or keep for your records.",
       },
       {
         property: "og:title",
-        content: "Master Digital Asset Launch Dossier",
+        content: "Share your launch plan — Cornerstone",
       },
       {
         property: "og:description",
-        content:
-          "Export your complete digital ownership record, DNS blueprint, and verified launch certificate in PDF, Markdown, or JSON.",
+        content: "Export your complete website summary, DNS settings, and verified launch record.",
       },
     ],
   }),
@@ -144,7 +143,11 @@ export function LaunchDossierPage() {
             ? "Passed"
             : "Not tested"
       : "Not tested";
-    const lastTest = journey ? new Date(journey.lastUpdatedAt).toLocaleDateString() + " " + new Date(journey.lastUpdatedAt).toLocaleTimeString() : "—";
+    const lastTest = journey
+      ? new Date(journey.lastUpdatedAt).toLocaleDateString() +
+        " " +
+        new Date(journey.lastUpdatedAt).toLocaleTimeString()
+      : "—";
     return `# OFFICIAL DIGITAL ASSET LAUNCH DOSSIER
 **Organization:** ${businessName}
 **Primary Domain:** ${domain}
@@ -259,8 +262,8 @@ This document certifies that full custody, credentials access, and master owners
 
   return (
     <AppShell
-      title="Master Digital Asset Launch Dossier & Deed"
-      description="Official printable deed, DNS configuration blueprint, ownership ledger, and agency handover document."
+      title="Share your launch plan"
+      description="A one-page summary and handover document to share with team members, contractors, or keep for your records."
       actions={
         <div className="flex flex-wrap items-center gap-2">
           <Button variant="outline" size="sm" onClick={copyToClipboard} className="text-xs gap-1.5">
@@ -480,7 +483,9 @@ This document certifies that full custody, credentials access, and master owners
             </h3>
             <div className="grid gap-3 sm:grid-cols-3 text-xs">
               <div className="p-3 rounded-lg bg-muted/30 border">
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Readiness</span>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">
+                  Readiness
+                </span>
                 <div className="mt-1">
                   <ReadinessStatusBadge status={readiness.status} />
                 </div>
@@ -495,27 +500,38 @@ This document certifies that full custody, credentials access, and master owners
                 </span>
               </div>
               <div className="p-3 rounded-lg bg-muted/30 border">
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Required checks</span>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">
+                  Required checks
+                </span>
                 <strong className="text-foreground text-sm">
                   {readiness.completedRequiredTasks} of {readiness.totalRequiredTasks}
                 </strong>
-                <span className="text-[11px] text-muted-foreground block">Required checks {readiness.completedRequiredTasks} of {readiness.totalRequiredTasks} · {readiness.requiredCompletionPercent}%</span>
+                <span className="text-[11px] text-muted-foreground block">
+                  Required checks {readiness.completedRequiredTasks} of{" "}
+                  {readiness.totalRequiredTasks} · {readiness.requiredCompletionPercent}%
+                </span>
               </div>
               <div className="p-3 rounded-lg bg-muted/30 border">
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Open blockers</span>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">
+                  Open blockers
+                </span>
                 <strong className="text-foreground text-sm">{readiness.blockers.length}</strong>
                 <span className="text-[11px] text-muted-foreground block">
-                  Open blockers {readiness.blockers.length} · DNS impact {dnsPreview.level.charAt(0).toUpperCase() + dnsPreview.level.slice(1)}
+                  Open blockers {readiness.blockers.length} · DNS impact{" "}
+                  {dnsPreview.level.charAt(0).toUpperCase() + dnsPreview.level.slice(1)}
                 </span>
               </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 text-xs">
               <div className="p-3 rounded-lg bg-card border">
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Last customer journey test</span>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">
+                  Last customer journey test
+                </span>
                 {state.customerJourneyTest ? (
                   <>
                     <strong className="text-foreground text-sm">
-                      {state.customerJourneyTest.journeyType === "custom" && state.customerJourneyTest.customJourneyLabel
+                      {state.customerJourneyTest.journeyType === "custom" &&
+                      state.customerJourneyTest.customJourneyLabel
                         ? state.customerJourneyTest.customJourneyLabel
                         : state.customerJourneyTest.journeyType.replace("_", " ")}{" "}
                       —{" "}
@@ -523,7 +539,8 @@ This document certifies that full custody, credentials access, and master owners
                         const steps = state.customerJourneyTest!.steps;
                         const blocked = steps.some((s) => s.status === "blocked");
                         const needs = steps.some((s) => s.status === "needs_improvement");
-                        const allPassed = steps.length > 0 && steps.every((s) => s.status === "passed");
+                        const allPassed =
+                          steps.length > 0 && steps.every((s) => s.status === "passed");
                         if (blocked) return "Blocked";
                         if (needs) return "Needs improvement";
                         if (allPassed) return "Passed";
@@ -531,27 +548,36 @@ This document certifies that full custody, credentials access, and master owners
                       })()}
                     </strong>
                     <span className="text-[11px] text-muted-foreground block">
-                      {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleDateString()} · {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleTimeString()}
+                      {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleDateString()} ·{" "}
+                      {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleTimeString()}
                     </span>
                   </>
                 ) : (
-                  <span className="text-muted-foreground">Not tested yet — run at /customer-journey</span>
+                  <span className="text-muted-foreground">
+                    Not tested yet — run at /customer-journey
+                  </span>
                 )}
               </div>
               <div className="p-3 rounded-lg bg-card border">
-                <span className="text-muted-foreground block text-[10px] uppercase font-bold">DNS impact</span>
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">
+                  DNS impact
+                </span>
                 <Badge
                   variant="outline"
                   className={cn(
                     "text-xs font-bold capitalize",
                     dnsPreview.level === "low" && "border-success/30 bg-success-soft text-success",
-                    dnsPreview.level === "medium" && "border-warning/30 bg-warning-soft text-warning-foreground",
-                    dnsPreview.level === "high" && "border-destructive/30 bg-destructive-soft text-destructive",
+                    dnsPreview.level === "medium" &&
+                      "border-warning/30 bg-warning-soft text-warning-foreground",
+                    dnsPreview.level === "high" &&
+                      "border-destructive/30 bg-destructive-soft text-destructive",
                   )}
                 >
                   {dnsPreview.level}
                 </Badge>
-                <span className="text-[11px] text-muted-foreground block mt-1">{dnsPreview.title}</span>
+                <span className="text-[11px] text-muted-foreground block mt-1">
+                  {dnsPreview.title}
+                </span>
               </div>
             </div>
             {readiness.blockers.length > 0 ? (
@@ -559,7 +585,9 @@ This document certifies that full custody, credentials access, and master owners
                 <p className="text-xs font-semibold mb-2">Open blockers — why + link</p>
                 <LaunchBlockerList blockers={readiness.blockers.slice(0, 4)} />
                 {readiness.blockers.length > 4 ? (
-                  <p className="text-[11px] text-muted-foreground mt-1">Full list in checklist → /checklist?filter=blockers</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">
+                    Full list in checklist → /checklist?filter=blockers
+                  </p>
                 ) : null}
               </div>
             ) : null}

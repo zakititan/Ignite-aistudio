@@ -87,9 +87,11 @@ function OnlineSetupPage() {
   const hasDomain = displayDomain !== "No domain selected yet";
 
   const registrar = business.registrarName.trim() || ownership.domainRegistrar.trim() || "";
-  const registrarDisplay = registrar || "Not yet recorded — add which company you pay for the address.";
+  const registrarDisplay =
+    registrar || "Not yet recorded — add which company you pay for the address.";
   const renewal = ownership.renewalDate.trim() || "";
-  const renewalDisplay = renewal || "Not yet recorded — record from your registrar to avoid expiry.";
+  const renewalDisplay =
+    renewal || "Not yet recorded — record from your registrar to avoid expiry.";
 
   const hasRegistrarAccessRaw = (business.hasRegistrarAccess ?? "").trim().toLowerCase();
   const hasRegistrarAccessDisplay =
@@ -119,7 +121,8 @@ function OnlineSetupPage() {
     ownership.dnsProvider.trim() ||
     state.dnsPlanning?.dnsProviderLocation?.trim() ||
     "";
-  const dnsProviderDisplay = dnsProvider || "Unknown — check registrar or DNS host (where you manage DNS).";
+  const dnsProviderDisplay =
+    dnsProvider || "Unknown — check registrar or DNS host (where you manage DNS).";
 
   const websiteChangeRaw = (
     business.websiteChangePlanned ??
@@ -163,8 +166,8 @@ function OnlineSetupPage() {
     formatTimestamp(state.customerJourneyTest?.lastUpdatedAt) ||
     formatTimestamp(
       // try finding a task completedAt for DNS related tasks as proxy
-      state.tasks.find((t) => t.title.toLowerCase().includes("point your web address"))?.completedAt ??
-        undefined,
+      state.tasks.find((t) => t.title.toLowerCase().includes("point your web address"))
+        ?.completedAt ?? undefined,
     );
   const hasValidTimestamp = Boolean(dnsCheckTimestamp);
 
@@ -183,10 +186,14 @@ function OnlineSetupPage() {
     return websiteUrl ? "Selected" : "Not chosen";
   })();
   const websitePlatform =
-    business.websiteProvider?.trim() || ownership.websitePlatform.trim() || business.websiteApproach?.trim() || "";
+    business.websiteProvider?.trim() ||
+    ownership.websitePlatform.trim() ||
+    business.websiteApproach?.trim() ||
+    "";
   const websitePlatformDisplay = websitePlatform || "Not chosen yet — choose a website tool first.";
   const websiteUrlDisplay = websiteUrl || "No URL added yet — add in Business profile.";
-  const customerActionSummary = customerActionArea?.summary ?? "Choose your primary customer action.";
+  const customerActionSummary =
+    customerActionArea?.summary ?? "Choose your primary customer action.";
 
   // ----- Business email card derived -----
   const emailNeedRaw = emailActiveRaw;
@@ -204,8 +211,10 @@ function OnlineSetupPage() {
   const exampleAddressDisplay = exampleAddress || "No example address entered yet.";
   const mailProtectionState = (() => {
     if (emailNeedRaw === "no") return "Not applicable — email not used";
-    if (preview.emailAtRisk) return "At risk during DNS changes — keep MX/SPF/DKIM records separate from website records.";
-    if (preview.recordsToPreserve.some((r) => r.toLowerCase().includes("mx"))) return "Preserve mail records — do not delete MX / SPF when pointing website.";
+    if (preview.emailAtRisk)
+      return "At risk during DNS changes — keep MX/SPF/DKIM records separate from website records.";
+    if (preview.recordsToPreserve.some((r) => r.toLowerCase().includes("mx")))
+      return "Preserve mail records — do not delete MX / SPF when pointing website.";
     return "Confirm email records before changing DNS.";
   })();
 
@@ -219,7 +228,9 @@ function OnlineSetupPage() {
     {
       label: "Website provider",
       value: websitePlatformDisplay,
-      sub: websitePlatform ? `Status: ${websiteArea?.statusLabel ?? "—"}` : "Pick in Platform matcher",
+      sub: websitePlatform
+        ? `Status: ${websiteArea?.statusLabel ?? "—"}`
+        : "Pick in Platform matcher",
     },
     {
       label: "Business email",
@@ -235,22 +246,50 @@ function OnlineSetupPage() {
 
   const whatToDoNext: { label: string; to: string; action: string }[] = [];
   if (!hasDomain) {
-    whatToDoNext.push({ label: "No domain yet — choose a web address", to: "/domains", action: "Choose a domain" });
+    whatToDoNext.push({
+      label: "No domain yet — choose a web address",
+      to: "/domains",
+      action: "Choose a domain",
+    });
   } else if (domainArea?.status !== "complete") {
-    whatToDoNext.push({ label: "Record who owns the domain and enable renewal", to: "/ownership-record", action: "Record ownership" });
+    whatToDoNext.push({
+      label: "Record who owns the domain and enable renewal",
+      to: "/ownership-record",
+      action: "Record ownership",
+    });
   }
   if (websiteUrlStatus !== "live" && websiteUrlStatus !== "draft") {
-    whatToDoNext.push({ label: "Confirm website draft or live status", to: "/business-profile", action: "Add website details" });
+    whatToDoNext.push({
+      label: "Confirm website draft or live status",
+      to: "/business-profile",
+      action: "Add website details",
+    });
   } else if (websiteUrlStatus === "draft") {
-    whatToDoNext.push({ label: "Draft detected — finish pages and plan connection", to: "/connect-domain", action: "Plan domain connection" });
+    whatToDoNext.push({
+      label: "Draft detected — finish pages and plan connection",
+      to: "/connect-domain",
+      action: "Plan domain connection",
+    });
   }
   if (preview.emailAtRisk) {
-    whatToDoNext.push({ label: "Protect mail records (MX / SPF / DKIM) before changing DNS", to: "/connect-domain", action: "Protect email during DNS changes" });
+    whatToDoNext.push({
+      label: "Protect mail records (MX / SPF / DKIM) before changing DNS",
+      to: "/connect-domain",
+      action: "Protect email during DNS changes",
+    });
   } else if (emailNeedRaw === "unsure" || emailNeedRaw === "" || emailNeedRaw === "not_sure") {
-    whatToDoNext.push({ label: "Confirm if business email is needed", to: "/business-email", action: "Plan business email" });
+    whatToDoNext.push({
+      label: "Confirm if business email is needed",
+      to: "/business-email",
+      action: "Plan business email",
+    });
   }
   if (whatToDoNext.length === 0) {
-    whatToDoNext.push({ label: "Review safeguards and connect when ready", to: "/connect-domain", action: "Review DNS guide" });
+    whatToDoNext.push({
+      label: "Review safeguards and connect when ready",
+      to: "/connect-domain",
+      action: "Review DNS guide",
+    });
   }
   // cap at 4
   const nextSteps = whatToDoNext.slice(0, 4);
@@ -265,11 +304,14 @@ function OnlineSetupPage() {
         <section className="surface-panel p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">Context workflow</p>
+              <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
+                Context workflow
+              </p>
               <h2 className="mt-1 font-display text-xl font-bold">Your connected presence</h2>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                This map shows what you control today and what is still unknown. Nothing is guessed — unknown
-                is shown as unknown. Review before you change DNS, so your website change does not break email.
+                This map shows what you control today and what is still unknown. Nothing is guessed
+                — unknown is shown as unknown. Review before you change DNS, so your website change
+                does not break email.
               </p>
             </div>
             <Badge variant="outline" className="shrink-0">
@@ -301,27 +343,33 @@ function OnlineSetupPage() {
                 {preview.websiteChangeExpected ? "Expected" : "Not planned"}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                {preview.existingWebsiteAtRisk ? "Existing site at risk" : "No existing site at risk"}
+                {preview.existingWebsiteAtRisk
+                  ? "Existing site at risk"
+                  : "No existing site at risk"}
               </p>
             </div>
             <div className="rounded-lg border bg-muted/30 p-3 text-center">
               <p className="text-xs text-muted-foreground">Email at risk</p>
-              <p className="mt-1 text-sm font-semibold">{preview.emailAtRisk ? "Yes — protect MX" : "No"}</p>
+              <p className="mt-1 text-sm font-semibold">
+                {preview.emailAtRisk ? "Yes — protect MX" : "No"}
+              </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {preview.recordsToPreserve.slice(0, 2).join(" · ")}
               </p>
             </div>
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            Based on <GlossaryTooltip term="DNS">DNS impact preview</GlossaryTooltip> and your saved answers.
-            If unsure, choose “unknown” rather than guessing.
+            Based on <GlossaryTooltip term="DNS">DNS impact preview</GlossaryTooltip> and your saved
+            answers. If unsure, choose “unknown” rather than guessing.
           </p>
 
           {/* Compact DNS impact summary — required spec */}
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary/20 bg-primary-soft/20 px-4 py-3">
             <div className="space-y-1">
               <p className="text-sm font-semibold">
-                DNS impact: {preview.level === "high" ? "High" : preview.level === "medium" ? "Medium" : "Low"} risk
+                DNS impact:{" "}
+                {preview.level === "high" ? "High" : preview.level === "medium" ? "Medium" : "Low"}{" "}
+                risk
                 {preview.emailAtRisk ? " — Business email may be affected" : " — No email at risk"}
                 {preview.existingWebsiteAtRisk ? " · Existing website at risk" : ""}
               </p>
@@ -356,7 +404,15 @@ function OnlineSetupPage() {
                   Domain
                 </h3>
               </div>
-              <Badge variant="outline" className={cn("text-xs", domainArea?.status === "complete" ? "bg-success-soft text-success border-success/30" : "border-border")}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs",
+                  domainArea?.status === "complete"
+                    ? "bg-success-soft text-success border-success/30"
+                    : "border-border",
+                )}
+              >
                 {domainArea?.statusLabel ?? "—"}
               </Badge>
             </div>
@@ -384,7 +440,9 @@ function OnlineSetupPage() {
               </div>
             </dl>
             {domainArea?.summary ? (
-              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{domainArea.summary}</p>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                {domainArea.summary}
+              </p>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-2">
               <Button asChild size="sm" variant="outline">
@@ -410,16 +468,24 @@ function OnlineSetupPage() {
                   DNS
                 </h3>
               </div>
-              <Badge variant="outline" className={cn("text-xs", dnsArea?.status === "complete" ? "bg-success-soft text-success border-success/30" : "border-border")}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs",
+                  dnsArea?.status === "complete"
+                    ? "bg-success-soft text-success border-success/30"
+                    : "border-border",
+                )}
+              >
                 {dnsArea?.statusLabel ?? "—"}
               </Badge>
             </div>
 
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              <GlossaryTooltip term="DNS">DNS</GlossaryTooltip> is the internet’s address book. It includes{" "}
-              <GlossaryTooltip term="A record">address records</GlossaryTooltip> for your website and{" "}
-              <GlossaryTooltip term="MX record">mail records</GlossaryTooltip> for email. Changing your website
-              edits DNS; email records should stay separate.
+              <GlossaryTooltip term="DNS">DNS</GlossaryTooltip> is the internet’s address book. It
+              includes <GlossaryTooltip term="A record">address records</GlossaryTooltip> for your
+              website and <GlossaryTooltip term="MX record">mail records</GlossaryTooltip> for
+              email. Changing your website edits DNS; email records should stay separate.
             </p>
 
             <dl className="mt-4 space-y-3 text-sm">
@@ -429,7 +495,9 @@ function OnlineSetupPage() {
               </div>
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">Connection planning</dt>
-                <dd className="max-w-[60%] text-right font-medium">{dnsArea?.summary ?? preview.summary}</dd>
+                <dd className="max-w-[60%] text-right font-medium">
+                  {dnsArea?.summary ?? preview.summary}
+                </dd>
               </div>
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">Website change planned</dt>
@@ -487,7 +555,15 @@ function OnlineSetupPage() {
                   Website
                 </h3>
               </div>
-              <Badge variant="outline" className={cn("text-xs", websiteArea?.status === "complete" ? "bg-success-soft text-success border-success/30" : "border-border")}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs",
+                  websiteArea?.status === "complete"
+                    ? "bg-success-soft text-success border-success/30"
+                    : "border-border",
+                )}
+              >
                 {websiteArea?.statusLabel ?? "—"}
               </Badge>
             </div>
@@ -503,19 +579,26 @@ function OnlineSetupPage() {
               </div>
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">URL</dt>
-                <dd className="max-w-[60%] text-right font-mono text-xs break-all">{websiteUrlDisplay}</dd>
+                <dd className="max-w-[60%] text-right font-mono text-xs break-all">
+                  {websiteUrlDisplay}
+                </dd>
               </div>
               <div className="flex justify-between gap-2">
                 <dt className="text-muted-foreground">Primary customer action</dt>
                 <dd className="max-w-[60%] text-right font-medium">
-                  {customerActionArea?.label ?? "Customer action"} — {customerActionArea?.statusLabel ?? "—"}
-                  <span className="block text-xs font-normal text-muted-foreground">{customerActionSummary}</span>
+                  {customerActionArea?.label ?? "Customer action"} —{" "}
+                  {customerActionArea?.statusLabel ?? "—"}
+                  <span className="block text-xs font-normal text-muted-foreground">
+                    {customerActionSummary}
+                  </span>
                 </dd>
               </div>
             </dl>
 
             {websiteArea?.summary ? (
-              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{websiteArea.summary}</p>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                {websiteArea.summary}
+              </p>
             ) : null}
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -545,7 +628,15 @@ function OnlineSetupPage() {
                   Business email
                 </h3>
               </div>
-              <Badge variant="outline" className={cn("text-xs", emailArea?.status === "complete" ? "bg-success-soft text-success border-success/30" : "border-border")}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs",
+                  emailArea?.status === "complete"
+                    ? "bg-success-soft text-success border-success/30"
+                    : "border-border",
+                )}
+              >
                 {emailArea?.statusLabel ?? "—"}
               </Badge>
             </div>
@@ -553,7 +644,9 @@ function OnlineSetupPage() {
             <dl className="mt-4 space-y-3 text-sm">
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">Need / status</dt>
-                <dd className="max-w-[60%] text-right font-medium">{emailNeedDisplay} · {emailArea?.summary ?? ""}</dd>
+                <dd className="max-w-[60%] text-right font-medium">
+                  {emailNeedDisplay} · {emailArea?.summary ?? ""}
+                </dd>
               </div>
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">Provider</dt>
@@ -561,11 +654,15 @@ function OnlineSetupPage() {
               </div>
               <div className="flex justify-between gap-2 border-b border-border pb-2">
                 <dt className="text-muted-foreground">Example address</dt>
-                <dd className="max-w-[60%] text-right font-mono text-xs break-all">{exampleAddressDisplay}</dd>
+                <dd className="max-w-[60%] text-right font-mono text-xs break-all">
+                  {exampleAddressDisplay}
+                </dd>
               </div>
               <div className="flex justify-between gap-2">
                 <dt className="text-muted-foreground">Mail protection</dt>
-                <dd className="max-w-[60%] text-right text-xs leading-relaxed">{mailProtectionState}</dd>
+                <dd className="max-w-[60%] text-right text-xs leading-relaxed">
+                  {mailProtectionState}
+                </dd>
               </div>
             </dl>
 
@@ -607,7 +704,10 @@ function OnlineSetupPage() {
               <ul className="mt-3 space-y-2">
                 {whatWeKnow.map((item) => (
                   <li key={item.label} className="flex gap-2 rounded-lg border bg-muted/30 p-3">
-                    <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                    <span
+                      className="mt-0.5 size-1.5 shrink-0 rounded-full bg-primary"
+                      aria-hidden="true"
+                    />
                     <div className="min-w-0">
                       <p className="text-sm font-medium">{item.label}</p>
                       <p className="text-sm break-all">{item.value}</p>
@@ -620,12 +720,16 @@ function OnlineSetupPage() {
 
             <div>
               <h3 className="flex items-center gap-2 text-sm font-semibold">
-                <AlertTriangle className="size-4 text-warning-foreground" aria-hidden="true" /> What to do next
+                <AlertTriangle className="size-4 text-warning-foreground" aria-hidden="true" /> What
+                to do next
               </h3>
               <ul className="mt-3 space-y-2">
                 {nextSteps.map((step) => (
                   <li key={step.label} className="flex gap-2 rounded-lg border bg-card p-3">
-                    <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-warning" aria-hidden="true" />
+                    <span
+                      className="mt-0.5 size-1.5 shrink-0 rounded-full bg-warning"
+                      aria-hidden="true"
+                    />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm leading-relaxed">{step.label}</p>
                       <Button asChild variant="link" size="sm" className="h-auto px-0 text-xs">
@@ -636,7 +740,9 @@ function OnlineSetupPage() {
                 ))}
               </ul>
               {ownershipArea?.summary ? (
-                <p className="mt-3 text-xs text-muted-foreground">Ownership: {ownershipArea.summary}</p>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Ownership: {ownershipArea.summary}
+                </p>
               ) : null}
             </div>
           </div>
@@ -645,10 +751,10 @@ function OnlineSetupPage() {
         {/* Safety note */}
         <Callout tone="warning" title="Keep control of your accounts">
           <p className="text-sm leading-relaxed">
-            Your web address, DNS, website and billing should stay in accounts you personally or jointly control.
-            Keep a written record of who can access each account, turn on two-step sign-in, and store recovery codes
-            offline. Never let an agency or freelancer be the only owner — if you part ways, you should not lose your
-            domain.
+            Your web address, DNS, website and billing should stay in accounts you personally or
+            jointly control. Keep a written record of who can access each account, turn on two-step
+            sign-in, and store recovery codes offline. Never let an agency or freelancer be the only
+            owner — if you part ways, you should not lose your domain.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <Button asChild size="sm">
@@ -678,11 +784,17 @@ function OnlineSetupPage() {
             Business email
           </Link>
           <span aria-hidden="true">·</span>
-          <Link to="/ownership-record" className="underline underline-offset-4 hover:text-foreground">
+          <Link
+            to="/ownership-record"
+            className="underline underline-offset-4 hover:text-foreground"
+          >
             Ownership record
           </Link>
           <span aria-hidden="true">·</span>
-          <Link to="/customer-journey" className="underline underline-offset-4 hover:text-foreground">
+          <Link
+            to="/customer-journey"
+            className="underline underline-offset-4 hover:text-foreground"
+          >
             Journey tester
           </Link>
         </div>

@@ -459,8 +459,8 @@ function DomainsPage() {
           to="/online-setup"
           className="inline-flex items-center gap-1.5 font-medium text-primary underline-offset-4 hover:underline"
         >
-          View setup map <ArrowRight className="size-3.5" aria-hidden="true" /> — see how your domain
-          connects to website & email
+          View setup map <ArrowRight className="size-3.5" aria-hidden="true" /> — see how your
+          domain connects to website & email
         </Link>
         <span className="text-xs text-muted-foreground">Context workflow · no guesswork</span>
       </div>

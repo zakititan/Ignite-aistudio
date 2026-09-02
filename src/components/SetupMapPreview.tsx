@@ -5,11 +5,19 @@ import { Badge } from "@/components/ui/badge";
 import type { PresenceStatusArea } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-function connectionLabel(domain: PresenceStatusArea | undefined, target: PresenceStatusArea | undefined, dns: PresenceStatusArea | undefined, kind: "website" | "email"): { label: string; tone: "success" | "warning" | "muted" | "destructive" } {
+function connectionLabel(
+  domain: PresenceStatusArea | undefined,
+  target: PresenceStatusArea | undefined,
+  dns: PresenceStatusArea | undefined,
+  kind: "website" | "email",
+): { label: string; tone: "success" | "warning" | "muted" | "destructive" } {
   if (kind === "website") {
-    if (!domain || domain.status === "not_started") return { label: "Domain not started", tone: "muted" };
-    if (target?.status === "complete" && dns?.status === "complete") return { label: "Connected", tone: "success" };
-    if (dns?.status === "needs_attention" || target?.status === "needs_attention") return { label: "Needs attention", tone: "destructive" };
+    if (!domain || domain.status === "not_started")
+      return { label: "Domain not started", tone: "muted" };
+    if (target?.status === "complete" && dns?.status === "complete")
+      return { label: "Connected", tone: "success" };
+    if (dns?.status === "needs_attention" || target?.status === "needs_attention")
+      return { label: "Needs attention", tone: "destructive" };
     if (
       dns?.status === "in_progress" ||
       dns?.status === "ready_for_review" ||
@@ -18,14 +26,28 @@ function connectionLabel(domain: PresenceStatusArea | undefined, target: Presenc
       target?.status === "planned"
     )
       return { label: "In progress", tone: "warning" };
-    if (dns?.status === "not_started" || target?.status === "not_started") return { label: "Not connected", tone: "muted" };
+    if (dns?.status === "not_started" || target?.status === "not_started")
+      return { label: "Not connected", tone: "muted" };
     return { label: dns?.statusLabel ?? "Planned", tone: "warning" };
   } else {
     // email
-    if (!domain || domain.status === "not_started") return { label: "Domain not started", tone: "muted" };
-    if (target?.status === "complete") return { label: target.statusLabel === "Complete" && target.summary.includes("not needed") ? "Not needed" : "Connected", tone: "success" };
-    if (target?.status === "needs_attention") return { label: "Needs attention", tone: "destructive" };
-    if (target?.status === "in_progress" || target?.status === "ready_for_review" || target?.status === "planned")
+    if (!domain || domain.status === "not_started")
+      return { label: "Domain not started", tone: "muted" };
+    if (target?.status === "complete")
+      return {
+        label:
+          target.statusLabel === "Complete" && target.summary.includes("not needed")
+            ? "Not needed"
+            : "Connected",
+        tone: "success",
+      };
+    if (target?.status === "needs_attention")
+      return { label: "Needs attention", tone: "destructive" };
+    if (
+      target?.status === "in_progress" ||
+      target?.status === "ready_for_review" ||
+      target?.status === "planned"
+    )
       return { label: target.statusLabel, tone: "warning" };
     return { label: target?.statusLabel ?? "Not connected", tone: "muted" };
   }
@@ -59,7 +81,9 @@ export function SetupMapPreview({ areas }: { areas: PresenceStatusArea[] }) {
           </p>
         </div>
         <Button asChild variant="outline" size="sm">
-          <Link to="/online-setup">View setup map <ArrowRight className="size-4" aria-hidden="true" /></Link>
+          <Link to="/online-setup">
+            View setup map <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
         </Button>
       </div>
 
@@ -87,7 +111,9 @@ export function SetupMapPreview({ areas }: { areas: PresenceStatusArea[] }) {
             </span>
           </div>
           <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-            {dns?.summary ?? website?.summary ?? "Add your domain and website to see connection steps."}
+            {dns?.summary ??
+              website?.summary ??
+              "Add your domain and website to see connection steps."}
           </p>
         </div>
 
@@ -109,16 +135,20 @@ export function SetupMapPreview({ areas }: { areas: PresenceStatusArea[] }) {
               <Mail className="mr-1 size-3" aria-hidden="true" />
               {emailConn.label}
             </Badge>
-            <span className="text-xs text-muted-foreground">Email: {email?.statusLabel ?? "—"}</span>
+            <span className="text-xs text-muted-foreground">
+              Email: {email?.statusLabel ?? "—"}
+            </span>
           </div>
           <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-            {email?.summary ?? "Business email uses your domain but stays separate from website records."}
+            {email?.summary ??
+              "Business email uses your domain but stays separate from website records."}
           </p>
         </div>
       </div>
 
       <p className="mt-3 text-xs text-muted-foreground">
-        Connecting your website changes domain settings. It should not require deleting your email settings.
+        Connecting your website changes domain settings. It should not require deleting your email
+        settings.
       </p>
     </section>
   );

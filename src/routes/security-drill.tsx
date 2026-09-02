@@ -36,21 +36,21 @@ export const Route = createFileRoute("/security-drill")({
   head: () => ({
     meta: [
       {
-        title: "Disaster Recovery & Domain Security Drill",
+        title: "Protect your website access — Cornerstone",
       },
       {
         name: "description",
         content:
-          "Emergency 'My Website is Down' triage diagnostic, 2FA security audit, and one-click DNS zone backup snapshot vault.",
+          "Keep access safe, prevent lockouts, audit account security, and keep a backup of your DNS.",
       },
       {
         property: "og:title",
-        content: "Disaster Recovery & Domain Security Drill",
+        content: "Protect your website access — Cornerstone",
       },
       {
         property: "og:description",
         content:
-          "Emergency diagnostic flowchart, account fortress checklist, and DNS backup vault for small business websites.",
+          "Emergency diagnostic flowchart, account security checklist, and DNS backup vault for small business websites.",
       },
     ],
   }),
@@ -273,8 +273,8 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
 
   return (
     <AppShell
-      title="Disaster Recovery & Domain Security Drill"
-      description="Interactive emergency triage diagnostic, 2FA account fortress audit, and one-click DNS zone backup snapshot vault."
+      title="Protect your website access"
+      description="Keep access safe, prevent lockouts, audit account security, and keep a backup of your DNS."
       actions={
         <div className="flex items-center gap-2">
           <Button

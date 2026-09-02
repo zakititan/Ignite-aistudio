@@ -9,8 +9,8 @@ export function OnlinePresenceStatusGrid({ areas }: { areas: PresenceStatusArea[
           Online presence overview
         </h2>
         <p className="text-sm text-muted-foreground">
-          Seven areas that make your business findable and contactable. Each shows where you stand and what
-          to do next.
+          Seven areas that make your business findable and contactable. Each shows where you stand
+          and what to do next.
         </p>
       </div>
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

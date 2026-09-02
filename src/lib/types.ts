@@ -211,13 +211,7 @@ export interface SavedDomainIdea {
 }
 
 export type PresenceAreaId =
-  | "domain"
-  | "website"
-  | "email"
-  | "dns"
-  | "customer_action"
-  | "ownership"
-  | "local_presence";
+  "domain" | "website" | "email" | "dns" | "customer_action" | "ownership" | "local_presence";
 
 export type PresenceAreaStatus =
   | "not_started"

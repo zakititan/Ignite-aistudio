@@ -24,6 +24,7 @@ import {
   Scale,
   Building,
   HelpCircle,
+  HardDrive,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
@@ -995,6 +996,19 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
       }
     >
       <div className="space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/80 bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <HardDrive className="size-4 text-primary" aria-hidden="true" />
+            <span>
+              <strong className="text-foreground">Data is saved on this device.</strong> Changes to
+              your page content are preserved automatically in local storage.
+            </span>
+          </div>
+          <Badge variant="outline" className="text-[11px] font-normal">
+            Auto-save active
+          </Badge>
+        </div>
+
         <Callout tone="info" title="Human Words Build Customer Trust">
           Write naturally in plain, spoken language as if you are talking to a customer
           face-to-face. As you type on the left, your live webpage mock updates in real time on the

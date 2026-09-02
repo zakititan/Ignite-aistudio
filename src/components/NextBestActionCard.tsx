@@ -60,13 +60,15 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
         aria-labelledby="nba-title"
         className="surface-panel border-success/20 bg-success-soft/30 p-5 sm:p-6"
       >
-        <p className="text-xs font-semibold tracking-wide text-success uppercase">Your next best action</p>
+        <p className="text-xs font-semibold tracking-wide text-success uppercase">
+          Your next best action
+        </p>
         <h2 id="nba-title" className="mt-2 font-display text-xl font-bold">
           All key presence areas look complete
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          No critical blockers found. Review everything once more on a real phone and with a test customer
-          action before inviting customers — this is guidance, not a guarantee.
+          No critical blockers found. Review everything once more on a real phone and with a test
+          customer action before inviting customers — this is guidance, not a guarantee.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button asChild>
@@ -85,9 +87,9 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
           </summary>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             We prioritise in order: 1) domain ownership, 2) website connection, 3) HTTPS/padlock, 4)
-            primary customer action blocked, 5) business details accuracy, 6) protecting business email. The
-            most critical blocker is surfaced first so you fix what would stop customers before polishing
-            secondary items.
+            primary customer action blocked, 5) business details accuracy, 6) protecting business
+            email. The most critical blocker is surfaced first so you fix what would stop customers
+            before polishing secondary items.
           </p>
         </details>
       </section>
@@ -105,7 +107,9 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
     <section aria-labelledby="nba-title" className="surface-panel p-5 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold tracking-[0.12em] text-primary uppercase">Your next best action</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-primary uppercase">
+            Your next best action
+          </p>
           <h2 id="nba-title" className="mt-1 font-display text-xl font-bold sm:text-2xl">
             {title}
           </h2>
@@ -115,8 +119,10 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
           className={cn(
             "shrink-0 text-xs",
             impact === "Launch essential" && "border-primary/20 bg-primary-soft text-primary",
-            impact === "Protects your email" && "border-warning/30 bg-warning-soft text-warning-foreground",
-            impact === "Helps customers contact you" && "border-success/20 bg-success-soft text-success",
+            impact === "Protects your email" &&
+              "border-warning/30 bg-warning-soft text-warning-foreground",
+            impact === "Helps customers contact you" &&
+              "border-success/20 bg-success-soft text-success",
           )}
         >
           {impact === "Protects your email" ? (
@@ -146,13 +152,16 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
           >
             {severity}
           </span>
-          <span className="text-muted-foreground">Priority {severity === "critical" ? "1–4" : "5–6"}</span>
+          <span className="text-muted-foreground">
+            Priority {severity === "critical" ? "1–4" : "5–6"}
+          </span>
         </p>
       ) : null}
 
       {!isBlocker(action) && (action as PresenceStatusArea).summary ? (
         <p className="mt-2 text-sm text-muted-foreground">
-          <span className="font-medium text-foreground">Current state:</span> {(action as PresenceStatusArea).summary}
+          <span className="font-medium text-foreground">Current state:</span>{" "}
+          {(action as PresenceStatusArea).summary}
         </p>
       ) : null}
 
@@ -176,8 +185,8 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
         </summary>
         <div className="mt-2 space-y-2 text-sm leading-relaxed text-muted-foreground">
           <p>
-            We surface the most critical blocker first so you fix what would stop customers before polishing
-            secondary items. Priority order:
+            We surface the most critical blocker first so you fix what would stop customers before
+            polishing secondary items. Priority order:
           </p>
           <ol className="list-decimal space-y-1 pl-5">
             <li>Domain ownership &amp; recovery — your address is business property</li>
@@ -187,7 +196,9 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
             <li>Business details accuracy — name, contact, hours, pricing</li>
             <li>Protecting business email — mail records must stay separate</li>
           </ol>
-          <p>Within the same priority we show the earliest presence area that is not yet complete.</p>
+          <p>
+            Within the same priority we show the earliest presence area that is not yet complete.
+          </p>
         </div>
       </details>
     </section>

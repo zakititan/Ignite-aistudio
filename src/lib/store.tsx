@@ -32,8 +32,13 @@ interface StoreValue {
   state: AppState;
   hydrated: boolean;
   hasPlan: boolean;
+  lastSavedAt: Date | null;
+  saveStatus: "saved" | "saving";
   setBusiness: (patch: Partial<BusinessProfile>) => void;
-  updateBusinessProfileField: <K extends keyof BusinessProfile>(field: K, value: BusinessProfile[K]) => void;
+  updateBusinessProfileField: <K extends keyof BusinessProfile>(
+    field: K,
+    value: BusinessProfile[K],
+  ) => void;
   setOnboardingStep: (step: number) => void;
   generatePlan: () => void;
   loadDemo: () => void;
@@ -70,7 +75,10 @@ interface StoreValue {
   restoreBackup: (backup: unknown) => boolean;
   setLocalInsightsConsent: (allowed: boolean) => void;
   setDnsPlanning: (patch: Partial<DnsPlanningState>) => void;
-  updateDnsPlanningField: <K extends keyof DnsPlanningState>(field: K, value: DnsPlanningState[K]) => void;
+  updateDnsPlanningField: <K extends keyof DnsPlanningState>(
+    field: K,
+    value: DnsPlanningState[K],
+  ) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -78,6 +86,8 @@ const StoreContext = createContext<StoreValue | null>(null);
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AppState>(() => emptyState());
   const [hydrated, setHydrated] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [saveStatus, setSaveStatus] = useState<"saved" | "saving">("saved");
 
   useEffect(() => {
     try {
@@ -106,6 +116,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         merged.business = { ...base.business, ...(merged.business ?? {}) } as BusinessProfile;
         if (!merged.dnsPlanning) merged.dnsPlanning = { ...defaultDnsPlanning };
         setState(merged);
+        setLastSavedAt(new Date());
       }
     } catch {
       /* ignore corrupt storage */
@@ -116,7 +127,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
+      setSaveStatus("saving");
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      setLastSavedAt(new Date());
+      setSaveStatus("saved");
+      window.dispatchEvent(new CustomEvent("cornerstone:saved", { detail: { time: new Date() } }));
     } catch {
       /* storage may be unavailable */
     }
@@ -129,6 +144,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       state,
       hydrated,
       hasPlan: state.onboardingComplete && state.tasks.length > 0,
+      lastSavedAt,
+      saveStatus,
       setBusiness: (p) => patch((s) => ({ ...s, business: { ...s.business, ...p } })),
       updateBusinessProfileField: (field, value) =>
         patch((s) => ({ ...s, business: { ...s.business, [field]: value } })),
@@ -319,7 +336,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           dnsPlanning: { ...(s.dnsPlanning ?? defaultDnsPlanning), [field]: val },
         })),
     }),
-    [state, hydrated, patch],
+    [state, hydrated, patch, lastSavedAt, saveStatus],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
