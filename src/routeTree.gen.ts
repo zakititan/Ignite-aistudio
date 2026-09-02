@@ -36,6 +36,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as StatusRouteImport } from './routes/status'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TroubleshootingRouteImport } from './routes/troubleshooting'
 
@@ -174,6 +175,11 @@ const SignInRoute = SignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
   '/terms': typeof TermsRoute
   '/troubleshooting': typeof TroubleshootingRoute
 }
@@ -244,6 +251,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
   '/terms': typeof TermsRoute
   '/troubleshooting': typeof TroubleshootingRoute
 }
@@ -276,6 +284,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sign-in': typeof SignInRoute
+  '/status': typeof StatusRoute
   '/terms': typeof TermsRoute
   '/troubleshooting': typeof TroubleshootingRoute
 }
@@ -309,6 +318,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
     | '/terms'
     | '/troubleshooting'
   fileRoutesByTo: FileRoutesByTo
@@ -340,6 +350,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
     | '/terms'
     | '/troubleshooting'
   id:
@@ -371,6 +382,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/settings'
     | '/sign-in'
+    | '/status'
     | '/terms'
     | '/troubleshooting'
   fileRoutesById: FileRoutesById
@@ -403,6 +415,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
   SignInRoute: typeof SignInRoute
+  StatusRoute: typeof StatusRoute
   TermsRoute: typeof TermsRoute
   TroubleshootingRoute: typeof TroubleshootingRoute
 }
@@ -598,6 +611,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -643,6 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
   SignInRoute: SignInRoute,
+  StatusRoute: StatusRoute,
   TermsRoute: TermsRoute,
   TroubleshootingRoute: TroubleshootingRoute,
 }
