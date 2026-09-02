@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useStore } from "@/lib/store";
+import { checkDomainAvailability } from "@/lib/domain-availability.functions";
 
 export const Route = createFileRoute("/domains")({
   head: () => ({
@@ -49,8 +50,9 @@ interface Suggestion {
   domain: string;
   why: string;
   bestFor: string;
-  status: "Check availability" | "Likely format" | "Alternative idea";
 }
+
+type Availability = Awaited<ReturnType<typeof checkDomainAvailability>>;
 
 const slug = (s: string) =>
   s
@@ -83,13 +85,11 @@ function buildSuggestions(name: string, category: string, city: string): Suggest
       domain: `${base}.com`,
       why: "Exact business name. Easiest to say on the phone and print on a card.",
       bestFor: "Any business that already uses this name",
-      status: "Check availability",
     },
     {
       domain: `${short}${trade}.com`,
       why: "Adds what you do, which helps people guess your address correctly.",
       bestFor: "Businesses with a common or abstract name",
-      status: "Check availability",
     },
   ];
   if (loc)
@@ -97,26 +97,22 @@ function buildSuggestions(name: string, category: string, city: string): Suggest
       domain: `${short}${loc}.com`,
       why: "A location word can help when you serve one town or neighbourhood.",
       bestFor: "Local service businesses",
-      status: "Likely format",
     });
   out.push(
     {
       domain: `${base}.co`,
       why: "A shorter alternative if the .com is taken. Still widely recognised.",
       bestFor: "Modern brands comfortable with a shorter ending",
-      status: "Alternative idea",
     },
     {
       domain: `get${short}.com`,
       why: "An action word can rescue a taken name without hyphens or numbers.",
       bestFor: "Product or service brands",
-      status: "Alternative idea",
     },
     {
       domain: `${short}${trade}.${loc ? "in" : "net"}`,
       why: "A country or general ending, useful when you mainly serve one market.",
       bestFor: "Businesses serving a single country",
-      status: "Alternative idea",
     },
   );
   return out;
@@ -170,6 +166,8 @@ function DomainsPage() {
   const [query, setQuery] = useState(b.businessName);
   const [submitted, setSubmitted] = useState(b.businessName);
   const [loading, setLoading] = useState(false);
+  const [checkingDomains, setCheckingDomains] = useState<string[]>([]);
+  const [availability, setAvailability] = useState<Record<string, Availability>>({});
   const [checked, setChecked] = useState<string[]>([]);
   const [scoreInput, setScoreInput] = useState(b.businessName ? `${slug(b.businessName)}.com` : "");
 
@@ -179,17 +177,28 @@ function DomainsPage() {
   );
   const scores = useMemo(() => scoreDomain(scoreInput, b.location), [scoreInput, b.location]);
 
-  const runSearch = () => {
+  const checkAvailability = async (domain: string) => {
+    setCheckingDomains((current) => [...new Set([...current, domain])]);
+    try {
+      const result = await checkDomainAvailability({ data: { domain } });
+      setAvailability((current) => ({ ...current, [domain]: result }));
+    } finally {
+      setCheckingDomains((current) => current.filter((item) => item !== domain));
+    }
+  };
+
+  const runSearch = async () => {
     if (!query.trim()) {
       toast.error("Enter your business name or idea to see suggestions.");
       return;
     }
     setLoading(true);
-    window.setTimeout(() => {
-      setSubmitted(query);
-      setScoreInput(`${slug(query)}.com`);
-      setLoading(false);
-    }, 700);
+    setSubmitted(query);
+    setScoreInput(`${slug(query)}.com`);
+    setAvailability({});
+    const ideas = buildSuggestions(query, b.category, b.location);
+    await Promise.all(ideas.map((idea) => checkAvailability(idea.domain)));
+    setLoading(false);
   };
 
   const copy = async (text: string) => {
@@ -231,8 +240,8 @@ function DomainsPage() {
               </Button>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              We suggest formats only. Availability and pricing are confirmed by a{" "}
-              <GlossaryTooltip term="Registrar" />, not here.
+              We check the registry's public RDAP service for each suggestion. A registrar confirms the final
+              price and completes registration.
             </p>
           </section>
 
@@ -274,7 +283,28 @@ function DomainsPage() {
                           {s.bestFor}
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline">{s.status}</Badge>
+                          {checkingDomains.includes(s.domain) ? (
+                            <Badge variant="outline">Checking…</Badge>
+                          ) : availability[s.domain] ? (
+                            <Badge
+                              className={
+                                availability[s.domain].status === "available"
+                                  ? "bg-success-soft text-success"
+                                  : availability[s.domain].status === "registered"
+                                    ? "bg-destructive-soft text-destructive"
+                                    : "bg-warning-soft text-warning-foreground"
+                              }
+                              title={availability[s.domain].message}
+                            >
+                              {availability[s.domain].status === "available"
+                                ? "Likely available"
+                                : availability[s.domain].status === "registered"
+                                  ? "Registered"
+                                  : "Could not confirm"}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline">Not checked</Badge>
+                          )}
                         </TableCell>
                         <TableCell className="text-right whitespace-nowrap">
                           <Button size="sm" variant="ghost" onClick={() => copy(s.domain)}>
@@ -283,6 +313,14 @@ function DomainsPage() {
                           </Button>
                           <Button size="sm" variant="outline" onClick={() => setScoreInput(s.domain)}>
                             Score it
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => checkAvailability(s.domain)}
+                            disabled={checkingDomains.includes(s.domain)}
+                          >
+                            Check live
                           </Button>
                         </TableCell>
                       </TableRow>
