@@ -2,42 +2,40 @@
 
 > A calm, step-by-step guide that helps small-business owners go from "I need a website" to "My business is live online."
 
-Launch Plan Buddy is a guided web application for non-technical small-business owners who need to set up a domain, build a professional website, configure business email, and establish the fundamentals for a safe and discoverable online presence.
+Launch Plan Buddy is a guided web application for non-technical small-business owners who need to set up a domain, choose a website approach, create a professional online presence, configure business email, and launch safely.
 
-Rather than overwhelming users with technical jargon or pushing a single provider, the app turns website setup into a personalized roadmap: one clear task at a time.
+Instead of overwhelming people with technical jargon or pushing a single provider, Launch Plan Buddy turns website setup into a personalized roadmap: one clear task at a time.
 
-## The problem
+## What it solves
 
-For a first-time business owner, launching a website can mean navigating unfamiliar terms, conflicting provider advice, hidden costs, account-access risks, and dozens of setup decisions.
-
-Common questions include:
+Launching a first business website often means facing unfamiliar concepts, conflicting provider advice, account-access risks, and dozens of setup decisions. Launch Plan Buddy helps users work through questions such as:
 
 - What is the difference between a domain, hosting, a website builder, and DNS?
-- Which type of website setup is right for my business?
-- How do I connect my domain without breaking business email?
-- What pages do customers expect to see?
-- How do I make sure my website works on phones and can be found online?
-- How do I ensure my business—not an agency or former employee—controls critical accounts?
+- Which website setup is appropriate for my business?
+- How can I connect a domain without breaking business email?
+- What content and pages does a professional business website need?
+- How can I make the site work on mobile and become easier for customers to find?
+- How do I make sure that the business owner—not an agency, contractor, or former employee—controls key online accounts?
 
-Launch Plan Buddy makes these decisions approachable by explaining them in plain English and organizing the work into an actionable launch plan.
+The product explains technical choices in plain English, guides users through safe next steps, and keeps launch work organized in an actionable plan.
 
 ## Who it is for
 
-Launch Plan Buddy is designed for small-business owners with limited technical experience, including:
+Launch Plan Buddy is built for small-business owners with limited technical experience, including:
 
-- Local service businesses, such as salons, tradespeople, consultants, tutors, repair shops, and clinics
+- Local service businesses such as salons, tradespeople, consultants, tutors, repair shops, and clinics
 - Restaurants, cafés, bakeries, and home-food businesses
 - Freelancers, independent professionals, coaches, and creators
 - Retailers and small ecommerce businesses
 - Charities, community groups, and early-stage founders
 
-The app is particularly useful for people who have a business name or social-media presence but no domain or website; own a domain but do not know what to do next; are replacing an old website; or need to regain clarity over accounts managed by someone else.
+It is especially useful for people who have a business name or social-media presence but no domain or website, already own a domain but do not know what to do next, are replacing an older website, or need clarity over accounts currently managed by someone else.
 
-## Core value
+## Product capabilities
 
 ### Personalized launch roadmap
 
-Users answer a short onboarding flow about their business type, goals, current setup, required website features, budget, timeline, and technical comfort. The app then creates a tailored roadmap across these stages:
+Users complete a short onboarding flow covering their business type, goals, current setup, website requirements, budget, timeline, and technical comfort. The app creates a tailored plan across these stages:
 
 1. Plan the online presence
 2. Secure the domain
@@ -47,24 +45,24 @@ Users answer a short onboarding flow about their business type, goals, current s
 6. Test and launch
 7. Improve discoverability and maintain the site
 
-Each stage contains practical tasks, plain-language explanations, estimated effort, and progress tracking.
+Each stage contains practical tasks, plain-language guidance, estimated effort, and progress tracking.
 
 ### Domain and digital ownership guidance
 
-The app helps owners understand and protect the assets their business depends on:
+The app helps owners understand and safeguard the online assets their business depends on:
 
-- Domain name and registrar account
+- Domain and registrar account
 - Website platform or hosting account
 - DNS provider
 - Business email provider
 - Analytics and search-monitoring accounts
 - Payment, booking, and social-media accounts
 
-The product emphasizes owner-controlled accounts, recovery details, two-factor authentication, renewal reminders, and documented access. It also provides a Digital Ownership Record template for recording who owns and can recover critical business systems.
+The guidance emphasizes owner-controlled accounts, recovery details, two-factor authentication, renewal reminders, and documented access. The Digital Ownership Record provides a dedicated place to track service ownership and recovery responsibility without storing secrets.
 
 ### Domain name helper
 
-The domain helper suggests business-appropriate name formats and evaluates them using easy-to-understand criteria:
+The domain helper suggests business-appropriate name formats and evaluates them through simple criteria:
 
 - Clarity
 - Memorability
@@ -73,40 +71,40 @@ The domain helper suggests business-appropriate name formats and evaluates them 
 - Brand flexibility
 - Potential confusion
 
-It does not claim a domain is available unless a live domain lookup integration is enabled. Instead, it offers name ideas and directs users to verify availability with a registrar.
+The app does not claim that a domain is available unless a live domain lookup integration is connected. It provides practical name ideas and directs users to verify availability with a registrar.
 
 ### Website platform matcher
 
-An interactive decision tool helps users choose a category of website setup based on their needs, rather than forcing them toward one vendor. Recommendation categories include:
+An interactive decision tool guides owners toward a category of website setup rather than forcing a provider choice.
 
 | Setup category | Best suited to |
 | --- | --- |
 | Easy all-in-one website builder | Owners who want a straightforward, low-maintenance site quickly |
 | Ecommerce-first platform | Businesses selling products online |
-| Flexible CMS with managed hosting | Businesses that need greater flexibility and room to grow |
-| Professional designer/developer build | Businesses with complex needs or a larger implementation budget |
+| Flexible CMS with managed hosting | Businesses needing more flexibility and room to grow |
+| Professional designer/developer build | Businesses with complex requirements or a larger implementation budget |
 | Simple one-page launch site | Owners who need an immediate, focused online presence |
 
-The matcher explains the benefits, trade-offs, maintenance expectations, feature fit, and questions owners should ask before purchasing.
+The matcher describes the advantages, trade-offs, maintenance expectations, feature fit, and questions owners should ask before purchasing.
 
 ### DNS connection center
 
-DNS is often the most intimidating part of website setup. The connection center converts it into a guided workflow, covering records such as A, CNAME, TXT, and MX records in practical language.
+DNS is often the most intimidating part of launching a website. The connection center breaks it into guided actions and explains records such as A, CNAME, TXT, and MX records in practical language.
 
 It includes:
 
 - A pre-change checklist
-- Editable DNS record tables with copy actions
-- Clear explanations of what each record does
-- A completion state for each record
+- DNS record tables with copy actions
+- Plain-English explanations of each record
+- Completion states for guided steps
 - Provider-agnostic troubleshooting flows
-- Warnings to preserve existing email-related records
+- Warnings to preserve existing mail-related records
 
-> **Important:** DNS changes can affect a website and business email. The app warns users not to delete unknown records and not to remove mail-related records unless they are deliberately changing email providers.
+> **Important:** DNS changes can affect both websites and business email. Users are warned not to delete unknown records and not to remove email-related records unless they are intentionally changing email providers.
 
 ### Website content builder
 
-The content workspace helps owners prepare the core information a credible business website needs. It supports guided drafts for:
+The content workspace helps owners prepare the essential information for a credible business site. It supports guided drafts for:
 
 - Home
 - About
@@ -120,11 +118,11 @@ The content workspace helps owners prepare the core information a credible busin
 - FAQ
 - Privacy and business-policy pages
 
-For each page, users receive a purpose statement, recommended sections, fill-in-the-blank prompts, quality checks, and editable AI-assisted draft placeholders.
+Each page includes a purpose statement, recommended sections, fill-in-the-blank prompts, quality checks, and editable AI-assisted drafting placeholders.
 
 ### Launch checklist
 
-The central launch checklist helps users work through required, recommended, and optional tasks without losing track of progress. It covers:
+The central checklist organizes required, recommended, and optional launch tasks across:
 
 - Account ownership and recovery
 - Website content and contact details
@@ -134,138 +132,155 @@ The central launch checklist helps users work through required, recommended, and
 - Analytics and conversion tracking
 - Post-launch review and maintenance
 
-Users can filter tasks, add notes, assign tasks to a teammate or contractor, and track their overall launch readiness.
+Users can filter work, add notes, assign tasks to teammates or contractors, and monitor their launch readiness.
 
 ### Business email guide
 
-A guided email section helps owners set up professional addresses such as `hello@yourbusiness.com`, `support@yourbusiness.com`, or `bookings@yourbusiness.com`. It includes mailbox planning, mobile setup, signatures, recovery settings, and introductory guidance for SPF, DKIM, and DMARC.
+A guided business-email section helps owners plan and set up professional addresses such as `hello@yourbusiness.com`, `support@yourbusiness.com`, or `bookings@yourbusiness.com`. It covers mailbox planning, mobile setup, signatures, recovery settings, and introductory SPF, DKIM, and DMARC guidance.
 
-### Search and local presence basics
+### Search and local presence
 
-The discoverability guide focuses on durable, user-friendly fundamentals rather than ranking promises:
+The discoverability guide focuses on durable fundamentals rather than ranking promises:
 
 - Clear page titles, headings, and navigation
-- Original, useful descriptions of services and products
-- Mobile-friendly, secure pages
-- Consistent business name, address, phone number, hours, and service-area information
-- Search-monitoring setup and site verification
+- Original, useful service and product descriptions
+- Mobile-friendly and secure pages
+- Consistent business name, address, phone number, hours, and service-area details
+- Search-monitoring setup and ownership verification
 - Sitemap and indexing guidance where supported
-- Practical content ideas tailored to the business type
+- Practical content ideas tailored to business type
 
-### Maintenance center
+### Ongoing maintenance
 
-Launching is the beginning, not the end. The maintenance center provides recurring reminders for reviewing customer enquiries, testing forms, updating offers and hours, reviewing analytics, checking access permissions, refreshing content, and monitoring domain renewal.
+The maintenance center helps owners protect their investment after launch, with recurring reminders for reviewing enquiries, testing forms, updating offers and hours, checking analytics, reviewing account access, refreshing content, and monitoring domain renewal.
 
-## Product principles
+## Application routes
+
+The product includes guided workflow pages, support resources, account flows, legal information, and a branded fallback for unknown URLs.
+
+### Planning and launch workflow
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Product landing page and main entry point |
+| `/how-it-works` | Overview of the Launch Plan Buddy process |
+| `/onboarding` | Personalized plan creation flow |
+| `/dashboard` | Plan progress and next actions |
+| `/domains` | Domain guidance and domain-name exploration |
+| `/platform-matcher` | Website setup category recommendations |
+| `/connect-domain` | DNS and domain-connection guidance |
+| `/content` | Guided website-content workspace |
+| `/checklist` | Interactive launch checklist |
+| `/business-email` | Professional business-email planning |
+| `/get-found` | Search and local-presence basics |
+| `/maintenance` | Ongoing website-maintenance guidance |
+| `/ownership-record` | Digital ownership and account-access record |
+| `/hire-help` | Guidance for safely hiring a freelancer or agency |
+
+### Learning and support
+
+| Route | Purpose |
+| --- | --- |
+| `/learn` | Learning library |
+| `/help` | Searchable help center |
+| `/troubleshooting` | Guided paths for common domain, website, email, and access issues |
+| `/glossary` | Plain-language technical glossary |
+| `/contact` | Support, feedback, partnership, privacy, and accessibility contact form |
+| `/status` | Service-status page and future incident-history surface |
+| `/changelog` | Product release notes and updates |
+
+### Account and legal
+
+| Route | Purpose |
+| --- | --- |
+| `/sign-in` | Existing-user sign-in |
+| `/create-account` | Account creation and plan-saving entry point |
+| `/forgot-password` | Privacy-safe password-reset request flow |
+| `/reset-password` | Password-reset route and invalid/expired-link fallback |
+| `/account` | Account overview |
+| `/settings` | Appearance, privacy, security, and support settings |
+| `/delete-account` | Account-deletion confirmation and request flow |
+| `/privacy` | Privacy information |
+| `/terms` | Terms and educational-guidance disclaimer |
+| `/accessibility` | Accessibility commitment and feedback information |
+
+### Unknown paths
+
+Unknown URLs are handled by a friendly, branded 404 route rather than a blank page or generic framework error. The fallback gives users clear recovery actions for Home, Dashboard, plan creation, and learning resources.
+
+## Dark mode
+
+Launch Plan Buddy includes a global appearance system with three preferences:
+
+- **Light**
+- **Dark**
+- **Use device settings**
+
+The theme selection is persisted locally and is available from Settings and the application’s navigation. The visual system is designed to keep core workflow elements—cards, forms, tables, task states, DNS warnings, modals, tooltips, and navigation—readable and consistent in both light and dark themes.
+
+Dark mode uses semantic design tokens rather than ad-hoc color overrides so the application can apply consistent surfaces, text contrast, borders, status states, and focus indicators across public pages, dashboard pages, and support flows.
+
+## Design principles
 
 - **Plain English first:** technical terms are introduced only when needed and explained immediately.
-- **Progress over perfection:** users are encouraged to complete one useful task at a time.
-- **Ownership and safety:** essential business accounts should remain under the business owner’s control.
+- **Progress over perfection:** users can move forward one useful task at a time.
+- **Ownership and safety:** critical business accounts should remain under business-owner control.
 - **Provider neutrality:** recommendations are based on needs and trade-offs, not a forced vendor choice.
-- **No false guarantees:** the app does not promise search rankings, uptime, legal compliance, or domain availability.
-- **Progressive disclosure:** beginner guidance appears first; advanced details are available on demand.
-- **Mobile-first usability:** owners should be able to complete meaningful work from a phone.
+- **No false guarantees:** the app does not promise rankings, uptime, legal compliance, domain availability, or third-party provider outcomes.
+- **Progressive disclosure:** beginner guidance appears first; advanced details are available when useful.
+- **Accessible by default:** the app supports semantic structure, keyboard use, visible focus states, readable contrast, responsive layouts, and light/dark/system appearance preferences.
+- **No dead ends:** internal links lead to a route, a meaningful state, or a friendly fallback—not a 404.
 
 ## Main user flow
 
 ```text
 Business details
       ↓
-Goal and requirements
+Goals and requirements
       ↓
 Current domain / website status
       ↓
 Personalized launch roadmap
       ↓
-Domain + platform decisions
+Domain and platform decisions
       ↓
-Website content + account setup
+Website content and account setup
       ↓
-DNS connection + quality checks
+DNS connection and quality checks
       ↓
 Launch checklist
       ↓
-Discoverability + ongoing maintenance
+Discoverability and ongoing maintenance
 ```
-
-## Key screens
-
-### Landing page
-
-A conversion-focused introduction to the product, featuring the main promise, common beginner concerns, a three-step explanation, product capabilities, digital-ownership guidance, FAQs, and a clear call to action.
-
-### Onboarding wizard
-
-A short, progress-aware questionnaire that captures:
-
-- Business name, category, description, and location
-- Local, online, or hybrid business model
-- Main objective: enquiries, bookings, ecommerce, credibility, portfolio, or newsletter
-- Current domain and website status
-- Needed features: contact form, booking, ecommerce, gallery, blog, multilingual content, and more
-- Budget, launch timeline, technology comfort, branding readiness, and email needs
-
-### Personalized dashboard
-
-The dashboard gives users a calm command center with:
-
-- Overall completion percentage
-- Current launch stage
-- Most important next action
-- Roadmap timeline
-- Ownership reminders
-- Quick tools and recommended learning
-- Recent activity and saved notes
-
-### Learning library and glossary
-
-A searchable library explains domains, hosting, DNS, email, ecommerce, content, search visibility, security, maintenance, and hiring a professional. Contextual tooltips and a dedicated glossary define terms such as registrar, nameserver, A record, CNAME, MX record, TXT record, HTTPS, sitemap, indexing, SPF, DKIM, and DMARC.
 
 ## Example user scenario
 
-**Harbor & Hearth Bakery** is a local bakery that wants to display its menu, receive custom-cake orders, use WhatsApp for enquiries, and look credible in local search.
+**Harbor & Hearth Bakery** is a local bakery that wants to display its menu, receive custom-cake orders, use WhatsApp for enquiries, and establish a credible local online presence.
 
-A personalized plan could recommend:
+A personalized plan can recommend:
 
 1. Select and register a simple, owner-controlled domain.
-2. Choose an easy all-in-one website approach that supports a menu, photo gallery, enquiry forms, and WhatsApp contact.
+2. Choose an easy all-in-one website approach supporting a menu, photo gallery, enquiry form, and WhatsApp contact.
 3. Prepare Home, Menu, About, Custom Cake Orders, and Contact pages.
 4. Add real product images, business hours, location, and clear ordering instructions.
 5. Set up a professional business email address.
-6. Connect the domain while preserving existing email settings.
-7. Test the website and contact path on mobile and desktop.
+6. Connect the domain while preserving any existing email configuration.
+7. Test the website and enquiry path on mobile and desktop.
 8. Set up search monitoring and local-profile basics.
-9. Schedule a monthly content and access review.
-
-## MVP scope
-
-The first release should prioritize the guided experience that creates immediate value:
-
-| Priority | Capability |
-| --- | --- |
-| P0 | Marketing landing page |
-| P0 | Onboarding wizard and personalized roadmap |
-| P0 | Interactive launch checklist with progress tracking |
-| P0 | Domain education and ownership checklist |
-| P0 | Platform matcher |
-| P0 | Website content builder |
-| P1 | DNS connection guidance and troubleshooting |
-| P1 | Search and local-presence guide |
-| P1 | Maintenance-center reminders |
-| P2 | Live domain availability lookup |
-| P2 | Provider-specific DNS setup flows |
-| P2 | AI generation and external service integrations |
+9. Schedule monthly content and access reviews.
 
 ## Technical direction
 
-Recommended implementation stack:
+The project uses a modern TypeScript web stack and a file-based route structure.
 
 - **Frontend:** React and TypeScript
-- **Styling:** Tailwind CSS
-- **UI components:** shadcn/ui
+- **Routing:** TanStack Router file-based routes
+- **Styling:** Tailwind CSS and semantic design tokens
+- **UI direction:** reusable components and accessible controls
 - **Icons:** Lucide
-- **Backend / authentication / persistence:** Supabase-compatible architecture
-- **Guest experience:** Local-storage persistence for in-progress plans
+- **Theme:** global light, dark, and system-preference support with local persistence
+- **Future backend/authentication/persistence:** Supabase-compatible architecture
+- **Guest experience:** local persistence for in-progress plans
 - **Future integrations:** domain lookup, AI content generation, analytics, calendar reminders, search-monitoring tools, and PDF export
 
 Suggested data entities:
@@ -282,76 +297,63 @@ maintenance_tasks
 learning_progress
 ```
 
-Security requirements:
+## Security and privacy
 
-- Do not store passwords, account-recovery codes, DNS credentials, or payment-card information.
-- Design persistence and permissions with row-level security readiness.
-- Keep API secrets server-side.
-- Provide guest mode, account creation, saved plans, data deletion, and privacy controls.
+Launch Plan Buddy should not store:
 
-## UX and accessibility
+- Passwords
+- Account-recovery codes
+- DNS credentials
+- Payment-card information
 
-The interface should be friendly, uncluttered, responsive, and usable by beginners.
+When a backend is connected, use least-privilege access patterns, keep API secrets server-side, and design persistence with row-level-security readiness. The app should support guest mode, account creation, saved plans, privacy controls, and a data-deletion path.
 
-- Use semantic HTML, keyboard navigation, visible focus states, accessible labels, and sufficient color contrast.
-- Do not rely on color alone for status.
-- Use clear validation and helpful error messages.
-- Show loading states and reassuring empty states.
-- Keep actions descriptive, such as “Create my launch plan,” “Mark task complete,” and “Copy DNS value.”
-- Use progressive disclosure to avoid exposing complex DNS and security content too early.
+Users should never send passwords, recovery codes, DNS credentials, or payment information through support forms.
+
+## Accessibility and UX
+
+The user experience should remain calm, clear, and usable by beginners.
+
+- Use semantic HTML, accessible labels, keyboard navigation, and visible focus states.
+- Maintain legible contrast in light and dark modes.
+- Do not rely on color alone to communicate task, warning, or error state.
+- Use clear inline validation and practical error messages.
+- Include loading, empty, success, and fallback states.
+- Prefer descriptive controls such as “Create my launch plan,” “Mark task complete,” and “Copy DNS value.”
+- Avoid introducing complex DNS and security details before the user needs them.
 
 ## AI-assisted capabilities
 
-AI features should assist—not replace—the owner’s judgment. Potential tools include:
+AI features should assist—not replace—the business owner’s judgment. Planned capabilities include:
 
 - Personalized roadmap generation
-- Domain-name idea generation
+- Domain-name ideas
 - Homepage headline and service-description drafts
 - FAQ and local-content ideas
 - Simplified explanations of technical terms
 - Next-priority task recommendations
 - Launch-plan gap analysis
-- A brief generator for hiring a web designer or agency
+- Project-brief generation for freelancers or agencies
 
-Every generated result should include edit, regenerate, and copy controls, along with a reminder to review generated content for accuracy before publishing.
-
-## Design direction
-
-The visual experience should feel capable, calm, and approachable:
-
-- Clean white and warm-gray surfaces
-- Deep indigo or blue as the primary trust color
-- Teal or emerald for successful completion states
-- Amber for important warnings and DNS/security guidance
-- Rounded cards, subtle shadows, generous spacing, and readable typography
-- A simple visual journey: `Business Idea → Domain → Website → Launch → Grow`
-
-Avoid aggressive sales language, dark technical aesthetics, provider lock-in, and cluttered dashboard patterns.
-
-## Safety and limitations
-
-Launch Plan Buddy provides general educational guidance. Provider pricing, plan features, technical requirements, domain availability, legal obligations, accessibility requirements, tax rules, privacy requirements, and search visibility vary by location, business type, and platform.
-
-Users should verify current provider documentation before making purchases or DNS changes and seek qualified professional advice when their situation requires it.
+Every generated result should offer edit, regenerate, and copy controls, plus a reminder to review content for accuracy before publishing.
 
 ## Roadmap
 
-- [ ] Build onboarding and roadmap generation
-- [ ] Build dashboard and task-progress system
-- [ ] Add domain education and digital-ownership record
-- [ ] Add platform matcher
-- [ ] Add website content workspace
-- [ ] Add launch checklist
-- [ ] Add guided DNS connection center
-- [ ] Add business-email guide
-- [ ] Add discoverability and local-presence guidance
-- [ ] Add recurring maintenance tasks
-- [ ] Add authentication and saved plans
-- [ ] Add integrations and export flows
+- [x] Build core landing, onboarding, dashboard, and guided workflow pages
+- [x] Add domain guidance, platform matcher, website-content workspace, and launch checklist
+- [x] Add account, support, legal, utility, and fallback routes
+- [x] Add a global light, dark, and system appearance system
+- [x] Add branded route fallback for unknown paths
+- [ ] Add authentication and saved plans backed by a production database
+- [ ] Add real-time domain availability lookup
+- [ ] Add provider-specific DNS setup flows
+- [ ] Add live AI generation and review workflows
+- [ ] Add analytics, search-monitoring, reminder, and PDF-export integrations
+- [ ] Add automated route/link validation and end-to-end theme tests
 
 ## Contributing
 
-Contributions, feedback, and ideas are welcome. Please keep proposed changes aligned with the product’s core principles: clarity for beginners, owner control, technical safety, accessible design, and provider-neutral guidance.
+Contributions, feedback, and product ideas are welcome. Please keep changes aligned with the core principles of beginner clarity, business-owner control, technical safety, accessible design, provider-neutral guidance, and reliable navigation.
 
 ## License
 
