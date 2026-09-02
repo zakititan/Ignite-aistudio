@@ -10,14 +10,50 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as BusinessEmailRouteImport } from './routes/business-email'
+import { Route as ChecklistRouteImport } from './routes/checklist'
+import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
+import { Route as ContentRouteImport } from './routes/content'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
+import { Route as GetFoundRouteImport } from './routes/get-found'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SignInRouteImport } from './routes/sign-in'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessEmailRoute = BusinessEmailRouteImport.update({
+  id: '/business-email',
+  path: '/business-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChecklistRoute = ChecklistRouteImport.update({
+  id: '/checklist',
+  path: '/checklist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConnectDomainRoute = ConnectDomainRouteImport.update({
+  id: '/connect-domain',
+  path: '/connect-domain',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContentRoute = ContentRouteImport.update({
+  id: '/content',
+  path: '/content',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -30,9 +66,24 @@ const DomainsRoute = DomainsRouteImport.update({
   path: '/domains',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GetFoundRoute = GetFoundRouteImport.update({
+  id: '/get-found',
+  path: '/get-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintenanceRoute = MaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -40,49 +91,151 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
+  id: '/platform-matcher',
+  path: '/platform-matcher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/business-email': typeof BusinessEmailRoute
+  '/checklist': typeof ChecklistRoute
+  '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/learn': typeof LearnRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
+  '/settings': typeof SettingsRoute
+  '/sign-in': typeof SignInRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/business-email': typeof BusinessEmailRoute
+  '/checklist': typeof ChecklistRoute
+  '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/learn': typeof LearnRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
+  '/settings': typeof SettingsRoute
+  '/sign-in': typeof SignInRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/business-email': typeof BusinessEmailRoute
+  '/checklist': typeof ChecklistRoute
+  '/connect-domain': typeof ConnectDomainRoute
+  '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/learn': typeof LearnRoute
+  '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
+  '/settings': typeof SettingsRoute
+  '/sign-in': typeof SignInRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/domains' | '/how-it-works' | '/onboarding'
+  fullPaths:
+    | '/'
+    | '/account'
+    | '/business-email'
+    | '/checklist'
+    | '/connect-domain'
+    | '/content'
+    | '/dashboard'
+    | '/domains'
+    | '/get-found'
+    | '/how-it-works'
+    | '/learn'
+    | '/maintenance'
+    | '/onboarding'
+    | '/platform-matcher'
+    | '/settings'
+    | '/sign-in'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/domains' | '/how-it-works' | '/onboarding'
+  to:
+    | '/'
+    | '/account'
+    | '/business-email'
+    | '/checklist'
+    | '/connect-domain'
+    | '/content'
+    | '/dashboard'
+    | '/domains'
+    | '/get-found'
+    | '/how-it-works'
+    | '/learn'
+    | '/maintenance'
+    | '/onboarding'
+    | '/platform-matcher'
+    | '/settings'
+    | '/sign-in'
   id:
     | '__root__'
     | '/'
+    | '/account'
+    | '/business-email'
+    | '/checklist'
+    | '/connect-domain'
+    | '/content'
     | '/dashboard'
     | '/domains'
+    | '/get-found'
     | '/how-it-works'
+    | '/learn'
+    | '/maintenance'
     | '/onboarding'
+    | '/platform-matcher'
+    | '/settings'
+    | '/sign-in'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRoute
+  BusinessEmailRoute: typeof BusinessEmailRoute
+  ChecklistRoute: typeof ChecklistRoute
+  ConnectDomainRoute: typeof ConnectDomainRoute
+  ContentRoute: typeof ContentRoute
   DashboardRoute: typeof DashboardRoute
   DomainsRoute: typeof DomainsRoute
+  GetFoundRoute: typeof GetFoundRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  LearnRoute: typeof LearnRoute
+  MaintenanceRoute: typeof MaintenanceRoute
   OnboardingRoute: typeof OnboardingRoute
+  PlatformMatcherRoute: typeof PlatformMatcherRoute
+  SettingsRoute: typeof SettingsRoute
+  SignInRoute: typeof SignInRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,6 +245,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business-email': {
+      id: '/business-email'
+      path: '/business-email'
+      fullPath: '/business-email'
+      preLoaderRoute: typeof BusinessEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checklist': {
+      id: '/checklist'
+      path: '/checklist'
+      fullPath: '/checklist'
+      preLoaderRoute: typeof ChecklistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/connect-domain': {
+      id: '/connect-domain'
+      path: '/connect-domain'
+      fullPath: '/connect-domain'
+      preLoaderRoute: typeof ConnectDomainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/content': {
+      id: '/content'
+      path: '/content'
+      fullPath: '/content'
+      preLoaderRoute: typeof ContentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -108,11 +296,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/get-found': {
+      id: '/get-found'
+      path: '/get-found'
+      fullPath: '/get-found'
+      preLoaderRoute: typeof GetFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maintenance': {
+      id: '/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MaintenanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -122,15 +331,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platform-matcher': {
+      id: '/platform-matcher'
+      path: '/platform-matcher'
+      fullPath: '/platform-matcher'
+      preLoaderRoute: typeof PlatformMatcherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRoute,
+  BusinessEmailRoute: BusinessEmailRoute,
+  ChecklistRoute: ChecklistRoute,
+  ConnectDomainRoute: ConnectDomainRoute,
+  ContentRoute: ContentRoute,
   DashboardRoute: DashboardRoute,
   DomainsRoute: DomainsRoute,
+  GetFoundRoute: GetFoundRoute,
   HowItWorksRoute: HowItWorksRoute,
+  LearnRoute: LearnRoute,
+  MaintenanceRoute: MaintenanceRoute,
   OnboardingRoute: OnboardingRoute,
+  PlatformMatcherRoute: PlatformMatcherRoute,
+  SettingsRoute: SettingsRoute,
+  SignInRoute: SignInRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
