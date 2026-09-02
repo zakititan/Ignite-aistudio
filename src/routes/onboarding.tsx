@@ -52,6 +52,22 @@ const YES_NO_UNSURE = [
   { value: "unsure", label: "Not sure" },
 ];
 
+type FieldErrors = Partial<
+  Record<
+    | "businessName"
+    | "category"
+    | "location"
+    | "customerModel"
+    | "primaryGoal"
+    | "currentStatus"
+    | "ownedDomain"
+    | "needs"
+    | "timeline"
+    | "techComfort",
+    string
+  >
+>;
+
 function Field({
   label,
   hint,
@@ -60,9 +76,9 @@ function Field({
   children,
 }: {
   label: string;
-  hint?: string;
-  error?: string;
-  htmlFor?: string;
+  hint?: string | undefined;
+  error?: string | undefined;
+  htmlFor?: string | undefined;
   children: React.ReactNode;
 }) {
   return (
@@ -122,7 +138,7 @@ function Onboarding() {
   const { state, hydrated, setBusiness, setOnboardingStep, generatePlan, loadDemo } = useStore();
   const b = state.business;
   const [step, setStep] = useState(0);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
@@ -137,7 +153,7 @@ function Onboarding() {
   };
 
   function validate(current: number) {
-    const e: Record<string, string> = {};
+    const e: FieldErrors = {};
     if (current === 0) {
       if (!b.businessName.trim()) e.businessName = "Please tell us your business name so we can personalize your plan.";
       if (!b.category) e.category = "Choose the closest category. You can change it later.";
