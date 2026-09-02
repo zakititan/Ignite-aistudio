@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ThemeSettingsCard } from "@/components/ThemeToggle";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/settings")({
