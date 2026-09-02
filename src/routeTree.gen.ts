@@ -14,6 +14,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
+  id: '/platform-matcher',
+  path: '/platform-matcher',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/domains': typeof DomainsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
+  '/platform-matcher': typeof PlatformMatcherRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/domains' | '/how-it-works' | '/onboarding'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/domains'
+    | '/how-it-works'
+    | '/onboarding'
+    | '/platform-matcher'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/domains' | '/how-it-works' | '/onboarding'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/domains'
+    | '/how-it-works'
+    | '/onboarding'
+    | '/platform-matcher'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/domains'
     | '/how-it-works'
     | '/onboarding'
+    | '/platform-matcher'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   DomainsRoute: typeof DomainsRoute
   HowItWorksRoute: typeof HowItWorksRoute
   OnboardingRoute: typeof OnboardingRoute
+  PlatformMatcherRoute: typeof PlatformMatcherRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platform-matcher': {
+      id: '/platform-matcher'
+      path: '/platform-matcher'
+      fullPath: '/platform-matcher'
+      preLoaderRoute: typeof PlatformMatcherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   DomainsRoute: DomainsRoute,
   HowItWorksRoute: HowItWorksRoute,
   OnboardingRoute: OnboardingRoute,
+  PlatformMatcherRoute: PlatformMatcherRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
