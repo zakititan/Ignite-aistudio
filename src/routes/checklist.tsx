@@ -23,6 +23,7 @@ import { PHASES, progressPercent } from "@/lib/plan";
 import { getReadiness } from "@/lib/readiness";
 import { LaunchReadinessCard } from "@/components/LaunchReadinessCard";
 import { ReadinessStatusBadge } from "@/components/ReadinessStatusBadge";
+import { LaunchBlockerList } from "@/components/LaunchBlockerList";
 import type { Importance, PhaseKey, TaskStatus } from "@/lib/types";
 
 export const Route = createFileRoute("/checklist")({
@@ -82,10 +83,18 @@ function Checklist() {
         (importance === "all" || t.importance === importance),
     );
     if (blockerOnly) {
-      tasks = tasks.filter((t) => blockerMap.has(t.id) && t.status !== "complete");
+      // Show only tasks tied to applicable blockers. Completed optional tasks do not hide critical blockers — blockers themselves remain visible above.
+      // Filter by blocker linkage OR by critical blocker existence when no relatedTaskId
+      const hasCriticalWithoutTask = readiness.blockers.some((b) => b.severity === "critical" && !b.relatedTaskId);
+      tasks = tasks.filter((t) => {
+        if (blockerMap.has(t.id) && t.status !== "complete") return true;
+        // If there are critical blockers without a task mapping, still show incomplete required tasks
+        if (hasCriticalWithoutTask && t.importance === "required" && t.status !== "complete") return true;
+        return false;
+      });
     }
     return tasks;
-  }, [state.tasks, phase, status, importance, blockerOnly, blockerMap]);
+  }, [state.tasks, phase, status, importance, blockerOnly, blockerMap, readiness.blockers]);
 
   const percent = progressPercent(state.tasks);
 
@@ -213,6 +222,21 @@ function Checklist() {
             and icons, not color alone.
           </p>
         </section>
+
+        {blockerOnly && readiness.blockers.length > 0 ? (
+          <section aria-labelledby="applicable-blockers" className="surface-panel p-5">
+            <h2 id="applicable-blockers" className="font-display text-base font-bold flex items-center gap-2">
+              <AlertTriangle className="size-4 text-destructive" aria-hidden="true" /> Applicable launch blockers — why this matters
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Only applicable to your business type ({state.business.category || "category"}, {state.business.customerModel || "model"}, {state.business.needs.join(", ") || "no special needs"}) — others hidden. Completed optional steps do not hide critical items.
+            </p>
+            <div className="mt-3">
+              <LaunchBlockerList blockers={readiness.blockers} />
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">Each blocker shows why it matters and links directly to the page that fixes it.</p>
+          </section>
+        ) : null}
 
         <section className="grid gap-3 sm:grid-cols-3 lg:grid-cols-4">
           <div className="space-y-1.5">

@@ -152,6 +152,16 @@ function HelpPage() {
       </section>
 
       <section className="surface-panel p-5">
+        <h2 className="font-display text-base font-bold">See how your domain, website and email connect</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Your web address, website and business email share the same domain settings (DNS). The setup map shows what is planned, what is unknown, and what to protect before you change anything. Email records (MX/SPF) stay separate from website records (A/CNAME).
+        </p>
+        <Button asChild size="sm" className="mt-3">
+          <Link to="/online-setup">View setup map →</Link>
+        </Button>
+      </section>
+
+      <section className="surface-panel p-5">
         <h2 className="font-display text-base font-bold">Test your customer journey</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           If a customer cannot call, submit a form, book or buy, use the 5-step journey tester to

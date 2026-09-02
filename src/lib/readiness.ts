@@ -40,6 +40,79 @@ function isTaskOutstanding(tasks: LaunchTask[], needles: string[]): boolean {
   return found.status !== "complete";
 }
 
+// Helpers for conditional gating per business type
+function isLiveWebsite(business: BusinessProfile): boolean {
+  return business.websiteUrlStatus === "live";
+}
+
+function isLocalRelevant(business: BusinessProfile): boolean {
+  return (
+    business.customerModel === "local" ||
+    business.customerModel === "both" ||
+    business.hasPhysicalLocation ||
+    business.servesAtCustomerLocation
+  );
+}
+
+function isEcommerceRelevant(business: BusinessProfile): boolean {
+  const needs = business.needs ?? [];
+  const goal = (business.primaryGoal ?? "").toLowerCase();
+  const cat = (business.category ?? "").toLowerCase();
+  return (
+    needs.includes("Ecommerce shop") ||
+    goal.includes("sell") ||
+    goal.includes("product") ||
+    cat.includes("retail") ||
+    cat.includes("shop") ||
+    (business.storeUrl ?? "").trim().length > 0
+  );
+}
+
+function isBookingRelevant(business: BusinessProfile): boolean {
+  const needs = business.needs ?? [];
+  const goal = (business.primaryGoal ?? "").toLowerCase();
+  return (
+    needs.includes("Online booking") ||
+    goal.includes("booking") ||
+    goal.includes("appointment") ||
+    (business.bookingUrl ?? "").trim().length > 0
+  );
+}
+
+function isContactFormRelevant(business: BusinessProfile): boolean {
+  const needs = business.needs ?? [];
+  const action = (business.primaryCustomerAction ?? "").toString();
+  return (
+    needs.includes("Contact form") ||
+    action === "contact_form" ||
+    (business.contactFormUrl ?? "").trim().length > 0
+  );
+}
+
+function needsBusinessEmailRelevant(business: BusinessProfile): boolean {
+  const v = (business.needsBusinessEmail ?? "").toString().toLowerCase();
+  const uses = (business.usesBusinessEmail ?? "").toString().toLowerCase();
+  if (v === "yes" || uses === "yes") return true;
+  if ((business.businessEmail ?? "").trim().length > 0) return true;
+  if (v === "unsure" || uses === "unsure" || uses === "not_sure") return false;
+  return v === "yes";
+}
+
+function isExistingSiteMigration(business: BusinessProfile): boolean {
+  const status = (business.existingWebsiteStatus ?? "").toLowerCase();
+  const present = (business.existingWebsitePresent ?? "").toString().toLowerCase();
+  const change = (business.websiteChangePlanned ?? "").toString().toLowerCase();
+  return (
+    present === "yes" ||
+    change === "yes" ||
+    change === "replacing" ||
+    status.includes("have a website") ||
+    status.includes("improving") ||
+    status.includes("someone else manages") ||
+    status.includes("already") // I already own a domain not necessarily site but treat as existing? keep conservative
+  );
+}
+
 export function getReadiness(
   tasks: LaunchTask[],
   business: BusinessProfile,
@@ -142,21 +215,25 @@ export function getReadiness(
     }
   }
 
-  // 3 - HTTPS (critical)
+  // 3 - HTTPS (critical) — only if live URL
   {
     const id = "https";
-    const outstanding = isTaskOutstanding(tasks, ["turn on https", "check for browser warnings"]);
-    if (outstanding) {
-      blockers.push({
-        id,
-        title: "Check HTTPS (padlock) for warnings",
-        description:
-          "Browsers warn visitors when the padlock is missing — review before you invite customers.",
-        severity: "critical",
-        relatedTaskId: findTaskId(tasks, ["turn on https"]),
-        relatedRoute: "/connect-domain",
-        actionLabel: "Review HTTPS",
-      });
+    const isLive = isLiveWebsite(business);
+    // Only gate HTTPS when live — per spec HTTPS only if live URL
+    if (isLive) {
+      const outstanding = isTaskOutstanding(tasks, ["turn on https", "check for browser warnings"]);
+      if (outstanding) {
+        blockers.push({
+          id,
+          title: "Check HTTPS (padlock) for warnings",
+          description:
+            "Browsers warn visitors when the padlock is missing — review before you invite customers.",
+          severity: "critical",
+          relatedTaskId: findTaskId(tasks, ["turn on https"]),
+          relatedRoute: "/connect-domain",
+          actionLabel: "Review HTTPS",
+        });
+      }
     }
   }
 
@@ -261,7 +338,7 @@ export function getReadiness(
     }
   }
 
-  // 6 - Mobile review (important)
+  // 6 - Mobile review (important) — All applicable
   {
     const id = "mobile-review";
     const outstanding = isTaskOutstanding(tasks, ["check every page on a real phone"]);
@@ -311,18 +388,12 @@ export function getReadiness(
       business.primaryGoal?.toLowerCase().includes("sell") ||
       business.category?.toLowerCase().includes("retail");
     if (needsSelling) {
-      // No dedicated task exists in base seeds; treat as always outstanding until user dismisses via checklist? But we can tie to analytics/page tasks heuristic.
-      // Deterministic: if selling, blocker exists until required tasks covering selling are done? For now, show blocker when selling and any required task incomplete or when selling-specific pages not complete.
       const sellingPageComplete = (() => {
         if (business.needs?.includes("Ecommerce shop")) {
           return isComplete(tasks, ["write your products page"]);
         }
         return true;
       })();
-      // Show blocker if selling page not complete OR always prompt review for policy
-      // We add blocker whenever selling is relevant and not all required selling signals are complete; to keep deterministic, only add if sellingPage not complete.
-      // But spec expects blocker to appear for selling models; so always add when selling unless sellingPageComplete and requiredCompletionPercent 100?
-      // Simpler: always add blocker when selling to prompt review; user resolves by checking via task? We'll require the task check — if selling page incomplete, definitely blocker; otherwise still show until manual review? To avoid never-clearing, use page check only.
       if (!sellingPageComplete) {
         blockers.push({
           id,
@@ -336,9 +407,6 @@ export function getReadiness(
           relatedRoute: "/content",
           actionLabel: "Review policies",
         });
-      } else if (business.needs?.includes("Ecommerce shop")) {
-        // For ecommerce, still surface as important until overall readiness high; but make it so it only appears when blockers would otherwise be empty? No, keep hidden if selling page complete to avoid perpetual blocker.
-        // Intentionally leave no blocker when selling page complete to allow ready_for_review.
       }
     }
   }
@@ -347,7 +415,7 @@ export function getReadiness(
   {
     const id = "business-essentials";
     const missingName = !business.businessName.trim();
-    const missingDescription = !business.description.trim();
+    const missingDescription = !business.description.trim() && !business.servicesOffered.trim();
     const needsLocation = business.customerModel !== "online" && business.customerModel !== "";
     const missingLocation = needsLocation
       ? !business.location.trim() && !(business.address ?? "").trim()
@@ -364,7 +432,7 @@ export function getReadiness(
 
     const missing: string[] = [];
     if (missingName) missing.push("business name");
-    if (missingDescription) missing.push("description");
+    if (missingDescription) missing.push("description/services");
     if (missingLocation) missing.push("location for local customers");
     if (missingContact) missing.push("primary customer action or contact method");
 
@@ -382,6 +450,220 @@ export function getReadiness(
         relatedRoute: "/business-profile",
         actionLabel: "Complete business profile",
       });
+    }
+  }
+
+  // 10 - Local presence specifics: location/service area + hours if needed
+  {
+    if (isLocalRelevant(business)) {
+      const locationMissing =
+        !business.location.trim() &&
+        !(business.address ?? "").trim() &&
+        !(business.serviceAreas ?? "").trim();
+      const hoursMissing = business.hasBusinessHours && !(business.hoursDetail ?? "").trim();
+      // Location/service area blocker
+      if (locationMissing) {
+        blockers.push({
+          id: "local-location-service-area",
+          title: "Add location or service area for local customers",
+          description:
+            "Local customers need to know where you are or where you serve. Add your town/city, address or service areas in Business profile — why it matters: without this, customers cannot visit or know if you serve them.",
+          severity: "critical",
+          relatedRoute: "/business-profile",
+          actionLabel: "Add location",
+        });
+      } else if (hoursMissing) {
+        // Only if location present but hours missing
+        blockers.push({
+          id: "local-hours",
+          title: "Add business hours for local customers",
+          description:
+            "When customers visit or call in person, they expect correct hours. Add opening hours in Business profile — why it matters: wrong hours cause wasted trips and lost trust.",
+          severity: "important",
+          relatedRoute: "/business-profile",
+          actionLabel: "Add hours",
+        });
+      }
+    }
+  }
+
+  // 11 - Ecommerce specifics: product/checkout/delivery/returns/payment
+  {
+    if (isEcommerceRelevant(business)) {
+      const productOutstanding = isTaskOutstanding(tasks, ["write your products page"]);
+      const deliveryMissing = !(business.deliveryNotes ?? "").trim();
+      const storeMissing = !(business.storeUrl ?? "").trim();
+      const needsPolicies = business.policiesNeeded ?? [];
+      const returnsMissing =
+        !needsPolicies.includes("Returns / refunds") &&
+        !needsPolicies.includes("Shipping / delivery");
+      // Product page critical
+      if (productOutstanding) {
+        blockers.push({
+          id: "ecommerce-product",
+          title: "Complete product and checkout details",
+          description:
+            "Online shoppers need clear products, prices and checkout. Finish your Products page — why it matters: customers will not buy if they cannot find what you sell or how to pay.",
+          severity: "critical",
+          relatedTaskId: findTaskId(tasks, ["write your products page"]),
+          relatedRoute: "/content",
+          actionLabel: "Add products",
+        });
+      }
+      // Delivery/payment/returns important (aggregate to avoid spam)
+      const ecommerceSecondaryMissing: string[] = [];
+      if (storeMissing) ecommerceSecondaryMissing.push("store/checkout link");
+      if (deliveryMissing) ecommerceSecondaryMissing.push("delivery/returns info");
+      if (returnsMissing) ecommerceSecondaryMissing.push("returns/shipping policy");
+      if (ecommerceSecondaryMissing.length > 0 && !productOutstanding) {
+        // Only show secondary if primary already done, to keep blocker count reasonable
+        blockers.push({
+          id: "ecommerce-fulfillment",
+          title: "Add delivery, returns and payment details",
+          description: `Missing ${ecommerceSecondaryMissing.join(", ")}. Add these in Business profile and Content — why it matters: checkout questions cause abandoned carts. Protect business email before DNS change.`,
+          severity: "important",
+          relatedRoute: "/business-profile",
+          actionLabel: "Review fulfilment",
+        });
+      }
+    }
+  }
+
+  // 12 - Booking specifics: booking flow + confirmation + cancellation
+  {
+    if (isBookingRelevant(business)) {
+      const bookingMissing = !(business.bookingUrl ?? "").trim();
+      const confirmationOutstanding = false; // No dedicated task; use journey test as proxy
+      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
+      const isBookingJourney = journey?.journeyType === "booking";
+      const journeyNotPassed = !journey || !journey.steps.every((s) => s.status === "passed");
+      if (bookingMissing) {
+        blockers.push({
+          id: "booking-flow",
+          title: "Set up booking flow and confirmation",
+          description:
+            "Customers need an easy way to book, a clear confirmation and a way to cancel or reschedule — add your booking link in Business profile and test the full flow, including confirmation and cancellation. Why it matters: a broken booking loses the customer.",
+          severity: "critical",
+          relatedRoute: "/business-profile",
+          actionLabel: "Add booking link",
+        });
+      } else if (isBookingJourney && journeyNotPassed) {
+        // Booking URL present but journey not passed — reinforce blocker already exists via journey, but add specific booking confirmation hint
+        // Avoid duplicate if journey blocker already present
+        const hasJourneyBlocker = blockers.some((b) => b.id.startsWith("customer-journey") || b.id === "primary-action-test");
+        if (!hasJourneyBlocker) {
+          blockers.push({
+            id: "booking-confirmation",
+            title: "Test booking confirmation and cancellation",
+            description:
+              "Try changing or cancelling a test booking to verify confirmation messages arrive. Why it matters: customers panic if they do not get a confirmation.",
+            severity: "important",
+            relatedRoute: "/customer-journey",
+            actionLabel: "Test booking",
+          });
+        }
+      }
+    }
+  }
+
+  // 13 - Contact-form: form tested or alternate
+  {
+    if (isContactFormRelevant(business)) {
+      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
+      const isContactFormJourney = journey?.journeyType === "contact_form";
+      const formTested = isContactFormJourney
+        ? journey!.steps.every((s) => s.status === "passed")
+        : !isTaskOutstanding(tasks, ["test your contact form"]);
+      const hasAlternate =
+        !!(business.phone ?? "").trim() ||
+        !!(business.whatsappNumber ?? "").trim() ||
+        !!(business.businessEmail ?? "").trim() ||
+        business.primaryCustomerAction === "phone_call" ||
+        business.primaryCustomerAction === "whatsapp_message";
+      if (!formTested && !hasAlternate) {
+        blockers.push({
+          id: "contact-form-or-alternate",
+          title: "Test contact form or add alternate contact",
+          description:
+            "Contact form enquiries must reach you — submit a test yourself and check the inbox, or list a phone/WhatsApp/email customers can use today. Why it matters: without this, enquiries are lost.",
+          severity: "critical",
+          relatedRoute: "/customer-journey",
+          actionLabel: "Test contact form",
+        });
+      }
+    }
+  }
+
+  // 14 - Business-email: email-safe DNS review before DNS complete
+  {
+    if (needsBusinessEmailRelevant(business)) {
+      const screenshotOutstanding = isTaskOutstanding(tasks, [
+        "take a screenshot of your current domain settings",
+      ]);
+      const pointOutstanding = isTaskOutstanding(tasks, ["point your web address at your website"]);
+      // If DNS not yet complete and email at risk, require safeguard review
+      if (screenshotOutstanding && pointOutstanding) {
+        blockers.push({
+          id: "email-safe-dns-review",
+          title: "Protect business email before changing DNS",
+          description:
+            "Email delivery depends on DNS records (MX, SPF/DKIM). Save your current domain settings screenshot and get exact mail values before updating — review DNS impact. Why it matters: wrong DNS change can stop business email.",
+          severity: "important",
+          relatedTaskId: findTaskId(tasks, ["take a screenshot of your current domain settings"]),
+          relatedRoute: "/connect-domain",
+          actionLabel: "Review DNS impact",
+        });
+      } else {
+        // Also if email test not done but DNS about to change, keep separate blocker? Already handled by protect-email
+      }
+    }
+  }
+
+  // 15 - Existing-site migration: backup + redirect + journey tested
+  {
+    if (isExistingSiteMigration(business)) {
+      const screenshotOutstanding = isTaskOutstanding(tasks, [
+        "take a screenshot of your current domain settings",
+      ]);
+      const pointOutstanding = isTaskOutstanding(tasks, ["point your web address at your website"]);
+      const isJourneyObject = typeof customerJourneyTest === "object" && customerJourneyTest !== null;
+      const journey = isJourneyObject ? (customerJourneyTest as CustomerJourneyTest) : null;
+      const journeyTested = journey ? journey.steps.every((s) => s.status === "passed") : false;
+      const journeyHasBlocked = journey ? journey.steps.some((s) => s.status === "blocked") : false;
+      if (screenshotOutstanding) {
+        blockers.push({
+          id: "existing-site-backup",
+          title: "Back up existing site before migrating",
+          description:
+            "You are replacing an existing website — take a screenshot/back-up of current DNS settings and content before changing. Why it matters: without a backup you cannot undo a bad change.",
+          severity: "critical",
+          relatedTaskId: findTaskId(tasks, ["take a screenshot of your current domain settings"]),
+          relatedRoute: "/connect-domain",
+          actionLabel: "Save backup",
+        });
+      }
+      // Redirect check not directly modelled as task; use journey tested as proxy
+      if (!journeyTested && !screenshotOutstanding && !pointOutstanding) {
+        // Only add if backup done and DNS pointed but journey not fully tested
+        if (!journeyHasBlocked) {
+          const hasJourneyBlocker = blockers.some(
+            (b) => b.id === "primary-action-test" || b.id.startsWith("customer-journey"),
+          );
+          if (!hasJourneyBlocker) {
+            blockers.push({
+              id: "existing-site-redirect-journey",
+              title: "Test redirects and main customer action after migration",
+              description:
+                "After migration, confirm old links redirect and test your primary customer action end to end on a real phone — why it matters: broken redirects lose search traffic and customers.",
+              severity: "important",
+              relatedRoute: "/customer-journey",
+              actionLabel: "Test after migration",
+            });
+          }
+        }
+      }
     }
   }
 

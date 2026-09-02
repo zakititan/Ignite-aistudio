@@ -502,6 +502,16 @@ export const emptyBusiness: BusinessProfile = {
   domainPurchased: "",
   existingWebsiteStatus: "",
   businessEmailStatus: "",
+  websiteUrl: "",
+  websiteUrlStatus: "not_added",
+  dnsProvider: "",
+  websiteProvider: "",
+  usesBusinessEmail: "",
+  emailStatus: "",
+  websiteChangePlanned: "",
+  existingWebsitePresent: "",
+  dnsScreenshotSaved: "",
+  hasExactProviderRecords: "",
 };
 
 export const demoBusiness: BusinessProfile = {
@@ -565,6 +575,14 @@ export const demoBusiness: BusinessProfile = {
   businessEmailStatus: "Needs setup",
 };
 
+export const defaultDnsPlanning: import("./types").DnsPlanningState = {
+  websiteChangeType: "unsure",
+  usesBusinessEmail: "not_sure",
+  dnsProviderLocation: "",
+  screenshotSaved: "unsure",
+  hasExactRecords: "not_yet",
+};
+
 export function demoState(): AppState {
   const tasks = generateTasks(demoBusiness);
   const now = new Date().toISOString();
@@ -598,6 +616,7 @@ export function demoState(): AppState {
     account: { signedIn: false, fullName: "", email: "" },
     customerJourneyTest: undefined,
     savedDomainIdeas: [],
+    dnsPlanning: { ...defaultDnsPlanning },
   };
 }
 
@@ -626,6 +645,7 @@ export function emptyState(): AppState {
     account: { signedIn: false, fullName: "", email: "" },
     customerJourneyTest: undefined,
     savedDomainIdeas: [],
+    dnsPlanning: { ...defaultDnsPlanning },
   };
 }
 

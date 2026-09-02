@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   CheckCircle2,
@@ -1145,6 +1145,15 @@ function BusinessEmail() {
       description="Step-by-step guidance, deliverability safeguards, and exact DNS records for your domain."
     >
       <div className="space-y-8">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-primary/20 bg-primary-soft/30 px-3 py-2 text-sm">
+          <Link
+            to="/online-setup"
+            className="inline-flex items-center gap-1.5 font-medium text-primary underline-offset-4 hover:underline"
+          >
+            View setup map — how your domain, website & business email fit together
+          </Link>
+          <span className="text-xs text-muted-foreground">Context workflow</span>
+        </div>
         {/* Top Overview & Credibility Card */}
         <section className="surface-panel overflow-hidden border border-border p-5 sm:p-7">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">

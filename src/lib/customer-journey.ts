@@ -129,20 +129,39 @@ export function inferDefaultJourney(business: BusinessProfile): CustomerJourneyT
 
   const needs = business.needs ?? [];
   const goal = (business.primaryGoal ?? "").toLowerCase();
+  const category = (business.category ?? "").toLowerCase();
   const has = (n: string) => needs.includes(n);
 
+  // Booking takes precedence — most specific flow
   if (has("Online booking") || goal.includes("booking") || goal.includes("appointment"))
     return "booking";
+  // Ecommerce shop
   if (has("Ecommerce shop") || goal.includes("sell") || goal.includes("product"))
     return "online_purchase";
+  // Newsletter
   if (
     has("Email newsletter signup") ||
     goal.includes("newsletter") ||
     goal.includes("collect leads")
   )
     return "newsletter_signup";
+  // Bakery / café / restaurant → Visit/order (prefer visit_location, fallback to online_purchase handled above)
+  if (category.includes("bakery") || category.includes("café") || category.includes("cafe") || category.includes("restaurant"))
+    return "visit_location";
+  // Freelancer / creative / consultant / tutor / coach / agency → Contact/booking
+  if (
+    category.includes("freelancer") ||
+    category.includes("creative") ||
+    category.includes("consultant") ||
+    category.includes("agency") ||
+    category.includes("tutor") ||
+    category.includes("coach")
+  ) {
+    if (has("Online booking") || goal.includes("booking")) return "booking";
+    return "contact_form";
+  }
+  // WhatsApp / phone button explicit need
   if (has("WhatsApp / phone contact button")) {
-    // Prefer whatsapp if explicitly, else phone
     return "whatsapp_message";
   }
   if (
@@ -152,12 +171,20 @@ export function inferDefaultJourney(business: BusinessProfile): CustomerJourneyT
     goal.includes("contact")
   )
     return "contact_form";
+  // Local → Phone/WhatsApp/contact per spec table
   if (
     business.hasPhysicalLocation ||
     business.customerModel === "local" ||
+    business.customerModel === "both" ||
     goal.includes("visit") ||
     goal.includes("local")
   ) {
+    // Prefer phone/whatsapp/contact in that order; visit_location already covered for bakery, so fallback to phone
+    if (goal.includes("phone") || goal.includes("call")) return "phone_call";
+    if (has("WhatsApp / phone contact button")) return "whatsapp_message";
+    // Default local suggestion: Phone call if phone available, else contact form, else visit_location
+    if ((business.phone ?? "").trim() || (business.whatsappNumber ?? "").trim()) return "phone_call";
+    if (has("Contact form")) return "contact_form";
     return "visit_location";
   }
   if (goal.includes("phone") || goal.includes("call")) return "phone_call";

@@ -19,6 +19,7 @@ import {
   Archive,
   XCircle,
   ShoppingBag,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
@@ -453,6 +454,16 @@ function DomainsPage() {
       title="Your web address"
       description="Find a name customers can remember — and keep it in your own name."
     >
+      <div className="mb-2 flex flex-wrap items-center gap-2 rounded-lg border border-primary/20 bg-primary-soft/30 px-3 py-2 text-sm">
+        <Link
+          to="/online-setup"
+          className="inline-flex items-center gap-1.5 font-medium text-primary underline-offset-4 hover:underline"
+        >
+          View setup map <ArrowRight className="size-3.5" aria-hidden="true" /> — see how your domain
+          connects to website & email
+        </Link>
+        <span className="text-xs text-muted-foreground">Context workflow · no guesswork</span>
+      </div>
       <Tabs defaultValue="find" className="space-y-6">
         <TabsList>
           <TabsTrigger value="find">Find a domain</TabsTrigger>

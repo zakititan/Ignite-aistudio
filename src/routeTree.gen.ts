@@ -38,6 +38,7 @@ import { Route as LaunchWizardRouteImport } from './routes/launch-wizard'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as OnlineSetupRouteImport } from './routes/online-setup'
 import { Route as OwnershipRecordRouteImport } from './routes/ownership-record'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 import { Route as PreflightRouteImport } from './routes/preflight'
@@ -196,6 +197,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnlineSetupRoute = OnlineSetupRouteImport.update({
+  id: '/online-setup',
+  path: '/online-setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OwnershipRecordRoute = OwnershipRecordRouteImport.update({
   id: '/ownership-record',
   path: '/ownership-record',
@@ -287,6 +293,7 @@ export interface FileRoutesByFullPath {
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/online-setup': typeof OnlineSetupRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
   '/preflight': typeof PreflightRoute
@@ -330,6 +337,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/online-setup': typeof OnlineSetupRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
   '/preflight': typeof PreflightRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/learn': typeof LearnRoute
   '/maintenance': typeof MaintenanceRoute
   '/onboarding': typeof OnboardingRoute
+  '/online-setup': typeof OnlineSetupRoute
   '/ownership-record': typeof OwnershipRecordRoute
   '/platform-matcher': typeof PlatformMatcherRoute
   '/preflight': typeof PreflightRoute
@@ -419,6 +428,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/online-setup'
     | '/ownership-record'
     | '/platform-matcher'
     | '/preflight'
@@ -462,6 +472,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/online-setup'
     | '/ownership-record'
     | '/platform-matcher'
     | '/preflight'
@@ -505,6 +516,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/maintenance'
     | '/onboarding'
+    | '/online-setup'
     | '/ownership-record'
     | '/platform-matcher'
     | '/preflight'
@@ -549,6 +561,7 @@ export interface RootRouteChildren {
   LearnRoute: typeof LearnRoute
   MaintenanceRoute: typeof MaintenanceRoute
   OnboardingRoute: typeof OnboardingRoute
+  OnlineSetupRoute: typeof OnlineSetupRoute
   OwnershipRecordRoute: typeof OwnershipRecordRoute
   PlatformMatcherRoute: typeof PlatformMatcherRoute
   PreflightRoute: typeof PreflightRoute
@@ -768,6 +781,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/online-setup': {
+      id: '/online-setup'
+      path: '/online-setup'
+      fullPath: '/online-setup'
+      preLoaderRoute: typeof OnlineSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ownership-record': {
       id: '/ownership-record'
       path: '/ownership-record'
@@ -885,6 +905,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnRoute: LearnRoute,
   MaintenanceRoute: MaintenanceRoute,
   OnboardingRoute: OnboardingRoute,
+  OnlineSetupRoute: OnlineSetupRoute,
   OwnershipRecordRoute: OwnershipRecordRoute,
   PlatformMatcherRoute: PlatformMatcherRoute,
   PreflightRoute: PreflightRoute,
