@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as BusinessEmailRouteImport } from './routes/business-email'
@@ -44,6 +45,11 @@ import { Route as TroubleshootingRouteImport } from './routes/troubleshooting'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccessibilityRoute = AccessibilityRouteImport.update({
@@ -199,6 +205,7 @@ const TroubleshootingRoute = TroubleshootingRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
@@ -266,6 +274,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accessibility': typeof AccessibilityRoute
   '/account': typeof AccountRoute
   '/business-email': typeof BusinessEmailRoute
@@ -301,6 +310,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
     | '/accessibility'
     | '/account'
     | '/business-email'
@@ -334,6 +344,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
     | '/accessibility'
     | '/account'
     | '/business-email'
@@ -367,6 +378,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$'
     | '/accessibility'
     | '/account'
     | '/business-email'
@@ -401,6 +413,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   AccessibilityRoute: typeof AccessibilityRoute
   AccountRoute: typeof AccountRoute
   BusinessEmailRoute: typeof BusinessEmailRoute
@@ -440,6 +453,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accessibility': {
@@ -657,6 +677,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   AccessibilityRoute: AccessibilityRoute,
   AccountRoute: AccountRoute,
   BusinessEmailRoute: BusinessEmailRoute,
