@@ -24,6 +24,10 @@ import { Callout } from "@/components/Callouts";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useStore } from "@/lib/store";
+import { getReadiness } from "@/lib/readiness";
+import { getDnsImpactPreview } from "@/lib/online-presence";
+import { ReadinessStatusBadge } from "@/components/ReadinessStatusBadge";
+import { LaunchBlockerList } from "@/components/LaunchBlockerList";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/launch-dossier")({
@@ -55,10 +59,15 @@ export function LaunchDossierPage() {
   const { state } = useStore();
   const b = state.business;
   const o = state.ownership;
+  const readiness = useMemo(
+    () => getReadiness(state.tasks, state.business, state.ownership, state.customerJourneyTest),
+    [state.tasks, state.business, state.ownership, state.customerJourneyTest],
+  );
+  const dnsPreview = useMemo(() => getDnsImpactPreview(state), [state]);
 
-  const businessName = b.businessName || b.name || "Your Business LLC";
+  const businessName = b.businessName || "Your Business LLC";
   const domain = b.ownedDomain || b.preferredDomain || "yourbusiness.com";
-  const primaryEmail = b.businessEmail || b.ownerContact || `contact@${domain}`;
+  const primaryEmail = b.businessEmail || `contact@${domain}`;
   const phone = b.phone || b.whatsappNumber || "(555) 123-4567";
   const location = b.location || b.address || "Local and Online";
   const todayStr = new Date().toLocaleDateString("en-US", {
@@ -117,6 +126,25 @@ export function LaunchDossierPage() {
 
   // Markdown Generator
   const generateMarkdownDossier = () => {
+    const readinessLabel =
+      readiness.status === "ready_for_review"
+        ? "Ready for review"
+        : readiness.status === "nearly_ready"
+          ? "Nearly ready"
+          : readiness.status === "blocked"
+            ? "Needs attention"
+            : "Not started";
+    const journey = state.customerJourneyTest;
+    const journeyStatus = journey
+      ? journey.steps.some((s) => s.status === "blocked")
+        ? "Blocked"
+        : journey.steps.some((s) => s.status === "needs_improvement")
+          ? "Needs improvement"
+          : journey.steps.every((s) => s.status === "passed") && journey.steps.length > 0
+            ? "Passed"
+            : "Not tested"
+      : "Not tested";
+    const lastTest = journey ? new Date(journey.lastUpdatedAt).toLocaleDateString() + " " + new Date(journey.lastUpdatedAt).toLocaleTimeString() : "—";
     return `# OFFICIAL DIGITAL ASSET LAUNCH DOSSIER
 **Organization:** ${businessName}
 **Primary Domain:** ${domain}
@@ -154,7 +182,17 @@ ${dnsBlueprint.map((r) => `| ${r.type} | ${r.host} | ${r.value} | ${r.ttl} | ${r
 
 ---
 
-## 4. Pre-Flight Technical Audit & Verification Summary
+## 4. Launch Readiness Summary
+- **Readiness:** ${readinessLabel}
+- **Required checks:** ${readiness.completedRequiredTasks} of ${readiness.totalRequiredTasks} (${readiness.requiredCompletionPercent}%)
+- **Open blockers:** ${readiness.blockers.length}
+- **Last customer journey test:** ${journey ? `${journey.journeyType} — ${journeyStatus} on ${lastTest}` : "Not tested yet"}
+- **DNS impact:** ${dnsPreview.level.charAt(0).toUpperCase() + dnsPreview.level.slice(1)} — ${dnsPreview.title}
+${readiness.blockers.length ? "- **Blockers:** " + readiness.blockers.map((b) => `${b.title} [${b.severity}]`).join("; ") : "- No open blockers — final review recommended (guidance, not a guarantee)"}
+
+---
+
+## 5. Pre-Flight Technical Audit & Verification Summary
 - [x] Lead contact forms tested and delivering to master inbox (${primaryEmail})
 - [x] Mobile responsiveness and tap-to-call dialers verified
 - [x] TLS / SSL certificate verified with automatic HTTPS enforcement
@@ -163,7 +201,7 @@ ${dnsBlueprint.map((r) => `| ${r.type} | ${r.host} | ${r.value} | ${r.ttl} | ${r
 
 ---
 
-## 5. Formal Custodian & Agency Handover Sign-Off
+## 6. Formal Custodian & Agency Handover Sign-Off
 This document certifies that full custody, credentials access, and master ownership of all digital assets listed above reside with the business owner.
 
 **Client / Business Owner Signature:** ___________________________  **Date:** ${todayStr}
@@ -434,11 +472,104 @@ This document certifies that full custody, credentials access, and master owners
             </div>
           </div>
 
-          {/* Section 4: Pre-Flight Technical Verification Audit */}
+          {/* Readiness summary section */}
+          <div className="space-y-3">
+            <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2 border-b border-border/50 pb-1">
+              <CheckCircle2 className="size-4 text-primary" />
+              <span>4. Launch Readiness Summary</span>
+            </h3>
+            <div className="grid gap-3 sm:grid-cols-3 text-xs">
+              <div className="p-3 rounded-lg bg-muted/30 border">
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Readiness</span>
+                <div className="mt-1">
+                  <ReadinessStatusBadge status={readiness.status} />
+                </div>
+                <span className="text-[11px] text-muted-foreground block mt-1">
+                  {readiness.status === "ready_for_review"
+                    ? "Ready for review"
+                    : readiness.status === "nearly_ready"
+                      ? "Nearly ready"
+                      : readiness.status === "blocked"
+                        ? "Needs attention"
+                        : "Not started"}
+                </span>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/30 border">
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Required checks</span>
+                <strong className="text-foreground text-sm">
+                  {readiness.completedRequiredTasks} of {readiness.totalRequiredTasks}
+                </strong>
+                <span className="text-[11px] text-muted-foreground block">Required checks {readiness.completedRequiredTasks} of {readiness.totalRequiredTasks} · {readiness.requiredCompletionPercent}%</span>
+              </div>
+              <div className="p-3 rounded-lg bg-muted/30 border">
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Open blockers</span>
+                <strong className="text-foreground text-sm">{readiness.blockers.length}</strong>
+                <span className="text-[11px] text-muted-foreground block">
+                  Open blockers {readiness.blockers.length} · DNS impact {dnsPreview.level.charAt(0).toUpperCase() + dnsPreview.level.slice(1)}
+                </span>
+              </div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div className="p-3 rounded-lg bg-card border">
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">Last customer journey test</span>
+                {state.customerJourneyTest ? (
+                  <>
+                    <strong className="text-foreground text-sm">
+                      {state.customerJourneyTest.journeyType === "custom" && state.customerJourneyTest.customJourneyLabel
+                        ? state.customerJourneyTest.customJourneyLabel
+                        : state.customerJourneyTest.journeyType.replace("_", " ")}{" "}
+                      —{" "}
+                      {(() => {
+                        const steps = state.customerJourneyTest!.steps;
+                        const blocked = steps.some((s) => s.status === "blocked");
+                        const needs = steps.some((s) => s.status === "needs_improvement");
+                        const allPassed = steps.length > 0 && steps.every((s) => s.status === "passed");
+                        if (blocked) return "Blocked";
+                        if (needs) return "Needs improvement";
+                        if (allPassed) return "Passed";
+                        return "Not tested";
+                      })()}
+                    </strong>
+                    <span className="text-[11px] text-muted-foreground block">
+                      {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleDateString()} · {new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleTimeString()}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-muted-foreground">Not tested yet — run at /customer-journey</span>
+                )}
+              </div>
+              <div className="p-3 rounded-lg bg-card border">
+                <span className="text-muted-foreground block text-[10px] uppercase font-bold">DNS impact</span>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "text-xs font-bold capitalize",
+                    dnsPreview.level === "low" && "border-success/30 bg-success-soft text-success",
+                    dnsPreview.level === "medium" && "border-warning/30 bg-warning-soft text-warning-foreground",
+                    dnsPreview.level === "high" && "border-destructive/30 bg-destructive-soft text-destructive",
+                  )}
+                >
+                  {dnsPreview.level}
+                </Badge>
+                <span className="text-[11px] text-muted-foreground block mt-1">{dnsPreview.title}</span>
+              </div>
+            </div>
+            {readiness.blockers.length > 0 ? (
+              <div className="mt-2">
+                <p className="text-xs font-semibold mb-2">Open blockers — why + link</p>
+                <LaunchBlockerList blockers={readiness.blockers.slice(0, 4)} />
+                {readiness.blockers.length > 4 ? (
+                  <p className="text-[11px] text-muted-foreground mt-1">Full list in checklist → /checklist?filter=blockers</p>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+
+          {/* Section 5: Pre-Flight Technical Verification Audit */}
           <div className="space-y-3">
             <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2 border-b border-border/50 pb-1">
               <Lock className="size-4 text-emerald-500" />
-              <span>4. Technical Pre-Flight Verification Audit</span>
+              <span>5. Technical Pre-Flight Verification Audit</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               <div className="flex items-center gap-2 p-2.5 rounded-lg border bg-emerald-500/5 border-emerald-500/20 text-emerald-700 dark:text-emerald-300">
@@ -460,10 +591,10 @@ This document certifies that full custody, credentials access, and master owners
             </div>
           </div>
 
-          {/* Section 5: Formal Handover Signatures */}
+          {/* Section 6: Formal Handover Signatures */}
           <div className="pt-4 border-t-2 border-dashed border-border/80 space-y-4">
             <h3 className="font-display text-base font-bold text-foreground">
-              5. Formal Custody Transfer & Handover Sign-Off
+              6. Formal Custody Transfer & Handover Sign-Off
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               This document certifies that full credentials access, root administrative ownership,

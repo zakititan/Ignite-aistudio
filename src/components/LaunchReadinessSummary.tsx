@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, AlertTriangle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ReadinessStatusBadge } from "@/components/ReadinessStatusBadge";
+import { LaunchBlockerList } from "@/components/LaunchBlockerList";
 import type { LaunchReadiness } from "@/lib/types";
 
 export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadiness }) {
@@ -59,7 +60,7 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
           <p className="mt-1 text-xs text-muted-foreground">All tasks</p>
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Required</p>
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Required checks</p>
           <p className="mt-1 text-2xl font-bold font-display">
             {completedRequiredTasks} of {totalRequiredTasks}
           </p>
@@ -68,18 +69,40 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
             className="mt-2"
             aria-label={`Required tasks ${completedRequiredTasks} of ${totalRequiredTasks}`}
           />
-          <p className="mt-1 text-xs text-muted-foreground">Must-review steps</p>
+          <p className="mt-1 text-xs text-muted-foreground">Required checks: {completedRequiredTasks} of {totalRequiredTasks} · {totalRequiredTasks ? Math.round((completedRequiredTasks / totalRequiredTasks) * 100) : 0}%</p>
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Blockers</p>
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Current blockers</p>
           <p className="mt-1 text-2xl font-bold font-display">{blockers.length}</p>
           <p className="mt-2 text-xs text-muted-foreground">
             {blockers.length
-              ? `${blockers.filter((b) => b.severity === "critical").length} critical, ${blockers.filter((b) => b.severity === "important").length} important`
-              : "No blockers found — final review recommended"}
+              ? `Current blockers: ${blockers.length} · ${blockers.filter((b) => b.severity === "critical").length} critical, ${blockers.filter((b) => b.severity === "important").length} important`
+              : "Current blockers: 0 — final review recommended"}
           </p>
         </div>
       </div>
+
+      {blockers.length > 0 ? (
+        <div className="mt-5 space-y-3">
+          <h3 className="text-sm font-semibold flex items-center gap-2">
+            {blockers.some((b) => b.severity === "critical") ? (
+              <AlertTriangle className="size-4 text-destructive" aria-hidden="true" />
+            ) : (
+              <Info className="size-4 text-warning-foreground" aria-hidden="true" />
+            )}
+            Why this matters & what to do next
+          </h3>
+          <LaunchBlockerList blockers={blockers.slice(0, 5)} />
+          {blockers.length > 5 ? (
+            <p className="text-xs text-muted-foreground">Showing 5 of {blockers.length} blockers — full list in checklist.</p>
+          ) : null}
+        </div>
+      ) : (
+        <div className="mt-5 rounded-xl border border-success/20 bg-success-soft/40 p-4">
+          <p className="text-sm font-medium text-success">No blockers found. Do a final review on a real phone and with a test customer action.</p>
+          <p className="mt-1 text-xs text-muted-foreground">This check is guidance only — review provider documentation and seek qualified advice when needed.</p>
+        </div>
+      )}
 
       <div className="mt-5 flex flex-wrap gap-2">
         <Button asChild size="sm">

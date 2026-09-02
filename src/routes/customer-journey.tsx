@@ -85,7 +85,7 @@ function buildSteps(type: CustomerJourneyType, customLabel?: string): CustomerJo
 }
 
 function CustomerJourneyPage() {
-  const { state, hasPlan, setCustomerJourneyTest } = useStore();
+  const { state, hasPlan, setCustomerJourneyTest, addTask } = useStore();
 
   const inferred = useMemo(() => inferDefaultJourney(state.business), [state.business]);
 
@@ -101,6 +101,14 @@ function CustomerJourneyPage() {
       existing?.steps ??
       buildSteps(existing?.journeyType ?? inferred, existing?.customJourneyLabel),
   );
+  // Optional evidence fields — no sensitive data
+  const [evidence, setEvidence] = useState({
+    testDate: existing?.testDate ?? new Date().toISOString().slice(0, 10),
+    deviceBrowser: existing?.deviceBrowser ?? "",
+    testWebsiteUrl: existing?.testWebsiteUrl ?? (state.business.websiteUrl ?? ""),
+    whatYouVerified: existing?.whatYouVerified ?? "",
+    confirmationReference: existing?.confirmationReference ?? "",
+  });
 
   // Sync when type changes and no existing or user explicitly changes
   useEffect(() => {
@@ -155,6 +163,11 @@ function CustomerJourneyPage() {
       steps,
       lastUpdatedAt: now,
       completedAt,
+      testDate: evidence.testDate?.trim() || undefined,
+      deviceBrowser: evidence.deviceBrowser?.trim().slice(0, 100) || undefined,
+      testWebsiteUrl: evidence.testWebsiteUrl?.trim().slice(0, 500) || undefined,
+      whatYouVerified: evidence.whatYouVerified?.trim().slice(0, 500) || undefined,
+      confirmationReference: evidence.confirmationReference?.trim().slice(0, 200) || undefined,
     });
     if (showToast)
       toast.success("Journey saved. Readiness will reflect blocked or needs-improvement steps.");
@@ -523,6 +536,67 @@ function CustomerJourneyPage() {
               ))}
             </div>
 
+            {/* Optional evidence — no sensitive data */}
+            <div className="surface-panel p-5 space-y-4">
+              <h3 className="font-display text-base font-semibold">Optional evidence (no sensitive data)</h3>
+              <p className="text-sm text-muted-foreground">Record what you checked — helps later without storing passwords or card numbers.</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Label htmlFor="evidence-date">Test date</Label>
+                  <Input
+                    id="evidence-date"
+                    type="date"
+                    value={evidence.testDate}
+                    onChange={(e) => setEvidence((p) => ({ ...p, testDate: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="evidence-device">Device / browser</Label>
+                  <Input
+                    id="evidence-device"
+                    value={evidence.deviceBrowser}
+                    onChange={(e) => setEvidence((p) => ({ ...p, deviceBrowser: e.target.value.slice(0, 100) }))}
+                    placeholder="e.g., iPhone 14, Chrome mobile"
+                    maxLength={100}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="evidence-url">Test website URL</Label>
+                <Input
+                  id="evidence-url"
+                  type="url"
+                  value={evidence.testWebsiteUrl}
+                  onChange={(e) => setEvidence((p) => ({ ...p, testWebsiteUrl: e.target.value.slice(0, 500) }))}
+                  placeholder="https://yourbusiness.example/contact or /booking page you tested"
+                  maxLength={500}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="evidence-what">What you verified</Label>
+                <Textarea
+                  id="evidence-what"
+                  rows={2}
+                  value={evidence.whatYouVerified}
+                  onChange={(e) => setEvidence((p) => ({ ...p, whatYouVerified: e.target.value.slice(0, 500) }))}
+                  placeholder="e.g., Form submitted, confirmation shown, email arrived in 2 mins, not in spam"
+                  maxLength={500}
+                />
+                <p className="text-xs text-muted-foreground">{evidence.whatYouVerified.length}/500</p>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="evidence-ref">Confirmation / reference (optional)</Label>
+                <Input
+                  id="evidence-ref"
+                  value={evidence.confirmationReference}
+                  onChange={(e) => setEvidence((p) => ({ ...p, confirmationReference: e.target.value.slice(0, 200) }))}
+                  placeholder="Order #1234, booking ref, or ‘received thank-you page’ — no sensitive data"
+                  maxLength={200}
+                />
+                <p className="text-xs text-muted-foreground">Do not enter card numbers, passwords or full customer personal data.</p>
+              </div>
+            </div>
+
             <div className="surface-panel flex flex-wrap items-center gap-3 p-4">
               <Button
                 variant="outline"
@@ -566,6 +640,128 @@ function CustomerJourneyPage() {
                 critical blocker; needs improvement appears as an important item.
               </p>
             </div>
+
+            {/* Customer journey result — spec required */}
+            <div className="surface-panel p-5 border-primary/20">
+              <h3 className="font-display text-base font-semibold">Customer journey result</h3>
+              {(() => {
+                const total = steps.length;
+                const passed = counts.passed;
+                let result: string;
+                if (hasBlocked) result = "Blocked";
+                else if (hasNeeds) result = "Needs improvement";
+                else if (allPassed) result = "Passed";
+                else result = "Not tested yet";
+                return (
+                  <p className="mt-2 text-sm">
+                    <span className="font-semibold">Customer journey result: {result}</span> — {passed} of {total} checks passed
+                  </p>
+                );
+              })()}
+              <div className="mt-3 grid gap-3 sm:grid-cols-4">
+                <div className="surface-panel p-4 text-center">
+                  <p className="text-2xl font-bold text-success">{counts.passed}</p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Passed</p>
+                </div>
+                <div className="surface-panel p-4 text-center border-warning/30">
+                  <p className="text-2xl font-bold text-warning-foreground">{counts.needs_improvement}</p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Needs improvement</p>
+                </div>
+                <div className="surface-panel p-4 text-center border-destructive/30">
+                  <p className="text-2xl font-bold text-destructive">{counts.blocked}</p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Blocked</p>
+                </div>
+                <div className="surface-panel p-4 text-center">
+                  <p className="text-2xl font-bold">{counts.not_tested}</p>
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Not tested</p>
+                </div>
+              </div>
+              {/* What to fix next */}
+              {(hasBlocked || hasNeeds) ? (
+                <div className="mt-4 rounded-xl border border-warning/20 bg-warning-soft/30 p-4">
+                  <h4 className="text-sm font-semibold">What to fix next</h4>
+                  <ul className="mt-2 list-disc pl-5 space-y-1 text-sm">
+                    {steps.filter((s) => s.status === "blocked" || s.status === "needs_improvement").map((s) => (
+                      <li key={s.id} className="wrap-break-word">
+                        <span className="font-medium">{s.label}</span> — {s.status === "blocked" ? "Blocked" : "Needs improvement"}
+                        {s.note ? `: ${s.note}` : ""}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : allPassed ? (
+                <p className="mt-3 text-sm text-muted-foreground">All checks passed — this clears the “Test your primary customer action” launch blocker. Review still recommended before inviting customers (guidance, not a guarantee).</p>
+              ) : null}
+              {/* Actions per spec */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const toGenerate = steps.filter((s) => s.status === "blocked" || s.status === "needs_improvement");
+                    if (toGenerate.length === 0) {
+                      toast.info("No blocked or needs-improvement steps to add.");
+                      return;
+                    }
+                    let added = 0;
+                    for (const st of toGenerate) {
+                      const needle = st.label.slice(0, 30).toLowerCase();
+                      const exists = state.tasks.some((t) => t.title.toLowerCase().includes(needle));
+                      if (exists) continue;
+                      addTask({
+                        phase: "launch",
+                        category: "Customer journey fixes",
+                        title: `Fix journey: ${st.label.slice(0, 80)}`,
+                        description: `From customer journey "${displayLabel}" — ${st.note?.slice(0, 200) ?? st.label} [${st.status}]`,
+                        importance: st.status === "blocked" ? "required" : "recommended",
+                        estimatedMinutes: 30,
+                        status: "todo",
+                        notes: `Generated from journey test ${evidence.testDate || new Date().toISOString().slice(0, 10)} · ${evidence.deviceBrowser || ""}`.trim(),
+                        assignedTo: "Me",
+                        completedAt: null,
+                        custom: true,
+                      });
+                      added++;
+                    }
+                    if (added > 0) toast.success(`Added ${added} fix task${added > 1 ? "s" : ""} to your launch plan (deduped).`);
+                    else toast.info("All fix tasks already exist — no duplicates added.");
+                  }}
+                >
+                  Add this to my launch plan
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/content">Open related content guidance →</Link>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/business-profile">Review website contact details →</Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setFlowStep(4)}>
+                  <RotateCcw className="size-4" aria-hidden="true" /> Run test again
+                </Button>
+              </div>
+              {/* Links to relevant setup per incomplete setup */}
+              <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                <span className="text-muted-foreground">Related setup:</span>
+                <Link to="/business-profile" className="underline underline-offset-4 text-primary">Business profile</Link>
+                <Link to="/content" className="underline underline-offset-4 text-primary">Content</Link>
+                <Link to="/platform-matcher" className="underline underline-offset-4 text-primary">Platform matcher</Link>
+                <Link to="/connect-domain" className="underline underline-offset-4 text-primary">Connect domain</Link>
+                <Link to="/business-email" className="underline underline-offset-4 text-primary">Business email</Link>
+              </div>
+            </div>
+
+            {/* Evidence recap */}
+            {(evidence.testDate || evidence.deviceBrowser || evidence.testWebsiteUrl || evidence.whatYouVerified || evidence.confirmationReference) ? (
+              <div className="surface-panel p-5">
+                <h3 className="font-display text-base font-semibold">Evidence you recorded (optional)</h3>
+                <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+                  <div className="flex flex-col"><dt className="text-xs text-muted-foreground">Test date</dt><dd className="font-medium">{evidence.testDate || "—"}</dd></div>
+                  <div className="flex flex-col"><dt className="text-xs text-muted-foreground">Device / browser</dt><dd className="font-medium">{evidence.deviceBrowser || "—"}</dd></div>
+                  <div className="flex flex-col"><dt className="text-xs text-muted-foreground">Test website URL</dt><dd className="font-medium break-all">{evidence.testWebsiteUrl || "—"}</dd></div>
+                  <div className="flex flex-col"><dt className="text-xs text-muted-foreground">Confirmation / reference</dt><dd className="font-medium">{evidence.confirmationReference || "—"}</dd></div>
+                  <div className="sm:col-span-2 flex flex-col"><dt className="text-xs text-muted-foreground">What you verified</dt><dd className="font-medium wrap-break-word">{evidence.whatYouVerified || "—"}</dd></div>
+                </dl>
+              </div>
+            ) : null}
 
             <div className="grid gap-3 sm:grid-cols-4">
               <div className="surface-panel p-4 text-center">

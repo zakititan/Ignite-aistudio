@@ -37,6 +37,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useStore } from "@/lib/store";
+import { getReadiness } from "@/lib/readiness";
+import { getDnsImpactPreview } from "@/lib/online-presence";
+import { ReadinessStatusBadge } from "@/components/ReadinessStatusBadge";
+import { LaunchBlockerList } from "@/components/LaunchBlockerList";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/preflight")({
@@ -155,6 +159,11 @@ const CHECKS_LIST: DiagnosticCheck[] = [
 export function PreflightPage() {
   const { state } = useStore();
   const [activeTab, setActiveTab] = useState("simulator");
+  const readiness = useMemo(
+    () => getReadiness(state.tasks, state.business, state.ownership, state.customerJourneyTest),
+    [state.tasks, state.business, state.ownership, state.customerJourneyTest],
+  );
+  const dnsPreview = useMemo(() => getDnsImpactPreview(state), [state]);
 
   // Checklist state
   const [checkedIds, setCheckedIds] = useState<Record<string, boolean>>(() => {
@@ -174,10 +183,9 @@ export function PreflightPage() {
     });
   };
 
-  const businessName = state.business.businessName || state.business.name || "Your Business";
+  const businessName = state.business.businessName || "Your Business";
   const domain = state.business.ownedDomain || state.business.preferredDomain || "yourbusiness.com";
-  const ownerEmail =
-    state.business.businessEmail || state.business.ownerContact || `hello@${domain}`;
+  const ownerEmail = state.business.businessEmail || `hello@${domain}`;
   const phone = state.business.phone || "+1 (555) 019-2834";
 
   // --- SANDBOX 1: Form Submission Simulation ---
@@ -272,6 +280,81 @@ export function PreflightPage() {
       }
     >
       <div className="space-y-6">
+        {/* Shared readiness summary — uses same getReadiness, no separate decision */}
+        <section aria-labelledby="preflight-readiness" className="surface-panel p-5 sm:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 id="preflight-readiness" className="font-display text-lg font-bold">Launch readiness — shared check</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Same readiness used on dashboard, checklist and dossier — not a separate decision. Review on a real phone.</p>
+            </div>
+            <ReadinessStatusBadge status={readiness.status} />
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3 text-xs">
+            <div className="p-3 rounded-lg bg-muted/30 border">
+              <span className="text-muted-foreground block text-[10px] uppercase font-bold">Readiness</span>
+              <span className="text-sm font-bold capitalize">
+                {readiness.status === "ready_for_review" ? "Ready for review" : readiness.status === "nearly_ready" ? "Nearly ready" : readiness.status === "blocked" ? "Needs attention" : "Not started"}
+              </span>
+            </div>
+            <div className="p-3 rounded-lg bg-muted/30 border">
+              <span className="text-muted-foreground block text-[10px] uppercase font-bold">Required checks</span>
+              <strong className="text-sm">{readiness.completedRequiredTasks} of {readiness.totalRequiredTasks} · {readiness.requiredCompletionPercent}%</strong>
+            </div>
+            <div className="p-3 rounded-lg bg-muted/30 border">
+              <span className="text-muted-foreground block text-[10px] uppercase font-bold">Open blockers</span>
+              <strong className="text-sm">{readiness.blockers.length} · DNS {dnsPreview.level}</strong>
+            </div>
+          </div>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 text-xs">
+            <div className="p-3 rounded-lg bg-card border">
+              <span className="text-muted-foreground block text-[10px] uppercase font-bold">Last customer journey test</span>
+              {state.customerJourneyTest ? (
+                <>
+                  <span className="font-medium">
+                    {state.customerJourneyTest.journeyType.replace("_", " ")} — {(() => {
+                      const s = state.customerJourneyTest!.steps;
+                      if (s.some((x) => x.status === "blocked")) return "Blocked";
+                      if (s.some((x) => x.status === "needs_improvement")) return "Needs improvement";
+                      if (s.every((x) => x.status === "passed") && s.length) return "Passed";
+                      return "Not tested";
+                    })()}
+                  </span>
+                  <span className="block text-[11px] text-muted-foreground">{new Date(state.customerJourneyTest.lastUpdatedAt).toLocaleString()}</span>
+                </>
+              ) : (
+                <span className="text-muted-foreground">Not tested yet — <Link to="/customer-journey" className="underline">Test at /customer-journey</Link></span>
+              )}
+            </div>
+            <div className="p-3 rounded-lg bg-card border">
+              <span className="text-muted-foreground block text-[10px] uppercase font-bold">DNS impact</span>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs capitalize",
+                  dnsPreview.level === "low" && "border-success/30 bg-success-soft text-success",
+                  dnsPreview.level === "medium" && "border-warning/30 bg-warning-soft text-warning-foreground",
+                  dnsPreview.level === "high" && "border-destructive/30 bg-destructive-soft text-destructive",
+                )}
+              >
+                {dnsPreview.level}
+              </Badge>
+              <span className="block text-[11px] text-muted-foreground mt-1">{dnsPreview.title}</span>
+            </div>
+          </div>
+          {readiness.blockers.length > 0 ? (
+            <div className="mt-3">
+              <p className="text-xs font-semibold mb-2">Current blockers — why + link</p>
+              <LaunchBlockerList blockers={readiness.blockers.slice(0, 4)} />
+              <p className="mt-2 text-xs">
+                <Link to="/checklist" search={{ filter: "blockers" } as never} className="text-primary underline underline-offset-4">View all in checklist →</Link>
+              </p>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-muted-foreground">No blockers from shared check — final review on a real phone still recommended.</p>
+          )}
+          <p className="mt-2 text-[11px] text-muted-foreground">Educational guidance only — not a guarantee.</p>
+        </section>
+
         {/* Pre-Flight Health Score Banner */}
         <div className="surface-panel p-5 sm:p-6 space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

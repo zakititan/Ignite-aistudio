@@ -174,6 +174,12 @@ export interface CustomerJourneyTest {
   steps: CustomerJourneyStepResult[];
   lastUpdatedAt: string;
   completedAt?: string | null | undefined;
+  /** Optional evidence — no sensitive data. */
+  testDate?: string | undefined;
+  deviceBrowser?: string | undefined;
+  testWebsiteUrl?: string | undefined;
+  whatYouVerified?: string | undefined;
+  confirmationReference?: string | undefined;
 }
 
 export type DomainShortlistStatus =
