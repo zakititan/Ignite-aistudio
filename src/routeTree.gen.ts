@@ -38,8 +38,8 @@ import { Route as LaunchWizardRouteImport } from './routes/launch-wizard'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as OwnershipRecordRouteImport } from './routes/ownership-record'
 import { Route as OnlineSetupRouteImport } from './routes/online-setup'
+import { Route as OwnershipRecordRouteImport } from './routes/ownership-record'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 import { Route as PreflightRouteImport } from './routes/preflight'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -197,14 +197,14 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OwnershipRecordRoute = OwnershipRecordRouteImport.update({
-  id: '/ownership-record',
-  path: '/ownership-record',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const OnlineSetupRoute = OnlineSetupRouteImport.update({
   id: '/online-setup',
   path: '/online-setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnershipRecordRoute = OwnershipRecordRouteImport.update({
+  id: '/ownership-record',
+  path: '/ownership-record',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
