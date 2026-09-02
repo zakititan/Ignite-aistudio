@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { MarketingNavbar } from "@/components/MarketingNavbar";
 import { SiteFooter } from "@/components/SiteFooter";
+import { OnlinePresenceMap } from "@/components/OnlinePresenceMap";
 import { OwnershipWarningCard } from "@/components/Callouts";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -229,6 +230,12 @@ function LandingPage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section className="border-t border-border bg-surface">
+          <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+            <OnlinePresenceMap />
           </div>
         </section>
 

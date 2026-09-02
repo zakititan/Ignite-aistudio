@@ -28,8 +28,8 @@ export const PHASES: {
   {
     key: "setup",
     number: 3,
-    title: "Choose your website setup",
-    why: "Picking the right type of website tool means less maintenance and fewer surprises later.",
+    title: "Choose your website and hosting setup",
+    why: "Picking the right website tool and understanding its hosting means less maintenance and fewer surprises later.",
   },
   {
     key: "build",
@@ -224,6 +224,18 @@ function baseSeeds(b: BusinessProfile): Seed[] {
     },
   );
 
+  if (wantsEmail) {
+    seeds.push({
+      phase: "setup",
+      category: "Business email",
+      title: "Choose your business email provider and addresses",
+      description:
+        "Decide where email will live, then start with one shared address such as hello@yourbusiness.com and any personal addresses you truly need.",
+      importance: "recommended",
+      minutes: 25,
+    });
+  }
+
   const corePages = ["Home", "About", "Contact"];
   if (has("Restaurant menu")) corePages.push("Menu");
   if (has("Ecommerce shop")) corePages.push("Products");
@@ -296,8 +308,9 @@ function baseSeeds(b: BusinessProfile): Seed[] {
       {
         phase: "connect",
         category: "Business email",
-        title: "Set up your business email address",
-        description: "Something like hello@yourbusiness.com looks professional and keeps work mail organised.",
+        title: "Set up your business email address without changing website records",
+        description:
+          "Add only the exact mail settings your email provider gives you. Your website records and mail records are separate.",
         importance: "recommended",
         minutes: 60,
       },

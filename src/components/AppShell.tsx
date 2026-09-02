@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/domains", label: "Domain finder", icon: Globe },
-  { to: "/platform-matcher", label: "Platform matcher", icon: Blocks },
+  { to: "/platform-matcher", label: "Website & hosting", icon: Blocks },
   { to: "/connect-domain", label: "Connect domain", icon: Network },
   { to: "/checklist", label: "Launch checklist", icon: ListChecks },
   { to: "/content", label: "Content builder", icon: FileText },

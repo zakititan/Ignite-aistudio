@@ -313,6 +313,12 @@ function PlatformMatcher() {
           fees, included email, storage, support and renewal terms before buying anything.
         </Callout>
 
+        <Callout tone="success" title="Hosting is often included — but email may not be">
+          An all-in-one website builder normally includes hosting, so you do not need to buy separate hosting.
+          Your domain and business email can still be separate services. Check exactly what is included before
+          you pay.
+        </Callout>
+
         <section className="grid gap-4 md:grid-cols-2">
           {QUESTIONS.map((q) => (
             <fieldset key={q.id} className="surface-panel p-5">
