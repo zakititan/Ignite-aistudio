@@ -54,7 +54,7 @@ export const Route = createFileRoute("/dashboard")({
 
 const QUICK_TOOLS = [
   { to: "/launch-wizard", label: "Launch track wizard", icon: Rocket },
-  { to: "/preflight", label: "Pre-flight simulator", icon: ClipboardCheck },
+  { to: "/preflight", label: "Post-launch site audit", icon: ClipboardCheck },
   { to: "/cost-calculator", label: "3-Yr budget calculator", icon: Calculator },
   { to: "/email-signature", label: "Email signature", icon: Mail },
   { to: "/review-kit", label: "Review QR kit", icon: Star },
@@ -230,7 +230,7 @@ function Dashboard() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="sm" className="gap-1.5">
-              <Link to="/preflight">Pre-Flight Simulator</Link>
+              <Link to="/preflight">Post-launch site audit</Link>
             </Button>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/create-account")({
   head: () => ({
     meta: [
-      { title: "Create your account — Launch My Business Online" },
+      { title: "Label this device plan — Launch My Business Online" },
       {
         name: "description",
         content:
@@ -29,14 +29,13 @@ function CreateAccountPage() {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [agreed, setAgreed] = useState(false);
 
   return (
     <ContentPageLayout
-      eyebrow="Accounts"
-      title="Create your account"
-      description="Label the plan on this device with your name so it is easy to recognise. No payment details required."
+      eyebrow="This device"
+      title="Label your saved plan"
+      description="Your plan is stored only in this browser. Add your details so it is easy to recognise on this device."
     >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <section className="surface-panel space-y-4 p-5 sm:p-6">
@@ -53,16 +52,12 @@ function CreateAccountPage() {
                 toast.error("Enter a valid email address.");
                 return;
               }
-              if (password.length < 8) {
-                toast.error("Use at least 8 characters for your password.");
-                return;
-              }
               if (!agreed) {
                 toast.error("Please accept the terms and privacy notice.");
                 return;
               }
               signIn(fullName.trim(), email.trim());
-              toast.success("Your plan is now labelled with your details.");
+              toast.success("Your device plan is now labelled with your details.");
               navigate({ to: "/dashboard" });
             }}
           >
@@ -84,20 +79,6 @@ function CreateAccountPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="ca-password">Password</Label>
-              <Input
-                id="ca-password"
-                type="password"
-                autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                aria-describedby="ca-password-hint"
-              />
-              <p id="ca-password-hint" className="text-xs text-muted-foreground">
-                At least 8 characters. Three unrelated words work well.
-              </p>
             </div>
             <div className="flex items-start gap-3">
               <Checkbox
@@ -122,13 +103,13 @@ function CreateAccountPage() {
               </Label>
             </div>
             <Button type="submit" className="w-full sm:w-auto">
-              Create account
+              Save label on this device
             </Button>
           </form>
           <p className="text-sm text-muted-foreground">
-            Already started?{" "}
+            Already have a plan on this device?{" "}
             <Link to="/sign-in" className="text-primary underline">
-              Sign in
+              Open my plan
             </Link>
           </p>
         </section>
@@ -144,9 +125,9 @@ function CreateAccountPage() {
             </ul>
           </div>
           <ComingSoonCard
-            title="Cross-device sync is coming"
-            description="Right now your plan is stored in this browser. Creating an account labels it with your name; syncing between devices arrives with account support."
-            note="No card details are ever requested."
+            title="This is not an online account"
+            description="No password is created and nothing is sent to a server. Export a backup in Settings before clearing browser data or changing devices."
+            note="Cloud sync is not enabled yet."
           />
         </aside>
       </div>

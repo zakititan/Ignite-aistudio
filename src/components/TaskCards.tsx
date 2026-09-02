@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Clock, StickyNote, User } from "lucide-react";
+import { BadgeCheck, Clock, StickyNote, User } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -49,6 +49,7 @@ export function LaunchTaskCard({
   const [openNote, setOpenNote] = useState(false);
   const [note, setNote] = useState(task.notes);
   const [assignee, setAssignee] = useState(task.assignedTo);
+  const [evidence, setEvidence] = useState(task.evidence ?? "");
   const done = task.status === "complete";
 
   return (
@@ -111,6 +112,11 @@ export function LaunchTaskCard({
               <StickyNote className="size-4" aria-hidden="true" />
               {task.notes ? "Edit note" : "Add note"}
             </Button>
+            {task.evidence ? (
+              <span className="inline-flex items-center gap-1 text-xs text-success">
+                <BadgeCheck className="size-4" aria-hidden="true" /> Verification recorded
+              </span>
+            ) : null}
           </div>
 
           {openNote ? (
@@ -126,6 +132,19 @@ export function LaunchTaskCard({
                 />
               </div>
               <div className="space-y-1.5">
+                <Label htmlFor={`evidence-${task.id}`}>How did you verify this? (optional)</Label>
+                <Input
+                  id={`evidence-${task.id}`}
+                  value={evidence}
+                  onChange={(e) => setEvidence(e.target.value)}
+                  placeholder="Live URL, confirmation number, or what you checked"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Helpful for launch-critical steps and handoffs. Never add passwords or recovery
+                  codes.
+                </p>
+              </div>
+              <div className="space-y-1.5">
                 <Label htmlFor={`assign-${task.id}`}>Who is doing this?</Label>
                 <Input
                   id={`assign-${task.id}`}
@@ -137,7 +156,7 @@ export function LaunchTaskCard({
               <Button
                 size="sm"
                 onClick={() => {
-                  onUpdate({ notes: note, assignedTo: assignee });
+                  onUpdate({ notes: note, assignedTo: assignee, evidence: evidence.trim() });
                   setOpenNote(false);
                   toast.success("Saved to your plan.");
                 }}
@@ -149,6 +168,9 @@ export function LaunchTaskCard({
             <p className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-sm">
               {task.notes}
             </p>
+          ) : null}
+          {task.evidence && !openNote ? (
+            <p className="mt-2 text-xs text-muted-foreground">Verified: {task.evidence}</p>
           ) : null}
         </div>
       </div>

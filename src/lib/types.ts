@@ -73,6 +73,8 @@ export interface LaunchTask {
   notes: string;
   assignedTo: string;
   completedAt: string | null;
+  /** A URL, confirmation code, or short note explaining how this was checked. */
+  evidence?: string;
   custom?: boolean;
 }
 
@@ -204,4 +206,6 @@ export interface AppState {
   account: { signedIn: boolean; fullName: string; email: string };
   customerJourneyTest?: CustomerJourneyTest | undefined;
   savedDomainIdeas: SavedDomainIdea[];
+  /** Opt-in only. Signals never leave this browser. */
+  localInsightsConsent?: boolean;
 }

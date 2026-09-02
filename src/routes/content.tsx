@@ -784,7 +784,7 @@ export function ContentBuilder() {
   <div class="container">
     <h1>Our Story</h1>
     <p class="story-body">${d.story || "Founded with a passion for excellence and authentic craft."}</p>
-    
+
     <h2>How We Work</h2>
     <p>${d.values || "Quality, honesty, and clear communication are at our core."}</p>
 
@@ -867,7 +867,7 @@ ${faqs || "  <p>Have questions? We are always happy to answer them.</p>"}
   <div class="container">
     <h1>Privacy Policy</h1>
     <p class="policy-updated">Last Updated: ${new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
-    
+
     <h2>1. Data Controller & Overview</h2>
     <p>${d.controller || bName}</p>
 

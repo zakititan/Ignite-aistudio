@@ -223,7 +223,7 @@ _Generated ${safeDate} from Launch My Business Online (stored locally in your br
 - What makes you different: ${fmt(business.differentiator)}
 - Qualifications: ${fmt(business.qualifications)}
 - Social links: ${fmt(business.socialLinks)}
-- Content drafts: 
+- Content drafts:
 ${draftSummary}
 - Writing differentiator proof: ${fmt(business.differentiator || business.description)}
 
@@ -261,7 +261,7 @@ ${
 ${blockers}
 - Journey test status (${journeyLabel}): ${journeyStatus}
 ${journeySteps.length ? journeySteps.map((s) => `  - ${s.label}: ${s.status}${s.note ? ` — ${s.note.slice(0, 80)}` : ""}`).join("\n") : ""}
-- Items to quote (quote open required tasks + blockers): 
+- Items to quote (quote open required tasks + blockers):
 ${openRequired.length ? openRequired.map((t) => `- ${t.title}`).join("\n") : "- No required tasks outstanding — quote remaining recommended and improvements"}
 
 ## 6 — Ownership / access checklist  —  Keep ownership with the business
