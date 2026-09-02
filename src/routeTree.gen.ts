@@ -16,6 +16,7 @@ import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as ContentRouteImport } from './routes/content'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
+import { Route as GetFoundRouteImport } from './routes/get-found'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
@@ -55,6 +56,11 @@ const DomainsRoute = DomainsRouteImport.update({
   path: '/domains',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GetFoundRoute = GetFoundRouteImport.update({
+  id: '/get-found',
+  path: '/get-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/content': typeof ContentRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
+  '/get-found': typeof GetFoundRoute
   '/how-it-works': typeof HowItWorksRoute
   '/onboarding': typeof OnboardingRoute
   '/platform-matcher': typeof PlatformMatcherRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/dashboard'
     | '/domains'
+    | '/get-found'
     | '/how-it-works'
     | '/onboarding'
     | '/platform-matcher'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/dashboard'
     | '/domains'
+    | '/get-found'
     | '/how-it-works'
     | '/onboarding'
     | '/platform-matcher'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/dashboard'
     | '/domains'
+    | '/get-found'
     | '/how-it-works'
     | '/onboarding'
     | '/platform-matcher'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   ContentRoute: typeof ContentRoute
   DashboardRoute: typeof DashboardRoute
   DomainsRoute: typeof DomainsRoute
+  GetFoundRoute: typeof GetFoundRoute
   HowItWorksRoute: typeof HowItWorksRoute
   OnboardingRoute: typeof OnboardingRoute
   PlatformMatcherRoute: typeof PlatformMatcherRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/get-found': {
+      id: '/get-found'
+      path: '/get-found'
+      fullPath: '/get-found'
+      preLoaderRoute: typeof GetFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContentRoute: ContentRoute,
   DashboardRoute: DashboardRoute,
   DomainsRoute: DomainsRoute,
+  GetFoundRoute: GetFoundRoute,
   HowItWorksRoute: HowItWorksRoute,
   OnboardingRoute: OnboardingRoute,
   PlatformMatcherRoute: PlatformMatcherRoute,
