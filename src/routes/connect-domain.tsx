@@ -56,10 +56,228 @@ interface RecordRow {
   purpose: string;
 }
 
+const WEBSITE_HOST_PRESETS = [
+  {
+    id: "custom",
+    name: "Other / Custom Hosting Provider",
+    records: [
+      {
+        id: "a-1",
+        type: "A",
+        host: "@",
+        value: "203.0.113.10 (use the IP address your web host gave you)",
+        purpose: "Points your bare root domain (e.g. yourdomain.com) to your web host server.",
+      },
+      {
+        id: "cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "your-site.example-platform.com",
+        purpose: "Sends visitors typing www.yourdomain.com to your website host.",
+      },
+    ],
+  },
+  {
+    id: "squarespace",
+    name: "Squarespace",
+    records: [
+      {
+        id: "sq-a-1",
+        type: "A",
+        host: "@",
+        value: "198.185.159.144",
+        purpose: "Squarespace primary A record 1.",
+      },
+      {
+        id: "sq-a-2",
+        type: "A",
+        host: "@",
+        value: "198.185.159.145",
+        purpose: "Squarespace redundant A record 2.",
+      },
+      {
+        id: "sq-a-3",
+        type: "A",
+        host: "@",
+        value: "198.49.23.144",
+        purpose: "Squarespace redundant A record 3.",
+      },
+      {
+        id: "sq-a-4",
+        type: "A",
+        host: "@",
+        value: "198.49.23.145",
+        purpose: "Squarespace redundant A record 4.",
+      },
+      {
+        id: "sq-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "ext-cust.squarespace.com",
+        purpose: "Squarespace www routing target.",
+      },
+      {
+        id: "sq-cname-verify",
+        type: "CNAME",
+        host: "(Unique 6-character code from Squarespace Settings)",
+        value: "verify.squarespace.com",
+        purpose: "Squarespace unique domain ownership verification record.",
+      },
+    ],
+  },
+  {
+    id: "shopify",
+    name: "Shopify Store",
+    records: [
+      {
+        id: "shop-a-1",
+        type: "A",
+        host: "@",
+        value: "23.227.38.65",
+        purpose: "Shopify official primary IP address for root domain.",
+      },
+      {
+        id: "shop-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "shops.myshopify.com",
+        purpose: "Directs www traffic through Shopify's global load balancers.",
+      },
+    ],
+  },
+  {
+    id: "wix",
+    name: "Wix",
+    records: [
+      {
+        id: "wix-a-1",
+        type: "A",
+        host: "@",
+        value: "185.230.63.171 (or IP shown in Wix Domain Manager)",
+        purpose: "Points your root domain to Wix servers.",
+      },
+      {
+        id: "wix-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "pointing.wixdns.net",
+        purpose: "Directs www subdomain traffic to your Wix website.",
+      },
+    ],
+  },
+  {
+    id: "siteground_hostinger_wp",
+    name: "SiteGround / Hostinger / Managed WordPress",
+    records: [
+      {
+        id: "wp-a-1",
+        type: "A",
+        host: "@",
+        value: "(Copy the Server IP from your SiteGround Site Tools or Hostinger hPanel dashboard)",
+        purpose: "Directs all root domain traffic to your dedicated WordPress server instance.",
+      },
+      {
+        id: "wp-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "@",
+        purpose: "Aliases www traffic directly to your root domain WordPress A record.",
+      },
+    ],
+  },
+  {
+    id: "webflow",
+    name: "Webflow",
+    records: [
+      {
+        id: "wf-a-1",
+        type: "A",
+        host: "@",
+        value: "75.2.70.75",
+        purpose: "Webflow primary AWS/Fastly edge A record.",
+      },
+      {
+        id: "wf-a-2",
+        type: "A",
+        host: "@",
+        value: "99.83.190.102",
+        purpose: "Webflow secondary edge A record.",
+      },
+      {
+        id: "wf-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "proxy-ssl.webflow.com",
+        purpose: "Webflow custom domain proxy CNAME.",
+      },
+    ],
+  },
+  {
+    id: "carrd",
+    name: "Carrd Pro",
+    records: [
+      {
+        id: "carrd-a-1",
+        type: "A",
+        host: "@",
+        value: "162.255.119.248 (or IP provided in Carrd Publish modal)",
+        purpose: "Directs root traffic to Carrd's ultra-fast one-page hosting network.",
+      },
+      {
+        id: "carrd-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "(Your site name).carrd.co",
+        purpose: "Routes www to your published Carrd project.",
+      },
+    ],
+  },
+  {
+    id: "neo_site",
+    name: "Neo AI One-Page Site",
+    records: [
+      {
+        id: "neo-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "site.neo.space",
+        purpose: "Connects your custom domain www to your Neo AI business website.",
+      },
+      {
+        id: "neo-a-root",
+        type: "A",
+        host: "@",
+        value: "(Provided in Neo Admin > Site Settings)",
+        purpose: "Points root domain to Neo's high-speed cloud site host.",
+      },
+    ],
+  },
+  {
+    id: "cloudflare_pages",
+    name: "Cloudflare Pages / Vercel",
+    records: [
+      {
+        id: "pages-cname-www",
+        type: "CNAME",
+        host: "www",
+        value: "(your-project).pages.dev (or cname.vercel-dns.com)",
+        purpose: "Points www subdomain to your static edge deployment.",
+      },
+      {
+        id: "pages-cname-root",
+        type: "CNAME",
+        host: "@",
+        value: "(your-project).pages.dev",
+        purpose: "CNAME Flattening / ALIAS record on root domain.",
+      },
+    ],
+  },
+];
+
 const BEFORE = [
   "Screenshot your existing domain settings",
   "Identify which services currently run your website and email",
-  "Do not delete records you do not recognise",
+  "Do not delete records you do not recognise (especially MX and TXT mail records)",
   "Confirm the exact target values from your website provider",
   "Make one change at a time where possible",
   "Write down what you changed and when",
@@ -80,7 +298,7 @@ const TROUBLESHOOTING = [
   },
   {
     q: "My business email stopped working",
-    a: "Restore the mail-related records you had before, using your screenshot. Mail records are separate from website records and should usually be left alone.",
+    a: "Restore the mail-related records you had before, using your screenshot. Mail records (MX, SPF TXT) are separate from website records and should never be deleted when pointing your domain at a web host.",
   },
   {
     q: "HTTPS is not active",
@@ -88,7 +306,7 @@ const TROUBLESHOOTING = [
   },
   {
     q: "Verification is failing",
-    a: "Verification usually uses a TXT record. Check for extra spaces, a missing quote, or a host field that your provider auto-completed with your domain name twice.",
+    a: "Verification usually uses a TXT or custom CNAME record. Check for extra spaces, a missing quote, or a host field that your provider auto-completed with your domain name twice.",
   },
   {
     q: "I am unsure which record to change",
@@ -99,6 +317,7 @@ const TROUBLESHOOTING = [
 function ConnectDomain() {
   const { state } = useStore();
   const [registrar, setRegistrar] = useState(state.business.registrarName);
+  const [selectedPresetId, setSelectedPresetId] = useState<string>("custom");
   const [host, setHost] = useState("");
   const [usesEmail, setUsesEmail] = useState<string>("");
   const [migrating, setMigrating] = useState<string>("");
@@ -108,40 +327,20 @@ function ConnectDomain() {
   const domain = state.business.ownedDomain || "yourbusiness.com";
 
   const records: RecordRow[] = useMemo(() => {
-    const rows: RecordRow[] = [
-      {
-        id: "a",
-        type: "A",
-        host: "@",
-        value: "203.0.113.10 (use the address your provider gives you)",
-        purpose: "Sends visitors typing your bare web address to your website.",
-      },
-      {
-        id: "cname",
-        type: "CNAME",
-        host: "www",
-        value: "your-site.example-platform.com",
-        purpose: "Sends visitors typing www to the same website.",
-      },
-      {
-        id: "txt",
-        type: "TXT",
-        host: "@",
-        value: "platform-verification=example-token",
-        purpose: "Proves to your website platform that you control this address.",
-      },
-    ];
+    const preset = WEBSITE_HOST_PRESETS.find((p) => p.id === selectedPresetId) || WEBSITE_HOST_PRESETS[0]!;
+    const rows: RecordRow[] = [...preset.records];
+
     if (migrating === "moving") {
       rows.push({
         id: "redirect",
-        type: "Redirect",
-        host: "old pages",
-        value: "Map each old page to its new page",
-        purpose: "Keeps existing links and search results working after the move.",
+        type: "Redirect / 301",
+        host: "old paths",
+        value: "Map each old URL to its corresponding new URL in your host dashboard",
+        purpose: "Preserves your existing Google SEO rankings and prevents 404 errors after the move.",
       });
     }
     return rows;
-  }, [migrating]);
+  }, [selectedPresetId, migrating]);
 
   const copy = async (text: string) => {
     try {
@@ -176,17 +375,29 @@ function ConnectDomain() {
                 id="reg"
                 value={registrar}
                 onChange={(e) => setRegistrar(e.target.value)}
-                placeholder="The company you pay each year"
+                placeholder="The company you pay each year (e.g. Porkbun, Namecheap, GoDaddy)"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="hostp">Where is your website being built or hosted?</Label>
-              <Input
+              <Label htmlFor="hostp">Select your website platform or host</Label>
+              <select
                 id="hostp"
-                value={host}
-                onChange={(e) => setHost(e.target.value)}
-                placeholder="Your website builder or hosting provider"
-              />
+                value={selectedPresetId}
+                onChange={(e) => {
+                  setSelectedPresetId(e.target.value);
+                  const found = WEBSITE_HOST_PRESETS.find((p) => p.id === e.target.value);
+                  if (found && found.id !== "custom") {
+                    setHost(found.name);
+                  }
+                }}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {WEBSITE_HOST_PRESETS.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

@@ -111,6 +111,30 @@ const EMAIL_OPTIONS = [
     bestFor: "Clean business presence without overpaying for enterprise office suites",
   },
   {
+    id: "neo_starter",
+    name: "Neo Business Email (Starter Plan)",
+    perUserMonth: 1.99,
+    storage: "15GB",
+    features: "Custom domain email, read receipts, email tracking, follow-up reminders, mobile apps",
+    bestFor: "Entrepreneurs wanting clean business email with 15GB storage and free 1st-year domain",
+  },
+  {
+    id: "neo_standard",
+    name: "Neo Business Email (Standard + AI)",
+    perUserMonth: 3.99,
+    storage: "50GB",
+    features: "AI Smart Compose & Reply, 50GB storage, 1-click email import from Google/Outlook",
+    bestFor: "Growing businesses seeking smart AI email drafting and larger mailbox storage",
+  },
+  {
+    id: "neo_max",
+    name: "Neo Business Email (Max Growth Suite)",
+    perUserMonth: 7.99,
+    storage: "100GB",
+    features: "Neo Bookings appointment scheduler, Invoice Builder, AI site builder, 100GB Drive",
+    bestFor: "Founders wanting an all-in-one client booking, invoicing, and email powerhouse",
+  },
+  {
     id: "google",
     name: "Google Workspace Business Starter",
     perUserMonth: 6.0,
@@ -127,6 +151,22 @@ const EMAIL_OPTIONS = [
     bestFor: "Businesses requiring tight Microsoft Excel/Teams integration",
   },
   {
+    id: "zoho",
+    name: "Zoho Mail Lite",
+    perUserMonth: 1.0,
+    storage: "5GB - 10GB",
+    features: "Custom domain webmail, calendar, tasks, mobile apps",
+    bestFor: "Budget-conscious solo businesses with basic email needs",
+  },
+  {
+    id: "fastmail",
+    name: "Fastmail Standard",
+    perUserMonth: 5.0,
+    storage: "30GB",
+    features: "Privacy-first, zero ads, masked email integration, 600 aliases",
+    bestFor: "Privacy advocates who want lightning-fast ad-free mail",
+  },
+  {
     id: "forwarding",
     name: "Free Email Forwarding + Personal Gmail",
     perUserMonth: 0.0,
@@ -136,7 +176,7 @@ const EMAIL_OPTIONS = [
   },
 ];
 
-// Website platform options
+// Website platform & hosting options
 const WEBSITE_OPTIONS = [
   {
     id: "squarespace",
@@ -150,21 +190,60 @@ const WEBSITE_OPTIONS = [
   {
     id: "wix",
     name: "Wix Core / Light Plan",
-    monthlyBilledAnnual: 17.0,
-    monthlyBilledMonthly: 23.0,
+    monthlyBilledAnnual: 23.0,
+    monthlyBilledMonthly: 29.0,
     type: "All-in-One Builder",
     maintenanceCost: 0,
     notes: "Visual drag-and-drop builder with managed cloud hosting & SSL.",
   },
   {
-    id: "wordpress_managed",
-    name: "Managed WordPress (Hostinger / SiteGround)",
+    id: "hostinger_builder",
+    name: "Hostinger AI Website Builder",
+    monthlyBilledAnnual: 2.99,
+    monthlyBilledMonthly: 11.99,
+    promoMultiplierYr2: 2.67, // Renews at $7.99/mo
+    type: "All-in-One Builder",
+    maintenanceCost: 0,
+    notes: "Intro promo ($2.99/mo) renews at $7.99/mo. Includes AI site generation & hosting.",
+  },
+  {
+    id: "webflow",
+    name: "Webflow CMS Plan",
+    monthlyBilledAnnual: 23.0,
+    monthlyBilledMonthly: 29.0,
+    type: "Visual Code Platform",
+    maintenanceCost: 0,
+    notes: "Design freedom, visual CMS database, and high-speed AWS/Fastly hosting.",
+  },
+  {
+    id: "siteground_wp",
+    name: "SiteGround Managed WordPress (StartUp/GrowBig)",
     monthlyBilledAnnual: 4.99,
-    monthlyBilledMonthly: 12.99,
-    promoMultiplierYr2: 2.6, // Renews at higher rate
-    type: "Self-Hosted CMS",
-    maintenanceCost: 15.0, // Avg plugins / security maintenance
-    notes: "Low intro teaser rate ($4.99/mo) renews at $12.99/mo after Year 1.",
+    monthlyBilledMonthly: 19.99,
+    promoMultiplierYr2: 3.6, // Renews at $17.99/mo
+    type: "Managed WordPress Hosting",
+    maintenanceCost: 15.0, // Avg plugins & security updates
+    notes: "Intro promo ($4.99/mo) renews at $17.99/mo. High speed, daily backups & staging.",
+  },
+  {
+    id: "wpengine",
+    name: "WP Engine Managed WordPress (Startup)",
+    monthlyBilledAnnual: 20.0,
+    monthlyBilledMonthly: 30.0,
+    promoMultiplierYr2: 1.5, // Renews at $30/mo
+    type: "Premium Managed WP Hosting",
+    maintenanceCost: 10.0,
+    notes: "Enterprise-grade WordPress infrastructure, automated caching & developer tools.",
+  },
+  {
+    id: "hostinger_wp",
+    name: "Hostinger WordPress Cloud / Business",
+    monthlyBilledAnnual: 3.99,
+    monthlyBilledMonthly: 13.99,
+    promoMultiplierYr2: 2.25, // Renews at $8.99/mo
+    type: "Self-Hosted WordPress",
+    maintenanceCost: 12.0,
+    notes: "Budget-friendly WordPress hosting with NVMe storage and free migration.",
   },
   {
     id: "shopify",
@@ -173,7 +252,26 @@ const WEBSITE_OPTIONS = [
     monthlyBilledMonthly: 39.0,
     type: "Ecommerce Platform",
     maintenanceCost: 0,
-    notes: "Dedicated online store with inventory & cart checkout.",
+    notes: "Dedicated online store with inventory & cart checkout (2.9% + 30¢ gateway fee).",
+  },
+  {
+    id: "carrd",
+    name: "Carrd Pro Standard (One-Page Site)",
+    monthlyBilledAnnual: 1.58, // $19 / year
+    monthlyBilledMonthly: 1.58,
+    type: "One-Page Builder",
+    maintenanceCost: 0,
+    notes: "Ultra-affordable one-page launch builder with custom domain support ($19/year).",
+  },
+  {
+    id: "neo_site",
+    name: "Neo AI One-Page Website (Included with Neo)",
+    monthlyBilledAnnual: 0.0,
+    monthlyBilledMonthly: 1.0,
+    promoMultiplierYr2: 1.0, // $0.60/mo ($7.20/yr) renewal
+    type: "One-Page AI Builder",
+    maintenanceCost: 0,
+    notes: "Free for 1st year with Neo email plan, then only $0.60/mo ($7.20/yr) upon renewal.",
   },
   {
     id: "static_custom",
@@ -182,7 +280,7 @@ const WEBSITE_OPTIONS = [
     monthlyBilledMonthly: 0.0,
     type: "Modern Developer Stack",
     maintenanceCost: 0,
-    notes: "Zero monthly hosting fees for static landing pages with free SSL.",
+    notes: "Zero monthly hosting fees for static landing pages with free global edge SSL.",
   },
 ];
 

@@ -206,6 +206,103 @@ const PROVIDER_PRESETS: ProviderPreset[] = [
     },
   },
   {
+    id: "neo",
+    name: "Neo Business Email",
+    tagline: "AI-powered business email with built-in growth tools & free domain",
+    badge: "AI-Powered + Free Domain",
+    docUrl: "https://www.neo.space/business-email",
+    pricing: {
+      startingPrice: "$1.99 – $7.99 / user / mo",
+      pricePerUserMonthly: 1.99,
+      billingNote: "Billed annually ($1.99 – $7.99/mo) or monthly ($2.49 – $9.99/mo)",
+      freeTierOrTrial: "15-day free trial with free domain for 1st year",
+      storage: "15 GB to 100 GB per mailbox",
+      bestFor:
+        "Entrepreneurs, freelancers, and small businesses seeking smart AI drafting, built-in appointment booking, invoice generation, and custom domain email.",
+      highlights: [
+        "AI Smart Write/Compose & AI Reply drafting assistant",
+        "Neo Bookings built-in appointment scheduler (Max plan)",
+        "Invoice Builder & client billing tools (Max plan)",
+        "Read receipts & real-time email open tracking",
+        "Send later, follow-up reminders, undo send & templates",
+        "Free custom domain (.co.site) or connect your own domain",
+        "Native iOS, Android & Desktop webmail apps",
+        "Cloud Drive storage (15GB to 100GB per user)",
+      ],
+      plans: [
+        {
+          name: "Starter",
+          price: "$1.99/user/mo (yearly) or $2.49/mo (monthly)",
+          storage: "15 GB / mailbox",
+          note: "Custom domain email, read receipts, email tracking, templates, webmail & mobile apps.",
+        },
+        {
+          name: "Standard",
+          price: "$3.99/user/mo (yearly) or $4.99/mo (monthly)",
+          storage: "50 GB / mailbox",
+          note: "Adds AI Smart Write/Compose & AI Reply, 1-click email import from Google/Outlook.",
+        },
+        {
+          name: "Max (Growth Suite)",
+          price: "$7.99/user/mo (yearly) or $9.99/mo (monthly)",
+          storage: "100 GB / mailbox",
+          note: "Adds Neo Bookings appointment scheduling, Invoice Builder, Campaign mode, Signature designer, Drive cloud storage.",
+        },
+      ],
+    },
+    generateRecords: (domain, spfIncludes, dmarcPolicy, dmarcEmail) => {
+      const spfIncludeStr =
+        spfIncludes.length > 0 ? " " + spfIncludes.map((i) => `include:${i}`).join(" ") : "";
+      return [
+        {
+          id: "neo-mx-1",
+          type: "MX",
+          host: "@",
+          priority: 10,
+          value: "mx0001.neo.space",
+          purpose: "Primary Neo incoming mail gateway.",
+          critical: true,
+        },
+        {
+          id: "neo-mx-2",
+          type: "MX",
+          host: "@",
+          priority: 20,
+          value: "mx0002.neo.space",
+          purpose: "Secondary backup Neo mail gateway.",
+          critical: true,
+        },
+        {
+          id: "neo-spf",
+          type: "TXT",
+          host: "@",
+          value: `v=spf1 include:spf0001.neo.space${spfIncludeStr} ~all`,
+          purpose:
+            "SPF permission record authorizing Neo mail servers to send for your domain.",
+          critical: true,
+        },
+        {
+          id: "neo-dkim",
+          type: "TXT",
+          host: "neo._domainkey",
+          value:
+            "v=DKIM1; k=rsa; p=(Copy your unique DKIM public key from Neo Admin Panel > Email Reputation)",
+          purpose:
+            "DKIM signature TXT record generated inside your Neo Admin panel to guarantee primary inbox delivery.",
+          critical: true,
+        },
+        {
+          id: "neo-dmarc",
+          type: "TXT",
+          host: "_dmarc",
+          value: `v=DMARC1; p=${dmarcPolicy}; rua=mailto:${dmarcEmail || `admin@${domain}`}; sp=${dmarcPolicy}; aspf=r;`,
+          purpose:
+            "DMARC policy to protect your domain reputation and satisfy Google/Yahoo inbox requirements.",
+        },
+      ];
+    },
+  },
+  {
     id: "google",
     name: "Google Workspace",
     tagline: "Gmail, Google Calendar, Drive, and Meet at your custom domain",
