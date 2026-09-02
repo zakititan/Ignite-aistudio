@@ -59,6 +59,17 @@ export interface BusinessProfile {
   domainPurchased: Confidence | "";
   existingWebsiteStatus: string;
   businessEmailStatus: string;
+  // Phase: online presence map extensions (minimal new fields, reuse where possible)
+  websiteUrl?: string;
+  websiteUrlStatus?: "not_added" | "draft" | "live";
+  dnsProvider?: string;
+  websiteProvider?: string;
+  usesBusinessEmail?: Confidence | "";
+  emailStatus?: string;
+  websiteChangePlanned?: Confidence | "";
+  existingWebsitePresent?: Confidence | "";
+  dnsScreenshotSaved?: Confidence | "";
+  hasExactProviderRecords?: Confidence | "";
 }
 
 export interface LaunchTask {
@@ -193,6 +204,61 @@ export interface SavedDomainIdea {
   updatedAt: string;
 }
 
+export type PresenceAreaId =
+  | "domain"
+  | "website"
+  | "email"
+  | "dns"
+  | "customer_action"
+  | "ownership"
+  | "local_presence";
+
+export type PresenceAreaStatus =
+  | "not_started"
+  | "needs_information"
+  | "planned"
+  | "in_progress"
+  | "needs_attention"
+  | "ready_for_review"
+  | "complete";
+
+export interface PresenceStatusArea {
+  id: PresenceAreaId;
+  label: string;
+  description: string;
+  status: PresenceAreaStatus;
+  statusLabel: string;
+  summary: string;
+  relatedRoute: string;
+  actionLabel: string;
+  priority: number;
+  blockers?: string[] | undefined;
+  lastVerifiedAt?: string | undefined;
+  evidence?: string | undefined;
+}
+
+export type DnsImpactLevel = "low" | "medium" | "high";
+
+export interface DnsImpactPreview {
+  level: DnsImpactLevel;
+  title: string;
+  summary: string;
+  websiteChangeExpected: boolean;
+  emailAtRisk: boolean;
+  existingWebsiteAtRisk: boolean;
+  requiredBeforeChange: string[];
+  recordsToPreserve: string[];
+  recommendedNextStep: { label: string; route: string };
+}
+
+export interface DnsPlanningState {
+  websiteChangeType: "first" | "replacing" | "unsure";
+  usesBusinessEmail: "yes" | "no" | "not_sure";
+  dnsProviderLocation: string;
+  screenshotSaved: "yes" | "not_yet" | "unsure";
+  hasExactRecords: "yes" | "not_yet" | "preset";
+}
+
 export interface AppState {
   onboardingComplete: boolean;
   onboardingStep: number;
@@ -208,4 +274,5 @@ export interface AppState {
   savedDomainIdeas: SavedDomainIdea[];
   /** Opt-in only. Signals never leave this browser. */
   localInsightsConsent?: boolean;
+  dnsPlanning?: DnsPlanningState | undefined;
 }

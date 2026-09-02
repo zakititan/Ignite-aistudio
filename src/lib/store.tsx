@@ -12,6 +12,7 @@ import type {
   BusinessProfile,
   ContentDraft,
   CustomerJourneyTest,
+  DnsPlanningState,
   DomainShortlistStatus,
   LaunchTask,
   MaintenanceTask,
@@ -19,7 +20,7 @@ import type {
   SavedDomainIdea,
   TaskStatus,
 } from "./types";
-import { demoState, emptyState, generateTasks } from "./plan";
+import { defaultDnsPlanning, demoState, emptyState, generateTasks } from "./plan";
 
 function normaliseDomain(value: string) {
   return value.trim().toLowerCase().replace(/\.$/, "");
@@ -32,6 +33,7 @@ interface StoreValue {
   hydrated: boolean;
   hasPlan: boolean;
   setBusiness: (patch: Partial<BusinessProfile>) => void;
+  updateBusinessProfileField: <K extends keyof BusinessProfile>(field: K, value: BusinessProfile[K]) => void;
   setOnboardingStep: (step: number) => void;
   generatePlan: () => void;
   loadDemo: () => void;
@@ -67,6 +69,8 @@ interface StoreValue {
   setSavedDomainStatus: (id: string, status: DomainShortlistStatus) => void;
   restoreBackup: (backup: unknown) => boolean;
   setLocalInsightsConsent: (allowed: boolean) => void;
+  setDnsPlanning: (patch: Partial<DnsPlanningState>) => void;
+  updateDnsPlanningField: <K extends keyof DnsPlanningState>(field: K, value: DnsPlanningState[K]) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -91,9 +95,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           // support legacy key domainShortlist and ensure default
           savedDomainIdeas:
             parsed.savedDomainIdeas ?? parsed.domainShortlist ?? base.savedDomainIdeas ?? [],
+          dnsPlanning: {
+            ...defaultDnsPlanning,
+            ...(parsed.dnsPlanning ?? {}),
+          },
         } as AppState;
         // ensure array
         if (!Array.isArray(merged.savedDomainIdeas)) merged.savedDomainIdeas = [];
+        // ensure business defaults for new fields
+        merged.business = { ...base.business, ...(merged.business ?? {}) } as BusinessProfile;
+        if (!merged.dnsPlanning) merged.dnsPlanning = { ...defaultDnsPlanning };
         setState(merged);
       }
     } catch {
@@ -119,6 +130,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       hydrated,
       hasPlan: state.onboardingComplete && state.tasks.length > 0,
       setBusiness: (p) => patch((s) => ({ ...s, business: { ...s.business, ...p } })),
+      updateBusinessProfileField: (field, value) =>
+        patch((s) => ({ ...s, business: { ...s.business, [field]: value } })),
       setOnboardingStep: (step) => patch((s) => ({ ...s, onboardingStep: step })),
       generatePlan: () =>
         patch((s) => ({
@@ -287,10 +300,24 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           savedDomainIdeas: Array.isArray(candidate.savedDomainIdeas)
             ? candidate.savedDomainIdeas
             : [],
+          dnsPlanning: {
+            ...defaultDnsPlanning,
+            ...((candidate as AppState).dnsPlanning ?? {}),
+          },
         });
         return true;
       },
       setLocalInsightsConsent: (allowed) => patch((s) => ({ ...s, localInsightsConsent: allowed })),
+      setDnsPlanning: (p) =>
+        patch((s) => ({
+          ...s,
+          dnsPlanning: { ...(s.dnsPlanning ?? defaultDnsPlanning), ...p },
+        })),
+      updateDnsPlanningField: (field, val) =>
+        patch((s) => ({
+          ...s,
+          dnsPlanning: { ...(s.dnsPlanning ?? defaultDnsPlanning), [field]: val },
+        })),
     }),
     [state, hydrated, patch],
   );
