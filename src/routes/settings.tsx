@@ -73,7 +73,7 @@ function Settings() {
       if (!restoreBackup(parsed)) throw new Error("invalid backup");
       toast.success("Your backup has been restored on this device.");
     } catch {
-      toast.error("That file is not a valid Launch Plan Buddy backup.");
+      toast.error("That file is not a valid Cornerstone backup.");
     } finally {
       if (backupInput.current) backupInput.current.value = "";
     }
@@ -93,9 +93,9 @@ function Settings() {
     const ics = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//Launch Plan Buddy//EN",
+      "PRODID:-//Cornerstone//EN",
       "BEGIN:VEVENT",
-      `UID:domain-renewal-${due}@launch-plan-buddy`,
+      `UID:domain-renewal-${due}@cornerstone`,
       `DTSTART;VALUE=DATE:${due}`,
       `SUMMARY:Renew ${domain}`,
       "DESCRIPTION:Confirm auto-renewal and payment details. Never share account credentials.",

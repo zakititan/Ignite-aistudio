@@ -80,13 +80,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Launch Plan Buddy" },
+      { title: "Cornerstone" },
       {
         name: "description",
         content:
           "A comprehensive readiness checklist and guide for launching your business online, connecting domains, business email, and marketing presence.",
       },
-      { property: "og:site_name", content: "Launch Plan Buddy" },
+      { property: "og:site_name", content: "Cornerstone" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

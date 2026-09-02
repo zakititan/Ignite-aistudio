@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
     meta: [
-      { title: "Choose a new password — Launch My Business Online" },
+      { title: "Choose a new password — Cornerstone" },
       {
         name: "description",
         content:

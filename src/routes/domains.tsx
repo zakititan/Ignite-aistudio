@@ -64,7 +64,7 @@ import type { DomainShortlistStatus, SavedDomainIdea } from "@/lib/types";
 export const Route = createFileRoute("/domains")({
   head: () => ({
     meta: [
-      { title: "Domain finder and domain basics — Launch My Business Online" },
+      { title: "Domain finder and domain basics — Cornerstone" },
       {
         name: "description",
         content:

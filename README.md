@@ -1,14 +1,14 @@
-# Launch Plan Buddy
+# Cornerstone
 
 > A calm, step-by-step guide that helps small-business owners go from "I need a website" to "My business is live online."
 
-Launch Plan Buddy is a guided web application for non-technical small-business owners who need to set up a domain, choose a website approach, create a professional online presence, configure business email, and launch safely.
+Cornerstone is a guided web application for non-technical small-business owners who need to set up a domain, choose a website approach, create a professional online presence, configure business email, and launch safely.
 
-Instead of overwhelming people with technical jargon or pushing a single provider, Launch Plan Buddy turns website setup into a personalized roadmap: one clear task at a time.
+Instead of overwhelming people with technical jargon or pushing a single provider, Cornerstone turns website setup into a personalized roadmap: one clear task at a time.
 
 ## What it solves
 
-Launching a first business website often means facing unfamiliar concepts, conflicting provider advice, account-access risks, and dozens of setup decisions. Launch Plan Buddy helps users work through questions such as:
+Launching a first business website often means facing unfamiliar concepts, conflicting provider advice, account-access risks, and dozens of setup decisions. Cornerstone helps users work through questions such as:
 
 - What is the difference between a domain, hosting, a website builder, and DNS?
 - Which website setup is appropriate for my business?
@@ -21,7 +21,7 @@ The product explains technical choices in plain English, guides users through sa
 
 ## Who it is for
 
-Launch Plan Buddy is built for small-business owners with limited technical experience, including:
+Cornerstone is built for small-business owners with limited technical experience, including:
 
 - Local service businesses such as salons, tradespeople, consultants, tutors, repair shops, and clinics
 - Restaurants, cafés, bakeries, and home-food businesses
@@ -174,23 +174,23 @@ The product includes guided workflow pages, support resources, account flows, le
 
 ### Planning and launch workflow
 
-| Route               | Purpose                                           |
-| ------------------- | ------------------------------------------------- |
-| `/`                 | Product landing page and main entry point         |
-| `/how-it-works`     | Overview of the Launch Plan Buddy process         |
-| `/onboarding`       | Personalized plan creation flow                   |
-| `/dashboard`        | Plan progress and next actions                    |
-| `/domains`          | Domain guidance and domain-name exploration       |
-| `/platform-matcher` | Website setup category recommendations            |
-| `/connect-domain`   | DNS and domain-connection guidance                |
-| `/content`          | Guided website-content workspace                  |
-| `/checklist`        | Interactive launch checklist                      |
-| `/business-email`   | Professional business-email planning              |
-| `/get-found`        | Search and local-presence basics                  |
-| `/maintenance`      | Ongoing website-maintenance guidance              |
-| `/ownership-record` | Digital ownership and account-access record       |
-| `/hire-help`        | Guidance for safely hiring a freelancer or agency |
-| `/customer-journey` | 5-step tester for your primary customer action    |
+| Route               | Purpose                                            |
+| ------------------- | -------------------------------------------------- |
+| `/`                 | Product landing page and main entry point          |
+| `/how-it-works`     | Overview of the Cornerstone process                |
+| `/onboarding`       | Personalized plan creation flow                    |
+| `/dashboard`        | Plan progress and next actions                     |
+| `/domains`          | Domain guidance and domain-name exploration        |
+| `/platform-matcher` | Website setup category recommendations             |
+| `/connect-domain`   | DNS and domain-connection guidance                 |
+| `/content`          | Guided website-content workspace                   |
+| `/checklist`        | Interactive launch checklist                       |
+| `/business-email`   | Professional business-email planning               |
+| `/get-found`        | Search and local-presence basics                   |
+| `/maintenance`      | Ongoing website-maintenance guidance               |
+| `/ownership-record` | Digital ownership and account-access record        |
+| `/hire-help`        | Guidance for safely hiring a freelancer or agency  |
+| `/customer-journey` | 5-step tester for your primary customer action     |
 | `/business-profile` | Unified profile workspace for all business details |
 
 ### Learning and support
@@ -226,7 +226,7 @@ Unknown URLs are handled by a friendly, branded 404 route rather than a blank pa
 
 ## Dark mode
 
-Launch Plan Buddy includes a global appearance system with three preferences:
+Cornerstone includes a global appearance system with three preferences:
 
 - **Light**
 - **Dark**
@@ -315,7 +315,7 @@ learning_progress
 
 ## Security and privacy
 
-Launch Plan Buddy should not store:
+Cornerstone should not store:
 
 - Passwords
 - Account-recovery codes

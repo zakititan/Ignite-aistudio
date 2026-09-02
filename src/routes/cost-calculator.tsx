@@ -115,8 +115,10 @@ const EMAIL_OPTIONS = [
     name: "Neo Business Email (Starter Plan)",
     perUserMonth: 1.99,
     storage: "15GB",
-    features: "Custom domain email, read receipts, email tracking, follow-up reminders, mobile apps",
-    bestFor: "Entrepreneurs wanting clean business email with 15GB storage and free 1st-year domain",
+    features:
+      "Custom domain email, read receipts, email tracking, follow-up reminders, mobile apps",
+    bestFor:
+      "Entrepreneurs wanting clean business email with 15GB storage and free 1st-year domain",
   },
   {
     id: "neo_standard",

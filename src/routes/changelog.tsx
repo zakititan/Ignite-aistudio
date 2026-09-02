@@ -6,7 +6,7 @@ import { CHANGELOG } from "@/lib/support-data";
 export const Route = createFileRoute("/changelog")({
   head: () => ({
     meta: [
-      { title: "What's new — Launch My Business Online" },
+      { title: "What's new — Cornerstone" },
       {
         name: "description",
         content:

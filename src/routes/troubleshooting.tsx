@@ -17,7 +17,7 @@ import { TROUBLESHOOTING_FLOWS } from "@/lib/support-data";
 export const Route = createFileRoute("/troubleshooting")({
   head: () => ({
     meta: [
-      { title: "Troubleshooting — Launch My Business Online" },
+      { title: "Troubleshooting — Cornerstone" },
       {
         name: "description",
         content:

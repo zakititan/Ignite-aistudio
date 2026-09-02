@@ -11,7 +11,7 @@ import { HELP_ARTICLES, HELP_CATEGORIES, type HelpArticle } from "@/lib/support-
 export const Route = createFileRoute("/help")({
   head: () => ({
     meta: [
-      { title: "Help centre — Launch My Business Online" },
+      { title: "Help centre — Cornerstone" },
       {
         name: "description",
         content:

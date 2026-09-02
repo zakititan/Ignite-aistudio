@@ -11,7 +11,7 @@ import {
 export type ThemeChoice = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
 
-export const THEME_STORAGE_KEY = "launch-plan-buddy-theme";
+export const THEME_STORAGE_KEY = "cornerstone-theme";
 
 /** Inline script injected in <head> so the correct theme is applied before paint. */
 export const themeInitScript = `(function(){try{var k="${THEME_STORAGE_KEY}";var s=localStorage.getItem(k);var m=window.matchMedia("(prefers-color-scheme: dark)").matches;var d=s==="dark"||((s==="system"||!s)&&m);var e=document.documentElement;e.classList.toggle("dark",d);e.style.colorScheme=d?"dark":"light";}catch(e){}})();`;

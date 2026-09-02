@@ -17,17 +17,11 @@ export function MarketingNavbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3.5 sm:px-6">
-        <Link
-          to="/"
-          className="flex items-center gap-2.5"
-          aria-label="Launch My Business Online, home"
-        >
+        <Link to="/" className="flex items-center gap-2.5" aria-label="Cornerstone, home">
           <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Rocket className="size-4.5" aria-hidden="true" />
           </span>
-          <span className="font-display text-base font-bold tracking-tight">
-            Launch My Business Online
-          </span>
+          <span className="font-display text-base font-bold tracking-tight">Cornerstone</span>
         </Link>
 
         <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 md:flex">

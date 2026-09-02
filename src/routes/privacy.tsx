@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy — Launch My Business Online" },
+      { title: "Privacy — Cornerstone" },
       {
         name: "description",
         content:
           "What we store when you build a launch plan, what we never ask for, and how to delete your data at any time.",
       },
-      { property: "og:title", content: "Privacy at Launch My Business Online" },
+      { property: "og:title", content: "Privacy at Cornerstone" },
       {
         property: "og:description",
         content: "Plain-English privacy: local plans, no passwords, easy deletion.",

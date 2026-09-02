@@ -54,7 +54,7 @@ export function SiteFooter() {
               <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
                 <Rocket className="size-4.5" aria-hidden="true" />
               </span>
-              <span className="font-display text-sm font-bold">Launch My Business Online</span>
+              <span className="font-display text-sm font-bold">Cornerstone</span>
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               Your simple, step-by-step guide from business idea to live website.

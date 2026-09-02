@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/accessibility")({
   head: () => ({
     meta: [
-      { title: "Accessibility — Launch My Business Online" },
+      { title: "Accessibility — Cornerstone" },
       {
         name: "description",
         content:

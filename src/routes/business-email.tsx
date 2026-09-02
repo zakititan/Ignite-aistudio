@@ -277,8 +277,7 @@ const PROVIDER_PRESETS: ProviderPreset[] = [
           type: "TXT",
           host: "@",
           value: `v=spf1 include:spf0001.neo.space${spfIncludeStr} ~all`,
-          purpose:
-            "SPF permission record authorizing Neo mail servers to send for your domain.",
+          purpose: "SPF permission record authorizing Neo mail servers to send for your domain.",
           critical: true,
         },
         {

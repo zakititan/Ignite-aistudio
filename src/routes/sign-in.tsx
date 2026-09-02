@@ -12,7 +12,7 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/sign-in")({
   head: () => ({
     meta: [
-      { title: "Sign in — Launch My Business Online" },
+      { title: "Sign in — Cornerstone" },
       {
         name: "description",
         content: "Come back to your saved launch plan and pick up where you left off.",

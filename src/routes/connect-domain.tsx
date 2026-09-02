@@ -327,7 +327,8 @@ function ConnectDomain() {
   const domain = state.business.ownedDomain || "yourbusiness.com";
 
   const records: RecordRow[] = useMemo(() => {
-    const preset = WEBSITE_HOST_PRESETS.find((p) => p.id === selectedPresetId) || WEBSITE_HOST_PRESETS[0]!;
+    const preset =
+      WEBSITE_HOST_PRESETS.find((p) => p.id === selectedPresetId) || WEBSITE_HOST_PRESETS[0]!;
     const rows: RecordRow[] = [...preset.records];
 
     if (migrating === "moving") {
@@ -336,7 +337,8 @@ function ConnectDomain() {
         type: "Redirect / 301",
         host: "old paths",
         value: "Map each old URL to its corresponding new URL in your host dashboard",
-        purpose: "Preserves your existing Google SEO rankings and prevents 404 errors after the move.",
+        purpose:
+          "Preserves your existing Google SEO rankings and prevents 404 errors after the move.",
       });
     }
     return rows;

@@ -36,12 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/platform-matcher")({
@@ -164,7 +159,8 @@ const RECOMMENDATIONS = {
   builder: {
     key: "builder",
     title: "Easy all-in-one website builder",
-    bestFor: "Most first-time small business websites that need to look polished quickly without touching server code.",
+    bestFor:
+      "Most first-time small business websites that need to look polished quickly without touching server code.",
     categoryFilter: "builder",
     advantages: [
       "Hosting, SSL, updates, and templates are bundled in one flat subscription",
@@ -189,7 +185,8 @@ const RECOMMENDATIONS = {
   ecommerce: {
     key: "ecommerce",
     title: "Dedicated ecommerce-first platform",
-    bestFor: "Businesses whose core engine is selling physical or digital goods online with inventory, cart checkout, and shipping.",
+    bestFor:
+      "Businesses whose core engine is selling physical or digital goods online with inventory, cart checkout, and shipping.",
     categoryFilter: "ecommerce",
     advantages: [
       "Payments, tax calculations, shipping labels, and inventory built-in",
@@ -207,14 +204,21 @@ const RECOMMENDATIONS = {
       "Which payment gateways (Stripe, PayPal, Apple Pay) are enabled?",
       "How are sales tax and shipping zones configured?",
     ],
-    features: ["Inventory Management", "PCI-Compliant Checkout", "Discounts", "Abandoned Cart", "Shipping Rules"],
+    features: [
+      "Inventory Management",
+      "PCI-Compliant Checkout",
+      "Discounts",
+      "Abandoned Cart",
+      "Shipping Rules",
+    ],
     topProviders: ["Shopify", "WooCommerce", "BigCommerce"],
     examples: "Shopify, WooCommerce on Managed Host, BigCommerce.",
   },
   cms: {
     key: "cms",
     title: "Flexible WordPress CMS with managed hosting",
-    bestFor: "Businesses publishing frequent content, multi-language sites, or requiring specific custom plugins and full ownership.",
+    bestFor:
+      "Businesses publishing frequent content, multi-language sites, or requiring specific custom plugins and full ownership.",
     categoryFilter: "cms",
     advantages: [
       "Massive ecosystem of 60,000+ plugins and endless design themes",
@@ -232,14 +236,21 @@ const RECOMMENDATIONS = {
       "What is the renewal price after the Year 1 promotional rate expires?",
       "Is server caching and web application firewall (WAF) enabled?",
     ],
-    features: ["Full Data Ownership", "Custom Post Types", "Plugin Library", "SEO Freedom", "Database Access"],
+    features: [
+      "Full Data Ownership",
+      "Custom Post Types",
+      "Plugin Library",
+      "SEO Freedom",
+      "Database Access",
+    ],
     topProviders: ["SiteGround", "WP Engine", "Hostinger WordPress", "DreamHost"],
     examples: "SiteGround Managed WP, WP Engine, Hostinger Cloud WP, DreamHost.",
   },
   pro: {
     key: "pro",
     title: "Professional visual code builder or custom build",
-    bestFor: "Businesses with distinctive branding, custom interaction requirements, and a dedicated budget.",
+    bestFor:
+      "Businesses with distinctive branding, custom interaction requirements, and a dedicated budget.",
     categoryFilter: "builder",
     advantages: [
       "Bespoke design that stands out completely from template clones",
@@ -264,7 +275,8 @@ const RECOMMENDATIONS = {
   onepage: {
     key: "onepage",
     title: "Simple one-page launch site",
-    bestFor: "Getting an honest, fast, and credible web presence online this week for under $20/year.",
+    bestFor:
+      "Getting an honest, fast, and credible web presence online this week for under $20/year.",
     categoryFilter: "onepage",
     advantages: [
       "Can be built and live in an afternoon for minimal cost",
@@ -281,7 +293,13 @@ const RECOMMENDATIONS = {
       "Can I connect my custom .com domain?",
       "Can I add a contact form that forwards straight to my email?",
     ],
-    features: ["Single Page Flow", "Contact Form", "Social Links", "Mobile Optimized", "Ultra Low Cost"],
+    features: [
+      "Single Page Flow",
+      "Contact Form",
+      "Social Links",
+      "Mobile Optimized",
+      "Ultra Low Cost",
+    ],
     topProviders: ["Carrd", "Neo AI Site", "Hostinger One-Page"],
     examples: "Carrd Pro, Neo AI Website, Hostinger One-Page.",
   },
@@ -433,7 +451,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     startingPriceMonthly: "$11.99 / mo",
     renewalPriceAnnual: "$7.99 / mo (Year 2+)",
     renewalShock: "medium",
-    shockDescription: "Introductory promotional teaser ($2.99/mo) jumps by ~167% to $7.99/mo upon Year 2 renewal.",
+    shockDescription:
+      "Introductory promotional teaser ($2.99/mo) jumps by ~167% to $7.99/mo upon Year 2 renewal.",
     hostingIncluded: true,
     freeDomainYear1: true,
     businessEmailIncluded: "Included (Free custom email mailboxes for 1st year)",
@@ -448,7 +467,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Renewal rate jumps to $7.99/mo after the promotional period",
       "Fewer third-party plugin integrations than WordPress or Shopify",
     ],
-    bestFor: "Solo founders, side hustles, and budget-conscious starters wanting an all-in-one bundle.",
+    bestFor:
+      "Solo founders, side hustles, and budget-conscious starters wanting an all-in-one bundle.",
     officialUrl: "https://www.hostinger.com/website-builder",
     plans: [
       {
@@ -472,13 +492,15 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     name: "SiteGround Managed WordPress",
     category: "cms",
     categoryLabel: "Managed WordPress",
-    tagline: "High-speed Google Cloud infrastructure with automated daily backups & top-tier support.",
+    tagline:
+      "High-speed Google Cloud infrastructure with automated daily backups & top-tier support.",
     badge: "Top WordPress Host",
     startingPriceAnnual: "$2.99 / mo",
     startingPriceMonthly: "$19.99 / mo",
     renewalPriceAnnual: "$17.99 / mo (Year 2+)",
     renewalShock: "high",
-    shockDescription: "Aggressive intro discount ($2.99/mo) renews at $17.99/mo — a 500% renewal increase.",
+    shockDescription:
+      "Aggressive intro discount ($2.99/mo) renews at $17.99/mo — a 500% renewal increase.",
     hostingIncluded: true,
     freeDomainYear1: false,
     businessEmailIncluded: "Included (Free unlimited custom domain mailboxes)",
@@ -493,7 +515,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Steep renewal prices after the initial contract period expires",
       "Strict storage and monthly visit limits on entry plan",
     ],
-    bestFor: "Small businesses building serious WordPress or WooCommerce sites wanting rock-solid reliability.",
+    bestFor:
+      "Small businesses building serious WordPress or WooCommerce sites wanting rock-solid reliability.",
     officialUrl: "https://www.siteground.com/wordpress-hosting.htm",
     plans: [
       {
@@ -508,7 +531,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
         annualPrice: "$4.99 / mo (Promo)",
         monthlyPrice: "$29.99 / mo",
         renewalPrice: "$29.99 / mo",
-        keyFeature: "Unlimited websites, 20 GB storage, ~100k visits, 1-click staging, on-demand backup.",
+        keyFeature:
+          "Unlimited websites, 20 GB storage, ~100k visits, 1-click staging, on-demand backup.",
       },
       {
         name: "GoGeek",
@@ -524,7 +548,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     name: "WP Engine",
     category: "cms",
     categoryLabel: "Premium WordPress",
-    tagline: "Enterprise-grade managed WordPress hosting with advanced developer staging and security.",
+    tagline:
+      "Enterprise-grade managed WordPress hosting with advanced developer staging and security.",
     badge: "Enterprise Standard",
     startingPriceAnnual: "$20 / mo",
     startingPriceMonthly: "$30 / mo",
@@ -545,7 +570,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Premium price point geared toward growing companies",
       "No email hosting included (must use Google Workspace, Microsoft 365, or Neo)",
     ],
-    bestFor: "Established businesses, agencies, and high-traffic WordPress sites where downtime is catastrophic.",
+    bestFor:
+      "Established businesses, agencies, and high-traffic WordPress sites where downtime is catastrophic.",
     officialUrl: "https://wpengine.com/plans/",
     plans: [
       {
@@ -553,14 +579,16 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
         annualPrice: "$20 / mo (billed $240/yr)",
         monthlyPrice: "$30 / mo",
         renewalPrice: "$30 / mo",
-        keyFeature: "1 site, 25k visits/mo, 10 GB storage, 50 GB bandwidth, free automated migration.",
+        keyFeature:
+          "1 site, 25k visits/mo, 10 GB storage, 50 GB bandwidth, free automated migration.",
       },
       {
         name: "Professional",
         annualPrice: "$50 / mo (billed $590/yr)",
         monthlyPrice: "$65 / mo",
         renewalPrice: "$65 / mo",
-        keyFeature: "3 sites, 75k visits/mo, 15 GB storage, 125 GB bandwidth, staging environments.",
+        keyFeature:
+          "3 sites, 75k visits/mo, 15 GB storage, 125 GB bandwidth, staging environments.",
       },
     ],
   },
@@ -627,7 +655,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     startingPriceMonthly: "$18 / mo",
     renewalPriceAnnual: "$14 / mo",
     renewalShock: "none",
-    shockDescription: "Transparent flat subscription. Tier depends on CMS items and monthly traffic.",
+    shockDescription:
+      "Transparent flat subscription. Tier depends on CMS items and monthly traffic.",
     hostingIncluded: true,
     freeDomainYear1: false,
     businessEmailIncluded: "Separate",
@@ -679,7 +708,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     startingPriceMonthly: "$1.58 / mo",
     renewalPriceAnnual: "$19 / year (Flat)",
     renewalShock: "none",
-    shockDescription: "Virtually unbeatable pricing: $19 per year covers up to 10 custom domain sites.",
+    shockDescription:
+      "Virtually unbeatable pricing: $19 per year covers up to 10 custom domain sites.",
     hostingIncluded: true,
     freeDomainYear1: false,
     businessEmailIncluded: "Separate (Compatible with Neo, Google Workspace, Titan)",
@@ -694,7 +724,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Restricted strictly to single-page layouts (not suitable for deep multi-page sites)",
       "Basic widget set without complex database features",
     ],
-    bestFor: "Freelancers, pre-launch waiting lists, portfolio cards, and quick local service pages.",
+    bestFor:
+      "Freelancers, pre-launch waiting lists, portfolio cards, and quick local service pages.",
     officialUrl: "https://carrd.co/pro",
     plans: [
       {
@@ -709,14 +740,16 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
         annualPrice: "$19 / year",
         monthlyPrice: "$1.58 / mo equiv.",
         renewalPrice: "$19 / year",
-        keyFeature: "Publish up to 10 sites with custom domains, contact forms, Google Analytics, no branding.",
+        keyFeature:
+          "Publish up to 10 sites with custom domains, contact forms, Google Analytics, no branding.",
       },
       {
         name: "Pro Plus",
         annualPrice: "$49 / year",
         monthlyPrice: "$4.08 / mo equiv.",
         renewalPrice: "$49 / year",
-        keyFeature: "Publish up to 25 sites, password protection, advanced forms, download site files.",
+        keyFeature:
+          "Publish up to 25 sites, password protection, advanced forms, download site files.",
       },
     ],
   },
@@ -731,7 +764,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     startingPriceMonthly: "$0 / yr 1",
     renewalPriceAnnual: "$0.60 / mo ($7.20 / year)",
     renewalShock: "none",
-    shockDescription: "Included free for Year 1 with any Neo email plan; renews at nominal $7.20/year.",
+    shockDescription:
+      "Included free for Year 1 with any Neo email plan; renews at nominal $7.20/year.",
     hostingIncluded: true,
     freeDomainYear1: true,
     businessEmailIncluded: "Directly bundled with your Neo Mailbox",
@@ -742,10 +776,7 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Seamless integration with Neo Bookings scheduler, WhatsApp chat, and contact forms",
       "Included free for year 1 with your Neo business email subscription",
     ],
-    cons: [
-      "Limited to single-page promotional presence",
-      "Tied to the Neo business ecosystem",
-    ],
+    cons: ["Limited to single-page promotional presence", "Tied to the Neo business ecosystem"],
     bestFor: "Entrepreneurs setting up both their email and website in a single 5-minute workflow.",
     officialUrl: "https://www.neo.space",
     plans: [
@@ -763,7 +794,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
     name: "Cloudflare Pages",
     category: "static",
     categoryLabel: "Jamstack / Static",
-    tagline: "Blazing fast global edge network hosting with unlimited bandwidth and zero server costs.",
+    tagline:
+      "Blazing fast global edge network hosting with unlimited bandwidth and zero server costs.",
     badge: "100% Free Edge Tier",
     startingPriceAnnual: "$0 / mo",
     startingPriceMonthly: "$0 / mo",
@@ -784,7 +816,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
       "Requires static HTML/React/Vue/Astro build or developer knowledge",
       "No built-in visual WYSIWYG drag-and-drop editor",
     ],
-    bestFor: "Developers, tech founders, and static sites wanting zero maintenance and zero hosting bills.",
+    bestFor:
+      "Developers, tech founders, and static sites wanting zero maintenance and zero hosting bills.",
     officialUrl: "https://pages.cloudflare.com",
     plans: [
       {
@@ -792,7 +825,8 @@ export const HOSTING_PROVIDERS: HostingProvider[] = [
         annualPrice: "$0",
         monthlyPrice: "$0",
         renewalPrice: "$0",
-        keyFeature: "Unlimited sites, unlimited requests, 500 builds/mo, global CDN & DDoS protection.",
+        keyFeature:
+          "Unlimited sites, unlimited requests, 500 builds/mo, global CDN & DDoS protection.",
       },
       {
         name: "Pro",
@@ -949,7 +983,10 @@ function PlatformMatcher() {
         </section>
 
         {/* Section 1: 8-Question Interactive Matchmaker */}
-        <section className="surface-panel space-y-6 p-5 sm:p-7 border border-border" aria-labelledby="matcher-heading">
+        <section
+          className="surface-panel space-y-6 p-5 sm:p-7 border border-border"
+          aria-labelledby="matcher-heading"
+        >
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
             <div>
               <span className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -969,7 +1006,10 @@ function PlatformMatcher() {
 
           <div className="grid gap-4 md:grid-cols-2">
             {QUESTIONS.map((q) => (
-              <fieldset key={q.id} className="rounded-xl border border-border bg-card p-4 space-y-2.5">
+              <fieldset
+                key={q.id}
+                className="rounded-xl border border-border bg-card p-4 space-y-2.5"
+              >
                 <legend className="font-display text-sm font-semibold text-foreground px-1">
                   {q.label}
                 </legend>
@@ -1081,13 +1121,18 @@ function PlatformMatcher() {
                     </h4>
                     <div className="flex flex-wrap gap-2 pt-1">
                       {result.topProviders.map((p) => (
-                        <Badge key={p} variant="secondary" className="px-2.5 py-1 text-xs font-semibold">
+                        <Badge
+                          key={p}
+                          variant="secondary"
+                          className="px-2.5 py-1 text-xs font-semibold"
+                        >
                           {p}
                         </Badge>
                       ))}
                     </div>
                     <p className="text-xs text-muted-foreground pt-2">
-                      Scroll down to see exact plan pricing and renewal terms for each of these tools.
+                      Scroll down to see exact plan pricing and renewal terms for each of these
+                      tools.
                     </p>
                   </div>
                 </div>
@@ -1111,11 +1156,10 @@ function PlatformMatcher() {
               <div className="rounded-xl border border-dashed border-border bg-muted/30 p-6 text-center text-sm text-muted-foreground">
                 <Blocks className="mx-auto size-8 text-muted-foreground/60 mb-2" />
                 <p className="font-medium text-foreground">
-                  Answer at least four questions above to calculate your customized platform recommendation.
+                  Answer at least four questions above to calculate your customized platform
+                  recommendation.
                 </p>
-                <p className="text-xs mt-1">
-                  Currently answered: {answered} of 8
-                </p>
+                <p className="text-xs mt-1">Currently answered: {answered} of 8</p>
               </div>
             )}
           </div>
@@ -1132,7 +1176,8 @@ function PlatformMatcher() {
                 Website & Hosting Provider Options & Pricing
               </h2>
               <p className="text-sm text-muted-foreground mt-0.5">
-                Transparent breakdown of popular website builders, managed WordPress hosts, and ecommerce stacks.
+                Transparent breakdown of popular website builders, managed WordPress hosts, and
+                ecommerce stacks.
               </p>
             </div>
 
@@ -1238,7 +1283,9 @@ function PlatformMatcher() {
 
                     <div className="text-right">
                       <span className="text-xs text-muted-foreground block">
-                        {billingCycleView === "annual" ? "Starting from (annual)" : "Starting from (monthly)"}
+                        {billingCycleView === "annual"
+                          ? "Starting from (annual)"
+                          : "Starting from (monthly)"}
                       </span>
                       <span className="font-display text-xl font-bold text-primary">
                         {billingCycleView === "annual"
@@ -1286,7 +1333,9 @@ function PlatformMatcher() {
                   {/* Feature & Inclusion Snapshot */}
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="rounded-md border border-border/70 bg-card p-2">
-                      <span className="text-muted-foreground block font-medium">Hosting Included</span>
+                      <span className="text-muted-foreground block font-medium">
+                        Hosting Included
+                      </span>
                       <span className="font-semibold flex items-center gap-1 mt-0.5">
                         {provider.hostingIncluded ? (
                           <Check className="size-3.5 text-success" />
@@ -1297,7 +1346,9 @@ function PlatformMatcher() {
                       </span>
                     </div>
                     <div className="rounded-md border border-border/70 bg-card p-2">
-                      <span className="text-muted-foreground block font-medium">Free Domain (Yr 1)</span>
+                      <span className="text-muted-foreground block font-medium">
+                        Free Domain (Yr 1)
+                      </span>
                       <span className="font-semibold flex items-center gap-1 mt-0.5">
                         {provider.freeDomainYear1 ? (
                           <Check className="size-3.5 text-success" />
@@ -1308,7 +1359,9 @@ function PlatformMatcher() {
                       </span>
                     </div>
                     <div className="rounded-md border border-border/70 bg-card p-2 col-span-2">
-                      <span className="text-muted-foreground block font-medium">Business Email Status</span>
+                      <span className="text-muted-foreground block font-medium">
+                        Business Email Status
+                      </span>
                       <span className="font-medium text-foreground mt-0.5 block">
                         {provider.businessEmailIncluded}
                       </span>
@@ -1404,7 +1457,8 @@ function PlatformMatcher() {
               Side-by-Side Website & Hosting Stack Comparison
             </h2>
             <p className="text-sm text-muted-foreground">
-              Compare hosting difficulty, recurring expenses, email independence, and portability across all categories.
+              Compare hosting difficulty, recurring expenses, email independence, and portability
+              across all categories.
             </p>
           </div>
 
@@ -1414,7 +1468,9 @@ function PlatformMatcher() {
                 <TableRow className="bg-muted/40">
                   <TableHead className="font-semibold text-foreground">Platform Type</TableHead>
                   <TableHead className="font-semibold text-foreground">Best For</TableHead>
-                  <TableHead className="font-semibold text-foreground">Typical Cost Range</TableHead>
+                  <TableHead className="font-semibold text-foreground">
+                    Typical Cost Range
+                  </TableHead>
                   <TableHead className="font-semibold text-foreground">Setup Difficulty</TableHead>
                   <TableHead className="font-semibold text-foreground">Maintenance Level</TableHead>
                   <TableHead className="font-semibold text-foreground">Hosting Bundled?</TableHead>
@@ -1428,8 +1484,12 @@ function PlatformMatcher() {
                     <TableCell className="font-semibold whitespace-nowrap text-primary">
                       {row.option}
                     </TableCell>
-                    <TableCell className="text-xs text-muted-foreground max-w-xs">{row.bestFor}</TableCell>
-                    <TableCell className="text-xs font-medium whitespace-nowrap">{row.priceRange}</TableCell>
+                    <TableCell className="text-xs text-muted-foreground max-w-xs">
+                      {row.bestFor}
+                    </TableCell>
+                    <TableCell className="text-xs font-medium whitespace-nowrap">
+                      {row.priceRange}
+                    </TableCell>
                     <TableCell className="text-xs whitespace-nowrap">{row.difficulty}</TableCell>
                     <TableCell className="text-xs whitespace-nowrap">{row.maintenance}</TableCell>
                     <TableCell className="text-xs whitespace-nowrap font-medium text-success">
@@ -1449,8 +1509,8 @@ function PlatformMatcher() {
         {/* Section 4: Pro-Tips for Small Business Website Owners */}
         <section className="surface-panel p-6 sm:p-8 border border-border space-y-6">
           <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl flex items-center gap-2">
-            <ShieldCheck className="size-6 text-primary" />
-            4 Golden Safeguards When Buying Website & Hosting
+            <ShieldCheck className="size-6 text-primary" />4 Golden Safeguards When Buying Website &
+            Hosting
           </h2>
 
           <div className="grid gap-6 sm:grid-cols-2">
@@ -1462,9 +1522,10 @@ function PlatformMatcher() {
                 Keep Domain Registration Separate From Website Hosting
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                If your domain registrar and website host are the same company, migrating away later is
-                stressful. Keeping your domain at an independent registrar (Porkbun, Cloudflare, Namecheap)
-                ensures you can switch website builders in 5 minutes by updating your DNS A records.
+                If your domain registrar and website host are the same company, migrating away later
+                is stressful. Keeping your domain at an independent registrar (Porkbun, Cloudflare,
+                Namecheap) ensures you can switch website builders in 5 minutes by updating your DNS
+                A records.
               </p>
             </div>
 
@@ -1476,9 +1537,9 @@ function PlatformMatcher() {
                 Never Lock Your Business Email to a Website Builder
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Use dedicated email platforms like Neo, Google Workspace, Titan, or Microsoft 365. If you
-                ever change your website theme, CMS, or hosting host, your business email and customer
-                conversations will remain completely uninterrupted.
+                Use dedicated email platforms like Neo, Google Workspace, Titan, or Microsoft 365.
+                If you ever change your website theme, CMS, or hosting host, your business email and
+                customer conversations will remain completely uninterrupted.
               </p>
             </div>
 
@@ -1490,9 +1551,9 @@ function PlatformMatcher() {
                 Watch Out for Promotional Year 2 Renewal Traps
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Shared web hosts often advertise headline rates of $2.99/mo, but automatically bill at
-                $17.99/mo to $29.99/mo upon renewal. Always check the 3-year total cost of ownership before
-                signing an annual contract.
+                Shared web hosts often advertise headline rates of $2.99/mo, but automatically bill
+                at $17.99/mo to $29.99/mo upon renewal. Always check the 3-year total cost of
+                ownership before signing an annual contract.
               </p>
             </div>
 
@@ -1505,8 +1566,8 @@ function PlatformMatcher() {
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground">
                 For ecommerce, calculate transaction fees (e.g. Shopify 2.9% + 30¢ vs WooCommerce 0%
-                platform commission). For WordPress, factor in premium plugins ($50–$200/yr for forms,
-                caching, or security).
+                platform commission). For WordPress, factor in premium plugins ($50–$200/yr for
+                forms, caching, or security).
               </p>
             </div>
           </div>

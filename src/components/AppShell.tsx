@@ -109,11 +109,7 @@ export function AppShell({
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
               <Rocket className="size-4.5" aria-hidden="true" />
             </span>
-            <span className="font-display text-sm leading-tight font-bold">
-              Launch My
-              <br />
-              Business Online
-            </span>
+            <span className="font-display text-sm leading-tight font-bold">Cornerstone</span>
           </Link>
           <NavLinks />
           <div
@@ -162,9 +158,7 @@ export function AppShell({
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-72 overflow-y-auto bg-sidebar p-4">
-                  <SheetTitle className="px-3 pb-4 font-display">
-                    Launch My Business Online
-                  </SheetTitle>
+                  <SheetTitle className="px-3 pb-4 font-display">Cornerstone</SheetTitle>
                   <NavLinks onNavigate={() => setOpen(false)} />
                   <div className="mt-4 rounded-xl border border-sidebar-border bg-sidebar-accent/20 p-2">
                     <p className="px-2 pb-1 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">

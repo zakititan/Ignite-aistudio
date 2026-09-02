@@ -39,7 +39,7 @@ import type { CustomerJourneyType } from "@/lib/types";
 export const Route = createFileRoute("/hire-help")({
   head: () => ({
     meta: [
-      { title: "Share your website plan with a professional — Launch My Business Online" },
+      { title: "Share your website plan with a professional — Cornerstone" },
       {
         name: "description",
         content:
@@ -191,7 +191,7 @@ function buildBriefText(opts: {
   });
 
   return `# Website Project Brief — ${business.businessName || "Your business"}
-_Generated ${safeDate} from Launch My Business Online (stored locally in your browser)._
+_Generated ${safeDate} from Cornerstone (stored locally in your browser)._
 
 > Keep domain, website, email, and payment accounts under business-owner control. This brief stays in your browser — nothing is sent to a server. Share the file or printed page directly with your chosen professional. Do not paste passwords or card numbers.
 

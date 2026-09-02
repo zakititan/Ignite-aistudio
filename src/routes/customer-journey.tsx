@@ -39,7 +39,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/customer-journey")({
   head: () => ({
     meta: [
-      { title: "Test your customer journey — Launch My Business Online" },
+      { title: "Test your customer journey — Cornerstone" },
       {
         name: "description",
         content:

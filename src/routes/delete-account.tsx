@@ -22,7 +22,7 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/delete-account")({
   head: () => ({
     meta: [
-      { title: "Delete your data — Launch My Business Online" },
+      { title: "Delete your data — Cornerstone" },
       {
         name: "description",
         content:

@@ -101,7 +101,7 @@ export function ThemeSettingsCard() {
       <div>
         <h2 className="font-display text-xl font-bold">Appearance</h2>
         <p className="text-sm text-muted-foreground">
-          Choose how Launch Plan Buddy looks on this device.
+          Choose how Cornerstone looks on this device.
         </p>
       </div>
       <div role="radiogroup" aria-label="Appearance" className="grid gap-3 sm:grid-cols-3">

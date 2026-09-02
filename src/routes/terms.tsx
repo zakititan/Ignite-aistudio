@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of use — Launch My Business Online" },
+      { title: "Terms of use — Cornerstone" },
       {
         name: "description",
         content:
@@ -51,9 +51,9 @@ function TermsPage() {
 
       <ContentSection id="guidance" title="Educational guidance">
         <p>
-          Launch My Business Online provides general educational guidance about getting a small
-          business online. It is not legal, tax, accounting, security or financial advice, and it
-          does not create a professional relationship.
+          Cornerstone provides general educational guidance about getting a small business online.
+          It is not legal, tax, accounting, security or financial advice, and it does not create a
+          professional relationship.
         </p>
       </ContentSection>
 

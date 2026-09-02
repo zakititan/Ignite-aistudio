@@ -8,7 +8,7 @@ import { SERVICE_STATUSES, type ServiceStatus } from "@/lib/support-data";
 export const Route = createFileRoute("/status")({
   head: () => ({
     meta: [
-      { title: "Service status — Launch My Business Online" },
+      { title: "Service status — Cornerstone" },
       {
         name: "description",
         content:
@@ -88,8 +88,8 @@ function StatusPage() {
 
       <ContentSection title="Is it us, or your provider?">
         <p>
-          This page only covers Launch My Business Online. Your website, domain and email are run by
-          other companies, and most outages people meet are theirs, not ours. To check:
+          This page only covers Cornerstone. Your website, domain and email are run by other
+          companies, and most outages people meet are theirs, not ours. To check:
         </p>
         <ul className="list-disc space-y-1.5 pl-5">
           <li>Search for your provider's own status page, for example “[provider name] status”.</li>

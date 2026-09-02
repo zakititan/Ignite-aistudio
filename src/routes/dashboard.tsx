@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Your launch dashboard — Launch My Business Online" },
+      { title: "Your launch dashboard — Cornerstone" },
       {
         name: "description",
         content:

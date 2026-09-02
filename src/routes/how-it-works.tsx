@@ -9,13 +9,13 @@ import { PHASES } from "@/lib/plan";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How it works — Launch My Business Online" },
+      { title: "How it works — Cornerstone" },
       {
         name: "description",
         content:
           "Seven guided phases from planning your online presence to getting found: see exactly what happens after you build your free launch plan.",
       },
-      { property: "og:title", content: "How Launch My Business Online works" },
+      { property: "og:title", content: "How Cornerstone works" },
       {
         property: "og:description",
         content:

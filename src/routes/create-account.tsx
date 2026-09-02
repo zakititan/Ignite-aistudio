@@ -11,7 +11,7 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/create-account")({
   head: () => ({
     meta: [
-      { title: "Label this device plan — Launch My Business Online" },
+      { title: "Label this device plan — Cornerstone" },
       {
         name: "description",
         content:

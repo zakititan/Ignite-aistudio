@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/$")({
   head: () => ({
     meta: [
-      { title: "Page not found — Launch My Business Online" },
+      { title: "Page not found — Cornerstone" },
       {
         name: "description",
         content:

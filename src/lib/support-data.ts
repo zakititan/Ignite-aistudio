@@ -304,7 +304,7 @@ export const TROUBLESHOOTING_FLOWS: TroubleshootingFlow[] = [
   },
   {
     id: "cannot-sign-in",
-    title: "I cannot sign in to Launch Plan Buddy",
+    title: "I cannot sign in to Cornerstone",
     likelyCause:
       "Your plan is stored in this browser, so a different device or cleared data looks empty.",
     steps: [

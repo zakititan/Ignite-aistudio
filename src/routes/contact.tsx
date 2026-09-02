@@ -24,7 +24,7 @@ import {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact us — Launch My Business Online" },
+      { title: "Contact us — Cornerstone" },
       {
         name: "description",
         content:
