@@ -57,7 +57,7 @@ export function OnlinePresenceMap({ showActions = true }: { showActions?: boolea
           </li>
         ))}
       </ol>
-      <p className="mt-4 rounded-lg bg-warning-soft px-3 py-2 text-sm text-warning-foreground">
+      <p className="mt-4 rounded-lg border border-warning/30 bg-warning-soft px-3 py-2 text-sm text-foreground">
         Connecting your website changes domain settings. It should not require deleting your email
         settings.
       </p>
