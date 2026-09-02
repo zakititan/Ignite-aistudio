@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { MarketingNavbar } from "@/components/MarketingNavbar";
+import { OnlinePresenceMap } from "@/components/OnlinePresenceMap";
 import { Callout } from "@/components/Callouts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,7 +40,7 @@ export const Route = createFileRoute("/onboarding")({
 const STEP_TITLES = [
   "Business basics",
   "Your main goal",
-  "Where you are today",
+  "Your domain, website and email",
   "What your website needs",
   "Budget and timeline",
   "Skills and preferences",
@@ -318,6 +319,7 @@ function Onboarding() {
 
           {step === 2 && (
             <>
+              <OnlinePresenceMap showActions={false} />
               <Field label="Where are you starting from?" error={errors.currentStatus}>
                 <ChoiceList
                   name="status"

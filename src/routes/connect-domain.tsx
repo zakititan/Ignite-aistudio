@@ -117,22 +117,6 @@ function ConnectDomain() {
         purpose: "Proves to your website platform that you control this address.",
       },
     ];
-    if (usesEmail === "yes") {
-      rows.push({
-        id: "mx",
-        type: "MX",
-        host: "@",
-        value: "Leave your existing mail values exactly as they are",
-        purpose: "Delivers your business email. Do not remove unless your email provider tells you to.",
-      });
-      rows.push({
-        id: "spf",
-        type: "TXT",
-        host: "@",
-        value: "v=spf1 include:your-email-provider.example ~all",
-        purpose: "Lists who may send email using your address, which helps mail reach inboxes.",
-      });
-    }
     if (migrating === "moving") {
       rows.push({
         id: "redirect",
@@ -243,7 +227,8 @@ function ConnectDomain() {
         {usesEmail === "yes" ? (
           <Callout tone="warning" title="Protect your email">
             Website settings and email settings live in the same place but are not interchangeable. Keep your
-            mail-related records unless you are intentionally changing email providers.
+            mail-related records unless you are intentionally changing email providers. This page only shows
+            website records; it will never ask you to add or replace MX, SPF, DKIM or DMARC records.
           </Callout>
         ) : usesEmail === "unsure" ? (
           <Callout tone="danger" title="Let's check your email first">
