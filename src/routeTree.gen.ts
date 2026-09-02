@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ConnectDomainRouteImport } from './routes/connect-domain'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DomainsRouteImport } from './routes/domains'
@@ -20,6 +21,11 @@ import { Route as PlatformMatcherRouteImport } from './routes/platform-matcher'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChecklistRoute = ChecklistRouteImport.update({
+  id: '/checklist',
+  path: '/checklist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConnectDomainRoute = ConnectDomainRouteImport.update({
@@ -55,6 +61,7 @@ const PlatformMatcherRoute = PlatformMatcherRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/checklist': typeof ChecklistRoute
   '/connect-domain': typeof ConnectDomainRoute
   '/dashboard': typeof DashboardRoute
   '/domains': typeof DomainsRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/checklist'
     | '/connect-domain'
     | '/dashboard'
     | '/domains'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/checklist'
     | '/connect-domain'
     | '/dashboard'
     | '/domains'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/checklist'
     | '/connect-domain'
     | '/dashboard'
     | '/domains'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChecklistRoute: typeof ChecklistRoute
   ConnectDomainRoute: typeof ConnectDomainRoute
   DashboardRoute: typeof DashboardRoute
   DomainsRoute: typeof DomainsRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checklist': {
+      id: '/checklist'
+      path: '/checklist'
+      fullPath: '/checklist'
+      preLoaderRoute: typeof ChecklistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/connect-domain': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChecklistRoute: ChecklistRoute,
   ConnectDomainRoute: ConnectDomainRoute,
   DashboardRoute: DashboardRoute,
   DomainsRoute: DomainsRoute,
