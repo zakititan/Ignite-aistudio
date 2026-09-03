@@ -142,6 +142,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["SEO", "Search", "Diagnostics"],
   },
   {
+    title: "Local SEO: get found nearby",
+    kind: "Video",
+    description:
+      "A beginner walkthrough of showing up in local searches and Google Maps with a complete, trustworthy business listing.",
+    analogy:
+      "Local SEO is putting your shop on the neighborhood map, then keeping the sign, opening hours and phone number accurate.",
+    url: "https://www.youtube.com/watch?v=pQSVsHvpTTA",
+    topics: ["Local search", "Google Maps", "Reviews"],
+  },
+  {
+    title: "Mailchimp: email marketing for beginners",
+    kind: "Video",
+    description:
+      "A current, step-by-step introduction to creating a simple subscriber list, writing a helpful email and sending it safely.",
+    analogy:
+      "Email marketing is like a regular newsletter at your front desk: people choose to receive it, and each issue gives them one useful reason to return.",
+    url: "https://www.youtube.com/watch?v=uVWmh3ikMnA",
+    topics: ["Email", "Marketing", "Customer retention"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
