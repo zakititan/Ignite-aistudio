@@ -281,6 +281,16 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["DNS", "Domains", "Website basics"],
   },
   {
+    title: "How to transfer a domain name",
+    kind: "Video",
+    description:
+      "A clear step-by-step overview of moving a domain to a new registrar while keeping your website and email safe.",
+    analogy:
+      "It is like changing the company that manages your street address without moving the shop itself.",
+    url: "https://www.youtube.com/watch?v=LNbhShnzcjI",
+    topics: ["Domains", "Ownership", "Hosting"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
