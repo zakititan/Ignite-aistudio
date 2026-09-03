@@ -189,27 +189,33 @@ The product includes guided workflow pages, support resources, account flows, le
 
 ### Planning and launch workflow
 
-| Route               | Purpose                                            |
-| ------------------- | -------------------------------------------------- |
-| `/`                 | Product landing page and main entry point          |
-| `/how-it-works`     | Overview of the Cornerstone process                |
-| `/onboarding`       | Personalized plan creation flow                    |
-| `/dashboard`        | Plan progress and next actions                     |
-| `/domains`          | Domain guidance and domain-name exploration        |
-| `/platform-matcher` | Website setup category recommendations             |
-| `/connect-domain`   | DNS and domain-connection guidance                 |
-| `/content`          | Guided website-content workspace                   |
-| `/checklist`        | Interactive launch checklist                       |
-| `/business-email`   | Professional business-email planning               |
-| `/get-found`        | Search and local-presence basics                   |
-| `/maintenance`      | Ongoing website-maintenance guidance               |
-| `/ownership-record` | Digital ownership and account-access record        |
-| `/hire-help`        | Guidance for safely hiring a freelancer or agency  |
-| `/customer-journey` | 5-step tester for your primary customer action     |
-| `/business-profile` | Unified profile workspace for all business details |
-| `/online-setup` | Domain → website → email setup map and DNS impact preview (read-only, contextual) |
-| `/launch-dossier` | Compact, printable launch readiness + DNS impact + journey summary (shared readiness) |
-| `/preflight` | Pre-flight sandbox + shared launch readiness check (same scorer, no separate decision) |
+| Route               | Purpose                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `/`                 | Product landing page and main entry point                                              |
+| `/how-it-works`     | 7-phase guide with objectives, outcomes and tool links                                 |
+| `/onboarding`       | Personalized plan creation flow                                                        |
+| `/dashboard`        | Plan progress and next actions                                                         |
+| `/domains`          | Domain guidance and domain-name exploration                                            |
+| `/platform-matcher` | Website setup category recommendations                                                 |
+| `/connect-domain`   | DNS and domain-connection guidance                                                     |
+| `/content`          | Guided website-content workspace                                                       |
+| `/checklist`        | Interactive launch checklist                                                           |
+| `/business-email`   | Professional business-email planning                                                   |
+| `/get-found`        | Search and local-presence basics                                                       |
+| `/maintenance`      | Ongoing website-maintenance guidance                                                   |
+| `/ownership-record` | Digital ownership and account-access record                                            |
+| `/hire-help`        | Guidance for safely hiring a freelancer or agency                                      |
+| `/customer-journey` | 5-step tester for your primary customer action                                         |
+| `/business-profile` | Unified profile workspace for all business details                                     |
+| `/online-setup`     | Domain → website → email setup map and DNS impact preview (read-only, contextual)      |
+| `/launch-dossier`   | Compact, printable launch readiness + DNS impact + journey summary (shared readiness)  |
+| `/preflight`        | Pre-flight sandbox + shared launch readiness check (same scorer, no separate decision) |
+| `/launch-wizard`    | Guided 6-step launch track (domain → email → website → DNS → local → pre-flight)       |
+| `/growth-toolkit`   | UTM builder, health checklists, SEO handrails, provider shortcuts                      |
+| `/cost-calculator`  | 3-year total cost of ownership (domain, hosting, email, renewals)                      |
+| `/email-signature`  | Professional email signature generator (4 templates)                                   |
+| `/review-kit`       | Google review QR, counter card, WhatsApp/email templates                               |
+| `/security-drill`   | Disaster recovery, DNS vault, 2FA and access triage                                    |
 
 ### Learning and support
 
@@ -313,6 +319,7 @@ The project uses a modern TypeScript web stack and a file-based route structure.
 - **UI direction:** reusable components and accessible controls
 - **Icons:** Lucide
 - **Theme:** global light, dark, and system-preference support with local persistence
+- **Navigation:** grouped AppShell with collapsible sections, command search (`Find a tool or answer`, `⌘K`), recent tools, and in-app Launch Assistant (local curated KB)
 - **Future backend/authentication/persistence:** Supabase-compatible architecture
 - **Guest experience:** local persistence for in-progress plans
 - **Future integrations:** domain lookup, AI content generation, analytics, calendar reminders, search-monitoring tools, and PDF export
