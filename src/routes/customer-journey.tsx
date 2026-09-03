@@ -686,9 +686,7 @@ function CustomerJourneyPage() {
                   </p>
                 </div>
                 <div className="surface-panel p-4 text-center border-warning/30">
-                  <p className="text-2xl font-bold text-warning">
-                    {counts.needs_improvement}
-                  </p>
+                  <p className="text-2xl font-bold text-warning">{counts.needs_improvement}</p>
                   <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                     Needs improvement
                   </p>
@@ -849,9 +847,7 @@ function CustomerJourneyPage() {
                 </p>
               </div>
               <div className="surface-panel p-4 text-center border-warning/30">
-                <p className="text-2xl font-bold text-warning">
-                  {counts.needs_improvement}
-                </p>
+                <p className="text-2xl font-bold text-warning">{counts.needs_improvement}</p>
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Needs improvement
                 </p>
@@ -935,8 +931,7 @@ function CustomerJourneyPage() {
                       className={cn(
                         s.status === "passed" && "border-success/30 text-success",
                         s.status === "blocked" && "border-destructive/30 text-destructive",
-                        s.status === "needs_improvement" &&
-                          "border-warning/30 text-warning",
+                        s.status === "needs_improvement" && "border-warning/30 text-warning",
                       )}
                     >
                       {s.status.replace("_", " ")}

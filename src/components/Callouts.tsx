@@ -55,10 +55,7 @@ export function OwnershipWarningCard({ className }: { className?: string }) {
   return (
     <div className={cn("rounded-xl border border-warning/40 bg-warning-soft p-5", className)}>
       <div className="flex gap-3">
-        <ShieldCheck
-          className="mt-0.5 size-6 shrink-0 text-warning"
-          aria-hidden="true"
-        />
+        <ShieldCheck className="mt-0.5 size-6 shrink-0 text-warning" aria-hidden="true" />
         <div className="space-y-2">
           <p className="font-display text-lg font-semibold">
             Important: keep ownership in your name

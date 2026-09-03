@@ -449,8 +449,8 @@ function HireHelpPage() {
               id="missing-info"
               className="font-display text-base font-bold flex items-center gap-2"
             >
-              <AlertTriangle className="size-5 text-warning" aria-hidden="true" />{" "}
-              Complete a few details for a stronger brief
+              <AlertTriangle className="size-5 text-warning" aria-hidden="true" /> Complete a few
+              details for a stronger brief
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Your brief is ready to share as-is, but adding essentials helps a professional quote
@@ -785,8 +785,8 @@ function HireHelpPage() {
               </div>
               <div className="rounded-xl border border-warning/30 bg-warning-soft/30 p-3 text-sm">
                 <p className="font-semibold flex items-center gap-1.5">
-                  <AlertTriangle className="size-4 text-warning" aria-hidden="true" />{" "}
-                  DNS / email reminder
+                  <AlertTriangle className="size-4 text-warning" aria-hidden="true" /> DNS / email
+                  reminder
                 </p>
                 <p className="mt-1 text-muted-foreground">
                   Screenshot current DNS before changes. Keep website records and mail records

@@ -27,6 +27,7 @@ const TOC = [
   { id: "never", label: "What we never store" },
   { id: "use", label: "How your plan is used" },
   { id: "local", label: "Guest plans and local storage" },
+  { id: "ai", label: "AI assistance" },
   { id: "delete", label: "Deleting your data" },
   { id: "contact", label: "Privacy questions" },
 ];
@@ -81,6 +82,25 @@ function PrivacyPage() {
           browsing data, using a different browser, or private browsing will make the plan appear
           empty. Export a copy from Settings if the plan matters to you.
         </p>
+      </ContentSection>
+
+      <ContentSection id="ai" title="AI assistance">
+        <p>
+          AI assistance is optional. When you choose to use it, your question, short chat context
+          (up to 6 recent messages), and selected non-sensitive setup context (current page,
+          business category/model/goal, primary customer action, high-level domain/website/email
+          state, readiness status and blocker titles, DNS impact level, customer journey
+          type/status) are sent to our server and then to OpenAI GPT-5.6 Luna to create a response.
+        </p>
+        <p>
+          We never send raw task notes, ownership notes, email addresses, phone numbers, DNS record
+          values, backup data, passwords, recovery codes, payment details, or API keys.
+        </p>
+        <p>
+          Chat history stays limited and local in this version. Rate limiting protects service
+          capacity; thresholds are not published to prevent bypass.
+        </p>
+        <p>AI calls are server-side only; your OpenAI key is never exposed to the browser.</p>
       </ContentSection>
 
       <ContentSection id="delete" title="Deleting your data">

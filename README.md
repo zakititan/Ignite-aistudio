@@ -378,6 +378,26 @@ AI features should assist—not replace—the business owner’s judgment. Plann
 
 Every generated result should offer edit, regenerate, and copy controls, plus a reminder to review content for accuracy before publishing.
 
+### Cornerstone AI Launch Assistant (GPT-5.6 Luna)
+
+Cornerstone includes an optional AI Launch Assistant powered by **OpenAI GPT-5.6 Luna**. The assistant helps explain domains, DNS, business email, and launch steps in plain English and links to the relevant workflow page.
+
+- **Model:** `gpt-5.6-luna` enforced server-side (rejects other models).
+- **Server-only:** `OPENAI_API_KEY` never leaves Vercel. Browser calls `POST /api/ai/chat` only.
+- **Context:** Only minimal allowlisted context (current route, business category/model/goal, primary customer action, high-level domain/website/email state, readiness blocker titles, DNS impact level, journey type/status) — no task notes, ownership notes, emails, phones, DNS values, or secrets.
+- **Knowledge retrieval:** Curated local excerpts from `src/lib/library.ts` / `src/lib/support-data.ts` (max 2500 chars, 3 excerpts) are injected as grounding.
+- **Rate limiting:** Distributed Redis via Vercel KV/Upstash (`KV_REST_API_URL`/`KV_REST_API_TOKEN`, `AI_SESSION_SECRET` signed `cornerstone_ai_session` cookie) — 2/20s burst, 5/5m, 20/hr, 30/day per session + 10/m, 60/hr, 150/day per IP + project daily cap 2000. Returns `429` with `Retry-After`.
+- **Privacy:** AI is opt-in (local `cornerstone_ai_consent` flag, Settings → AI assistance). Chat history stays local and limited (6 messages). No cloud sync of plan data. See Settings and Privacy pages.
+- **Vercel env:** `OPENAI_API_KEY`, `AI_MODEL=gpt-5.6-luna`, `AI_FEATURE_ENABLED`, `AI_MAX_OUTPUT_TOKENS=500`, `AI_REQUEST_TIMEOUT_MS=20000`, `AI_SESSION_SECRET`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`.
+
+AI does not purchase domains, change DNS, access accounts, or certify launch. Local curated KB is the fallback when AI is disabled, rate-limited, or unavailable.
+
+### AI assistant troubleshooting
+
+If the assistant is unavailable, Cornerstone continues to provide local guides. AI failures are classified as configuration/access, provider rate limit, timeout, provider availability, or request validation errors. Provider error details and secrets are not exposed to users.
+
+The assistant is configured server-side with `AI_MODEL=gpt-5.6-luna`. Confirm the OpenAI API project/key has access to that model and that the selected OpenAI API endpoint/parameters are supported for it.
+
 ## Roadmap
 
 - [x] Build core landing, onboarding, dashboard, and guided workflow pages

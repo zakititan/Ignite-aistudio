@@ -288,8 +288,8 @@ function BusinessProfilePage() {
           {completion.missing.length ? (
             <div className="mt-4 rounded-xl border border-warning/25 bg-warning-soft/40 p-4">
               <p className="flex items-center gap-2 text-sm font-semibold">
-                <AlertTriangle className="size-4 text-warning" aria-hidden="true" />{" "}
-                Missing: {completion.missing.map((m) => m.label).join(", ")}
+                <AlertTriangle className="size-4 text-warning" aria-hidden="true" /> Missing:{" "}
+                {completion.missing.map((m) => m.label).join(", ")}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 Fill these where you can. Essentials for launch readiness are:{" "}

@@ -119,8 +119,7 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
           className={cn(
             "shrink-0 text-xs",
             impact === "Launch essential" && "border-primary/20 bg-primary-soft text-primary",
-            impact === "Protects your email" &&
-              "border-warning/30 bg-warning-soft text-foreground",
+            impact === "Protects your email" && "border-warning/30 bg-warning-soft text-foreground",
             impact === "Helps customers contact you" &&
               "border-success/20 bg-success-soft text-success",
           )}
