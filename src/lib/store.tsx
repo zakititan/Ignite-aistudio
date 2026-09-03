@@ -48,6 +48,7 @@ interface StoreValue {
   addTask: (task: Omit<LaunchTask, "id">) => void;
   updateMaintenance: (id: string, patch: Partial<MaintenanceTask>) => void;
   saveDraft: (pageType: string, fields: Record<string, string>) => void;
+  setDraftStatus: (pageType: string, status: import("./types").ContentDraftStatus) => void;
   setOwnership: (patch: Partial<OwnershipRecord>) => void;
   toggleArticle: (slug: string) => void;
   signIn: (fullName: string, email: string) => void;
@@ -185,7 +186,24 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         })),
       saveDraft: (pageType, fields) =>
         patch((s) => {
-          const draft: ContentDraft = { pageType, fields, updatedAt: new Date().toISOString() };
+          const existing = s.drafts[pageType];
+          const draft: ContentDraft = {
+            pageType,
+            fields,
+            updatedAt: new Date().toISOString(),
+            status: existing?.status ?? (Object.values(fields).some((v) => v.trim().length > 0) ? "draft" : "not_started"),
+          };
+          return { ...s, drafts: { ...s.drafts, [pageType]: draft } };
+        }),
+      setDraftStatus: (pageType: string, status: import("./types").ContentDraftStatus) =>
+        patch((s) => {
+          const existing = s.drafts[pageType];
+          const draft: ContentDraft = {
+            pageType,
+            fields: existing?.fields ?? {},
+            updatedAt: new Date().toISOString(),
+            status,
+          };
           return { ...s, drafts: { ...s.drafts, [pageType]: draft } };
         }),
       setOwnership: (p) => patch((s) => ({ ...s, ownership: { ...s.ownership, ...p } })),

@@ -86,7 +86,7 @@ export const NAV_GROUPS: NavGroup[] = [
         to: "/content",
         label: "Content",
         icon: FileText,
-        description: "Draft essential pages (Home, About, Contact)",
+        description: "Draft 13 pages (Home, About, Services, Products, Booking, Menu, Portfolio, ...)",
       },
       {
         to: "/business-email",

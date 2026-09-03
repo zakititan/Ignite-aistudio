@@ -98,10 +98,20 @@ export interface MaintenanceTask {
   notes: string;
 }
 
+export type ContentDraftStatus = "not_started" | "draft" | "needs_review" | "ready_to_publish";
+
+export const CONTENT_DRAFT_STATUS_LABEL: Record<ContentDraftStatus, string> = {
+  not_started: "Not started",
+  draft: "Draft",
+  needs_review: "Needs review",
+  ready_to_publish: "Ready to publish",
+};
+
 export interface ContentDraft {
   pageType: string;
   fields: Record<string, string>;
   updatedAt: string;
+  status?: ContentDraftStatus;
 }
 
 export interface DomainRecordEntry {
