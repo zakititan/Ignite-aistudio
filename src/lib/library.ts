@@ -241,6 +241,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Business email", "DNS", "SPF", "DKIM", "DMARC"],
   },
   {
+    title: "cPanel hosting setup for beginners",
+    kind: "Video",
+    description:
+      "A recent visual tour of a common hosting dashboard: where website files, domains, email accounts and security settings live.",
+    analogy:
+      "cPanel is like the reception desk for your website building, with separate drawers for rooms, mail and keys.",
+    url: "https://www.youtube.com/watch?v=Xg_uL5wHD9c",
+    topics: ["Hosting", "Website", "Business email"],
+  },
+  {
+    title: "What is cPanel hosting?",
+    kind: "Video",
+    description:
+      "A gentle introduction to the hosting control panel many providers use, without assuming you know server terminology.",
+    analogy:
+      "It is a simple control panel—like the buttons in a building’s lobby—for managing your site without touching the machinery room.",
+    url: "https://www.youtube.com/watch?v=M71MI4C-M14",
+    topics: ["Hosting", "Domains", "Email"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
