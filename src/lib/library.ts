@@ -261,6 +261,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Hosting", "Domains", "Email"],
   },
   {
+    title: "DNS explained: records and propagation",
+    kind: "Video",
+    description:
+      "A visual beginner lesson on DNS records, where they live and why a change can take time to appear everywhere.",
+    analogy:
+      "DNS is the internet’s directory; propagation is the time it takes for every copy of that directory to update.",
+    url: "https://www.youtube.com/watch?v=12wzEqOXPwU",
+    topics: ["DNS", "Domains", "Hosting"],
+  },
+  {
+    title: "DNS (Domain Name System) explained simply",
+    kind: "Video",
+    description:
+      "A plain-English visual explanation of how a memorable website name finds the right server on the internet.",
+    analogy:
+      "It works like calling directory assistance: you say the business name, and it finds the number to connect you.",
+    url: "https://www.youtube.com/watch?v=sUhEqT_HSBI",
+    topics: ["DNS", "Domains", "Website basics"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:

@@ -128,7 +128,7 @@ function HelpPage() {
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {VISUAL_RESOURCES.filter((resource) => resource.kind === "Video")
-                .slice(0, 22)
+                .slice(0, 24)
                 .map((resource) => (
                   <a
                     key={resource.title}
