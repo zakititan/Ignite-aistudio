@@ -16,11 +16,11 @@ type MapProps = {
 
 const toneClasses: Record<string, string> = {
   complete: "border-success/30 bg-success-soft text-success",
-  ready_for_review: "border-warning/30 bg-warning-soft text-warning-foreground",
-  in_progress: "border-warning/30 bg-warning-soft text-warning-foreground",
+  ready_for_review: "border-warning/30 bg-warning-soft text-foreground",
+  in_progress: "border-warning/30 bg-warning-soft text-foreground",
   planned: "border-primary/30 bg-primary-soft text-primary",
   needs_attention: "border-destructive/30 bg-destructive-soft text-destructive",
-  needs_information: "border-warning/30 bg-warning-soft text-warning-foreground",
+  needs_information: "border-warning/30 bg-warning-soft text-foreground",
   not_started: "border-border bg-muted text-muted-foreground",
 };
 

@@ -163,7 +163,7 @@ export function MilestoneSequence() {
                     className={cn(
                       "flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
                       isDone
-                        ? "bg-success text-success-foreground"
+                        ? "bg-success text-success"
                         : isCurrent
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted text-muted-foreground",
@@ -175,7 +175,7 @@ export function MilestoneSequence() {
                     variant={isDone ? "default" : isCurrent ? "default" : "outline"}
                     className={cn(
                       "text-[10px] px-1.5 py-0 font-medium",
-                      isDone && "bg-success text-success-foreground",
+                      isDone && "bg-success text-success",
                       isCurrent && "bg-primary text-primary-foreground",
                     )}
                   >

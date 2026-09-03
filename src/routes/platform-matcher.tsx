@@ -1087,7 +1087,7 @@ function PlatformMatcher() {
                       <Blocks className="size-6" aria-hidden="true" />
                     </span>
                     <div>
-                      <Badge className="bg-success text-success-foreground mb-1">
+                      <Badge className="bg-success text-success mb-1">
                         Best Fit for Your Profile
                       </Badge>
                       <h3 className="font-display text-2xl font-bold">{result.title}</h3>

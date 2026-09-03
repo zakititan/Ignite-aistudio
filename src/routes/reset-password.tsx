@@ -34,8 +34,8 @@ function strengthOf(pw: string) {
   if (/\d/.test(pw)) score += 1;
   if (/[^A-Za-z0-9]/.test(pw)) score += 1;
   if (score <= 2) return { label: "Weak", tone: "text-destructive" as const };
-  if (score <= 4) return { label: "Reasonable", tone: "text-warning-foreground" as const };
-  return { label: "Strong", tone: "text-success-foreground" as const };
+  if (score <= 4) return { label: "Reasonable", tone: "text-warning" as const };
+  return { label: "Strong", tone: "text-success" as const };
 }
 
 function ResetPasswordPage() {

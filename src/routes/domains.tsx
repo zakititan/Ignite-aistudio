@@ -445,7 +445,7 @@ function DomainsPage() {
                                     ? "bg-success-soft text-success border-success/30"
                                     : av.status === "registered"
                                       ? "bg-destructive-soft text-destructive border-destructive/30"
-                                      : "bg-warning-soft text-warning-foreground border-warning/30"
+                                      : "bg-warning-soft text-foreground border-warning/30"
                                 }
                                 title={av.message}
                               >

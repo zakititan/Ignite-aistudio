@@ -293,7 +293,7 @@ function Dashboard() {
                       className={cn(
                         "flex size-10 shrink-0 items-center justify-center rounded-xl font-display font-bold",
                         isDone
-                          ? "bg-success text-success-foreground"
+                          ? "bg-success text-success"
                           : phase.key === stage
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted text-muted-foreground",

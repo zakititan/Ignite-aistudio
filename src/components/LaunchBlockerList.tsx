@@ -30,7 +30,7 @@ export function LaunchBlockerList({
                 "mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full border",
                 b.severity === "critical"
                   ? "border-destructive/20 bg-destructive-soft text-destructive"
-                  : "border-warning/20 bg-warning-soft text-warning-foreground",
+                  : "border-warning/20 bg-warning-soft text-foreground",
               )}
             >
               {b.severity === "critical" ? (
@@ -47,7 +47,7 @@ export function LaunchBlockerList({
                     "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase",
                     b.severity === "critical"
                       ? "border-destructive/30 bg-background text-destructive"
-                      : "border-warning/30 bg-background text-warning-foreground",
+                      : "border-warning/30 bg-background text-warning",
                   )}
                   aria-label={`Severity: ${b.severity}`}
                 >

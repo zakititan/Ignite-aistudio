@@ -152,7 +152,7 @@ function Checklist() {
                     {journeyBlocker.severity === "critical" ? (
                       <AlertTriangle className="size-4 text-destructive" aria-hidden="true" />
                     ) : (
-                      <Info className="size-4 text-warning-foreground" aria-hidden="true" />
+                      <Info className="size-4 text-warning" aria-hidden="true" />
                     )}
                     {journeyBlocker.title}
                   </p>
@@ -339,7 +339,7 @@ function Checklist() {
                     <div key={t.id} className="space-y-2">
                       {showBlocker ? (
                         <div className="flex flex-wrap items-center gap-2 rounded-xl border border-warning/25 bg-warning-soft/40 px-3 py-2 text-xs">
-                          <span className="inline-flex items-center gap-1.5 font-semibold text-warning-foreground">
+                          <span className="inline-flex items-center gap-1.5 font-semibold text-warning">
                             {blocker!.severity === "critical" ? (
                               <AlertTriangle className="size-3.5" aria-hidden="true" />
                             ) : (

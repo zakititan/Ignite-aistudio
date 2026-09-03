@@ -449,7 +449,7 @@ function HireHelpPage() {
               id="missing-info"
               className="font-display text-base font-bold flex items-center gap-2"
             >
-              <AlertTriangle className="size-5 text-warning-foreground" aria-hidden="true" />{" "}
+              <AlertTriangle className="size-5 text-warning" aria-hidden="true" />{" "}
               Complete a few details for a stronger brief
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -785,7 +785,7 @@ function HireHelpPage() {
               </div>
               <div className="rounded-xl border border-warning/30 bg-warning-soft/30 p-3 text-sm">
                 <p className="font-semibold flex items-center gap-1.5">
-                  <AlertTriangle className="size-4 text-warning-foreground" aria-hidden="true" />{" "}
+                  <AlertTriangle className="size-4 text-warning" aria-hidden="true" />{" "}
                   DNS / email reminder
                 </p>
                 <p className="mt-1 text-muted-foreground">
@@ -920,7 +920,7 @@ function HireHelpPage() {
                           ? "border-success/30 text-success"
                           : state.customerJourneyTest.steps.some((s) => s.status === "blocked")
                             ? "border-destructive/30 text-destructive"
-                            : "border-warning/30 text-warning-foreground"
+                            : "border-warning/30 text-warning"
                       }
                     >
                       {state.customerJourneyTest.steps.every((s) => s.status === "passed")
@@ -964,7 +964,7 @@ function HireHelpPage() {
           >
             <h2
               id="brief-6"
-              className="font-display text-lg font-bold flex items-center gap-2 text-warning-foreground"
+              className="font-display text-lg font-bold flex items-center gap-2 text-warning"
             >
               <ShieldCheck className="size-5" aria-hidden="true" /> 6 · Keep ownership with the
               business

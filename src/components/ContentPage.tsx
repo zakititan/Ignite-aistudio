@@ -124,7 +124,7 @@ export function SafetyWarningBanner({
     <div role="note" className="rounded-xl border border-warning/40 bg-warning-soft p-4 sm:p-5">
       <div className="flex gap-3">
         <AlertTriangle
-          className="mt-0.5 size-5 shrink-0 text-warning-foreground"
+          className="mt-0.5 size-5 shrink-0 text-warning"
           aria-hidden="true"
         />
         <div className="space-y-1.5">

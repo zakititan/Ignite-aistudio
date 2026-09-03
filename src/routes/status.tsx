@@ -31,12 +31,12 @@ const STATUS_UI: Record<
   operational: {
     label: "Operational",
     icon: CheckCircle2,
-    className: "text-success-foreground bg-success-soft",
+    className: "text-success bg-success-soft",
   },
   degraded: {
     label: "Degraded",
     icon: AlertTriangle,
-    className: "text-warning-foreground bg-warning-soft",
+    className: "text-warning bg-warning-soft",
   },
   down: { label: "Outage", icon: XCircle, className: "text-destructive bg-destructive/10" },
 };

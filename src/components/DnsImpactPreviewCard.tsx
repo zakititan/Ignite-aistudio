@@ -22,7 +22,7 @@ export function DnsImpactPreviewCard({ preview }: Props) {
     level === "high"
       ? "text-destructive"
       : level === "medium"
-        ? "text-warning-foreground"
+        ? "text-warning"
         : "text-success";
 
   return (

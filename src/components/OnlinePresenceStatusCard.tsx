@@ -38,9 +38,9 @@ const STATUS_STYLES: Record<
     labelClass: "text-muted-foreground",
   },
   needs_information: {
-    badge: "border-warning/30 bg-warning-soft text-warning-foreground",
+    badge: "border-warning/30 bg-warning-soft text-foreground",
     icon: Info,
-    labelClass: "text-warning-foreground",
+    labelClass: "text-warning",
   },
   planned: {
     badge: "border-primary/20 bg-primary-soft text-primary",
@@ -58,9 +58,9 @@ const STATUS_STYLES: Record<
     labelClass: "text-destructive",
   },
   ready_for_review: {
-    badge: "border-warning/30 bg-warning-soft text-warning-foreground",
+    badge: "border-warning/30 bg-warning-soft text-foreground",
     icon: AlertTriangle,
-    labelClass: "text-warning-foreground",
+    labelClass: "text-warning",
   },
   complete: {
     badge: "border-success/30 bg-success-soft text-success",
@@ -97,7 +97,7 @@ export function OnlinePresenceStatusCard({ area }: { area: PresenceStatusArea })
         <ul className="space-y-1 text-xs text-muted-foreground">
           {area.blockers.slice(0, 2).map((b) => (
             <li key={b} className="flex gap-1.5">
-              <span aria-hidden="true" className="text-warning-foreground">
+              <span aria-hidden="true" className="text-warning">
                 •
               </span>
               <span>{b}</span>

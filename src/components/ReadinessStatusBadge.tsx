@@ -26,7 +26,7 @@ const MAP: Record<
   nearly_ready: {
     label: "Nearly ready",
     icon: Clock3,
-    className: "border-warning/30 bg-warning-soft text-warning-foreground",
+    className: "border-warning/30 bg-warning-soft text-foreground",
     ariaLabel: "Status: nearly ready",
   },
   ready_for_review: {

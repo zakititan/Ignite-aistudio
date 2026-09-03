@@ -120,7 +120,7 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
             "shrink-0 text-xs",
             impact === "Launch essential" && "border-primary/20 bg-primary-soft text-primary",
             impact === "Protects your email" &&
-              "border-warning/30 bg-warning-soft text-warning-foreground",
+              "border-warning/30 bg-warning-soft text-foreground",
             impact === "Helps customers contact you" &&
               "border-success/20 bg-success-soft text-success",
           )}
@@ -147,7 +147,7 @@ export function NextBestActionCard({ action }: { action: TopAction }) {
               "rounded-full border px-2 py-0.5",
               severity === "critical"
                 ? "border-destructive/30 bg-destructive-soft text-destructive"
-                : "border-warning/30 bg-warning-soft text-warning-foreground",
+                : "border-warning/30 bg-warning-soft text-foreground",
             )}
           >
             {severity}
