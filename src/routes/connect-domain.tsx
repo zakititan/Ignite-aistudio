@@ -675,7 +675,7 @@ function ConnectDomain() {
                 placeholder="e.g. Porkbun, Namecheap, GoDaddy, Cloudflare"
               />
               {!providerKnown ? (
-                <p className="text-xs text-warning-foreground">
+                <p className="text-xs text-warning">
                   Confirm where DNS is managed before continuing — check your registrar account or
                   nameservers (manual).
                 </p>

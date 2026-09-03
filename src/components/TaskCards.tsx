@@ -27,7 +27,7 @@ export function TaskStatusBadge({ status }: { status: TaskStatus }) {
 export function ImportanceBadge({ importance }: { importance: Importance }) {
   const map: Record<Importance, string> = {
     required: "border-destructive/40 bg-destructive-soft text-destructive",
-    recommended: "border-warning/40 bg-warning-soft text-warning-foreground",
+    recommended: "border-warning/40 bg-warning-soft text-foreground",
     optional: "border-border bg-muted text-muted-foreground",
   };
   return (

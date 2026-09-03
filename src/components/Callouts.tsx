@@ -9,7 +9,7 @@ const toneStyles: Record<Tone, { wrap: string; icon: typeof Info; iconClass: str
   warning: {
     wrap: "bg-warning-soft border-warning/40",
     icon: AlertTriangle,
-    iconClass: "text-warning-foreground",
+    iconClass: "text-warning",
   },
   success: {
     wrap: "bg-success-soft border-success/35",
@@ -56,7 +56,7 @@ export function OwnershipWarningCard({ className }: { className?: string }) {
     <div className={cn("rounded-xl border border-warning/40 bg-warning-soft p-5", className)}>
       <div className="flex gap-3">
         <ShieldCheck
-          className="mt-0.5 size-6 shrink-0 text-warning-foreground"
+          className="mt-0.5 size-6 shrink-0 text-warning"
           aria-hidden="true"
         />
         <div className="space-y-2">

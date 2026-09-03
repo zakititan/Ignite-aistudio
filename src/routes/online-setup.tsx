@@ -329,7 +329,7 @@ function OnlineSetupPage() {
                   preview.level === "high"
                     ? "text-destructive"
                     : preview.level === "medium"
-                      ? "text-warning-foreground"
+                      ? "text-warning"
                       : "text-success",
                 )}
               >
@@ -720,7 +720,7 @@ function OnlineSetupPage() {
 
             <div>
               <h3 className="flex items-center gap-2 text-sm font-semibold">
-                <AlertTriangle className="size-4 text-warning-foreground" aria-hidden="true" /> What
+                <AlertTriangle className="size-4 text-warning" aria-hidden="true" /> What
                 to do next
               </h3>
               <ul className="mt-3 space-y-2">

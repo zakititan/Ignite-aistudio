@@ -106,7 +106,7 @@ export function LaunchReadinessSummary({ readiness }: { readiness: LaunchReadine
             {blockers.some((b) => b.severity === "critical") ? (
               <AlertTriangle className="size-4 text-destructive" aria-hidden="true" />
             ) : (
-              <Info className="size-4 text-warning-foreground" aria-hidden="true" />
+              <Info className="size-4 text-warning" aria-hidden="true" />
             )}
             Why this matters & what to do next
           </h3>

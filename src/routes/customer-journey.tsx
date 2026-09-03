@@ -256,7 +256,7 @@ function CustomerJourneyPage() {
                     s === flowStep
                       ? "bg-primary text-primary-foreground"
                       : s < flowStep
-                        ? "bg-success text-success-foreground"
+                        ? "bg-success text-success"
                         : "bg-muted text-muted-foreground",
                   )}
                   aria-current={s === flowStep ? "step" : undefined}
@@ -686,7 +686,7 @@ function CustomerJourneyPage() {
                   </p>
                 </div>
                 <div className="surface-panel p-4 text-center border-warning/30">
-                  <p className="text-2xl font-bold text-warning-foreground">
+                  <p className="text-2xl font-bold text-warning">
                     {counts.needs_improvement}
                   </p>
                   <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -849,7 +849,7 @@ function CustomerJourneyPage() {
                 </p>
               </div>
               <div className="surface-panel p-4 text-center border-warning/30">
-                <p className="text-2xl font-bold text-warning-foreground">
+                <p className="text-2xl font-bold text-warning">
                   {counts.needs_improvement}
                 </p>
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -889,7 +889,7 @@ function CustomerJourneyPage() {
                 </p>
               ) : hasNeeds ? (
                 <p className="mt-2 flex gap-2 rounded-xl border border-warning/25 bg-warning-soft/50 p-3 text-sm">
-                  <Info className="size-4 shrink-0 text-warning-foreground" aria-hidden="true" />
+                  <Info className="size-4 shrink-0 text-warning" aria-hidden="true" />
                   <span>
                     <span className="font-semibold">Important:</span> {counts.needs_improvement}{" "}
                     step{counts.needs_improvement > 1 ? "s" : ""} need improvement. Customers can
@@ -936,7 +936,7 @@ function CustomerJourneyPage() {
                         s.status === "passed" && "border-success/30 text-success",
                         s.status === "blocked" && "border-destructive/30 text-destructive",
                         s.status === "needs_improvement" &&
-                          "border-warning/30 text-warning-foreground",
+                          "border-warning/30 text-warning",
                       )}
                     >
                       {s.status.replace("_", " ")}

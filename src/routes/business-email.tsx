@@ -1214,10 +1214,10 @@ function BusinessEmail() {
             </div>
             <div className="rounded-xl border border-success/30 bg-success-soft p-4">
               <div className="flex items-center justify-between">
-                <Badge className="bg-success text-success-foreground">Established Business</Badge>
+                <Badge className="bg-success text-success">Established Business</Badge>
                 <span className="text-xs text-success font-medium">100% Brand Ownership</span>
               </div>
-              <p className="mt-3 font-mono text-sm font-semibold break-all text-success-foreground">
+              <p className="mt-3 font-mono text-sm font-semibold break-all text-success">
                 hello@{domain}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -2367,7 +2367,7 @@ function BusinessEmail() {
                             Step {idx + 1}: {step.label}
                           </span>
                           {isChecked && (
-                            <Badge className="bg-success text-success-foreground text-[10px]">
+                            <Badge className="bg-success text-success text-[10px]">
                               Passed
                             </Badge>
                           )}

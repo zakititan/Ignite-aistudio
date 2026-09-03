@@ -568,7 +568,7 @@ This document certifies that full custody, credentials access, and master owners
                     "text-xs font-bold capitalize",
                     dnsPreview.level === "low" && "border-success/30 bg-success-soft text-success",
                     dnsPreview.level === "medium" &&
-                      "border-warning/30 bg-warning-soft text-warning-foreground",
+                      "border-warning/30 bg-warning-soft text-foreground",
                     dnsPreview.level === "high" &&
                       "border-destructive/30 bg-destructive-soft text-destructive",
                   )}

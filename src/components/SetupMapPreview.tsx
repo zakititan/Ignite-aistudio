@@ -64,7 +64,7 @@ export function SetupMapPreview({ areas }: { areas: PresenceStatusArea[] }) {
 
   const toneClasses: Record<string, string> = {
     success: "border-success/20 bg-success-soft text-success",
-    warning: "border-warning/30 bg-warning-soft text-warning-foreground",
+    warning: "border-warning/30 bg-warning-soft text-foreground",
     muted: "border-border bg-muted text-muted-foreground",
     destructive: "border-destructive/20 bg-destructive-soft text-destructive",
   };
