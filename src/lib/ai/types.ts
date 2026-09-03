@@ -100,3 +100,31 @@ export interface AiChatMetric {
   outputCharacters?: number;
   model: "gpt-5.6-luna";
 }
+
+export type OpenAiProviderFailureKind =
+  | "invalid_api_key"
+  | "invalid_model"
+  | "model_access_denied"
+  | "unsupported_request"
+  | "provider_rate_limited"
+  | "provider_timeout"
+  | "provider_unavailable"
+  | "invalid_model_output"
+  | "unknown_provider_error";
+
+export class OpenAiProviderError extends Error {
+  readonly kind: OpenAiProviderFailureKind;
+  readonly status?: number;
+  readonly providerCode?: string;
+
+  constructor(
+    kind: OpenAiProviderFailureKind,
+    options?: { status?: number; providerCode?: string; cause?: unknown },
+  ) {
+    super(kind);
+    this.name = "OpenAiProviderError";
+    this.kind = kind;
+    this.status = options?.status;
+    this.providerCode = options?.providerCode;
+  }
+}

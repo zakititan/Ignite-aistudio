@@ -5,6 +5,7 @@ import { checkRateLimit } from "@/lib/ai/rate-limit";
 import { callOpenAi } from "@/lib/ai/openai-provider";
 import { errorResponse } from "@/lib/ai/errors";
 import { minimizeContext } from "@/lib/ai/assistant-context";
+import { OpenAiProviderError } from "@/lib/ai/types";
 
 export async function handleAiChat(request: Request): Promise<Response> {
   const start = Date.now();
@@ -149,7 +150,10 @@ export async function handleAiChat(request: Request): Promise<Response> {
       minimized as unknown as Record<string, unknown>,
       conversation,
     );
-    const headers: Record<string, string> = {};
+    const headers: Record<string, string> = {
+      "Cache-Control": "no-store",
+      "X-Request-Id": requestId,
+    };
     if (setCookieHeader) headers["Set-Cookie"] = setCookieHeader;
 
     console.log(
@@ -167,16 +171,76 @@ export async function handleAiChat(request: Request): Promise<Response> {
 
     return Response.json(result, { headers });
   } catch (e) {
+    if (e instanceof OpenAiProviderError) {
+      const providerError = e as OpenAiProviderError;
+      console.error(
+        JSON.stringify({
+          event: "ai_chat_provider_failure",
+          requestId,
+          failureKind: providerError.kind,
+          providerStatus: providerError.status ?? null,
+          providerCode: providerError.providerCode ?? null,
+          route: context.currentRoute,
+          latencyMs: Date.now() - start,
+          model: "gpt-5.6-luna",
+        }),
+      );
+
+      const headers: Record<string, string> = {
+        "Cache-Control": "no-store",
+        "X-Request-Id": requestId,
+      };
+
+      switch (providerError.kind) {
+        case "invalid_api_key":
+        case "invalid_model":
+        case "model_access_denied":
+          return Response.json(
+            errorResponse(
+              "AI_DISABLED",
+              "AI help is not available in this environment. You can still use Cornerstone's local guides.",
+            ),
+            { status: 503, headers },
+          );
+        case "unsupported_request":
+        case "invalid_model_output":
+        case "unknown_provider_error":
+        case "provider_unavailable":
+          return Response.json(
+            errorResponse(
+              "UPSTREAM_UNAVAILABLE",
+              "The AI service is temporarily unavailable. Please try again shortly.",
+            ),
+            { status: 503, headers },
+          );
+        case "provider_rate_limited":
+          return Response.json(
+            errorResponse(
+              "UPSTREAM_RATE_LIMITED",
+              "The AI service is temporarily busy. Please try again shortly.",
+            ),
+            { status: 429, headers: { ...headers, "Retry-After": "60" } },
+          );
+        case "provider_timeout":
+          return Response.json(
+            errorResponse(
+              "UPSTREAM_TIMEOUT",
+              "The AI service took too long to respond. Please try again shortly.",
+            ),
+            { status: 504, headers },
+          );
+      }
+    }
+
     const err = e as Error & { code?: string };
     const msg = err.message ?? "";
-
     if (msg.includes("timeout") || err.name === "AbortError") {
       return Response.json(
         errorResponse(
           "UPSTREAM_TIMEOUT",
           "The AI service took too long to respond. Please try again shortly.",
         ),
-        { status: 504 },
+        { status: 504, headers: { "Cache-Control": "no-store", "X-Request-Id": requestId } },
       );
     }
     if (msg.includes("429") || msg.includes("rate limit")) {
@@ -185,13 +249,11 @@ export async function handleAiChat(request: Request): Promise<Response> {
           "UPSTREAM_RATE_LIMITED",
           "The AI service is temporarily busy. Please try again shortly.",
         ),
-        { status: 429 },
+        {
+          status: 429,
+          headers: { "Cache-Control": "no-store", "X-Request-Id": requestId, "Retry-After": "60" },
+        },
       );
-    }
-    if (msg.includes("model") || msg.includes("configuration")) {
-      return Response.json(errorResponse("INTERNAL_ERROR", "AI configuration error."), {
-        status: 500,
-      });
     }
 
     console.error(
@@ -202,7 +264,7 @@ export async function handleAiChat(request: Request): Promise<Response> {
         "UPSTREAM_UNAVAILABLE",
         "The AI service is temporarily unavailable. Please try again shortly.",
       ),
-      { status: 503 },
+      { status: 503, headers: { "Cache-Control": "no-store", "X-Request-Id": requestId } },
     );
   }
 }

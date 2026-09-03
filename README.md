@@ -392,6 +392,12 @@ Cornerstone includes an optional AI Launch Assistant powered by **OpenAI GPT-5.6
 
 AI does not purchase domains, change DNS, access accounts, or certify launch. Local curated KB is the fallback when AI is disabled, rate-limited, or unavailable.
 
+### AI assistant troubleshooting
+
+If the assistant is unavailable, Cornerstone continues to provide local guides. AI failures are classified as configuration/access, provider rate limit, timeout, provider availability, or request validation errors. Provider error details and secrets are not exposed to users.
+
+The assistant is configured server-side with `AI_MODEL=gpt-5.6-luna`. Confirm the OpenAI API project/key has access to that model and that the selected OpenAI API endpoint/parameters are supported for it.
+
 ## Roadmap
 
 - [x] Build core landing, onboarding, dashboard, and guided workflow pages
