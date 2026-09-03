@@ -322,7 +322,8 @@ The project uses a modern TypeScript web stack and a file-based route structure.
 - **Navigation:** grouped AppShell with collapsible sections, command search (`Find a tool or answer`, `⌘K`), recent tools, and in-app Launch Assistant (local curated KB)
 - **Future backend/authentication/persistence:** Supabase-compatible architecture
 - **Guest experience:** local persistence for in-progress plans
-- **Future integrations:** domain lookup, AI content generation, analytics, calendar reminders, search-monitoring tools, and PDF export
+- **AI assistant:** optional server-side GPT-5.6 Luna via `POST /api/ai/chat` (Vercel, KV rate limits, local KB fallback)
+- **Future integrations:** domain lookup, AI content generation for page drafts, analytics, calendar reminders, search-monitoring tools, and PDF export
 
 Suggested data entities:
 
@@ -365,7 +366,7 @@ The user experience should remain calm, clear, and usable by beginners.
 
 ## AI-assisted capabilities
 
-AI features should assist—not replace—the business owner’s judgment. Planned capabilities include:
+AI features assist—not replace—the business owner’s judgment. **Live:** Cornerstone AI Launch Assistant (see below) is available as an optional, server-side helper. Planned additional capabilities include:
 
 - Personalized roadmap generation
 - Domain-name ideas
@@ -378,7 +379,7 @@ AI features should assist—not replace—the business owner’s judgment. Plann
 
 Every generated result should offer edit, regenerate, and copy controls, plus a reminder to review content for accuracy before publishing.
 
-### Cornerstone AI Launch Assistant (GPT-5.6 Luna)
+### Cornerstone AI Launch Assistant (GPT-5.6 Luna) — live on `test/ai-launch-assistant-vercel`, planned for `main`
 
 Cornerstone includes an optional AI Launch Assistant powered by **OpenAI GPT-5.6 Luna**. The assistant helps explain domains, DNS, business email, and launch steps in plain English and links to the relevant workflow page.
 
@@ -419,9 +420,11 @@ The assistant is configured server-side with `AI_MODEL=gpt-5.6-luna`. Confirm th
 - [ ] Add authentication and saved plans backed by a production database (not live in this sprint)
 - [ ] Add real-time domain availability lookup via provider integration (RDAP helper present, registrar confirms price)
 - [ ] Add provider-specific DNS setup flows
-- [ ] Add live AI generation and review workflows
+- [x] Add AI Launch Assistant (GPT-5.6 Luna, server-side `POST /api/ai/chat`, Vercel KV rate limiting, local KB fallback, opt-in) — `test/ai-launch-assistant-vercel`
+- [ ] Add live AI generation and review workflows for content/page drafts (beyond assistant Q&A)
 - [ ] Add analytics, search-monitoring, reminder, and PDF-export backend integrations (browser print only today)
 - [ ] Add automated route/link validation and end-to-end theme tests
+- [x] Fix dark-mode legibility for warning soft and related status (semantic tokens, no dark-on-dark)
 
 ## Contributing
 
