@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { BookOpen, Clock, ExternalLink, PlayCircle, Search } from "lucide-react";
+import { Clock, Search } from "lucide-react";
 import { ContentPageLayout } from "@/components/ContentPage";
 import { EmptyState } from "@/components/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HELP_ARTICLES, HELP_CATEGORIES, type HelpArticle } from "@/lib/support-data";
 import { VISUAL_RESOURCES } from "@/lib/library";
+import { VisualResourceCard } from "@/components/VisualResourceCard";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -130,32 +131,7 @@ function HelpPage() {
               {VISUAL_RESOURCES.filter((resource) => resource.kind === "Video")
                 .slice(0, 25)
                 .map((resource) => (
-                  <a
-                    key={resource.title}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-lg border p-4 transition-colors hover:bg-muted"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-                        <span>
-                          {resource.kind === "Video" ? (
-                            <PlayCircle className="size-3" />
-                          ) : (
-                            <BookOpen className="size-3" />
-                          )}
-                        </span>
-                        {resource.kind}
-                      </span>
-                      <ExternalLink className="size-4 text-muted-foreground" aria-hidden="true" />
-                    </div>
-                    <h3 className="mt-2 font-display font-semibold">{resource.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{resource.description}</p>
-                    <p className="mt-2 text-xs text-primary/80">
-                      Think of it like: {resource.analogy}
-                    </p>
-                  </a>
+                  <VisualResourceCard key={resource.title} resource={resource} />
                 ))}
             </div>
           </section>

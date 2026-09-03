@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { BookOpen, Check, ExternalLink, PlayCircle, Search } from "lucide-react";
+import { BookOpen, Check, Search } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { GlossaryTooltip } from "@/components/GlossaryTooltip";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,7 @@ import {
 import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES, VISUAL_RESOURCES } from "@/lib/library";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { VisualResourceCard } from "@/components/VisualResourceCard";
 
 export const Route = createFileRoute("/learn")({
   head: () => ({
@@ -78,33 +79,7 @@ function Learn() {
           </div>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             {VISUAL_RESOURCES.map((resource) => (
-              <a
-                key={resource.title}
-                href={resource.url}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-lg border p-4 transition-colors hover:bg-muted"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <Badge variant="outline">
-                    <span className="mr-1 inline-flex">
-                      {resource.kind === "Video" ? (
-                        <PlayCircle className="size-3" />
-                      ) : (
-                        <BookOpen className="size-3" />
-                      )}
-                    </span>
-                    {resource.kind}
-                  </Badge>
-                  <ExternalLink className="size-4 text-muted-foreground" aria-hidden="true" />
-                </div>
-                <h3 className="mt-3 font-display font-semibold">{resource.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{resource.description}</p>
-                <p className="mt-2 text-xs text-primary/80">Think of it like: {resource.analogy}</p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Topics: {resource.topics.join(" · ")}
-                </p>
-              </a>
+              <VisualResourceCard key={resource.title} resource={resource} />
             ))}
           </div>
         </section>
