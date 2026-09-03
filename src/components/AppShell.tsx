@@ -172,7 +172,11 @@ export function AppShell({
       <div className="mx-auto flex w-full max-w-[1440px]">
         {/* Desktop Sidebar */}
         <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col gap-4 overflow-y-auto border-r border-sidebar-border bg-sidebar px-4 py-5 lg:flex">
-          <Link to="/dashboard" className="flex items-center gap-2.5 px-2">
+          <Link
+            to="/"
+            className="flex items-center gap-2.5 px-2"
+            aria-label="Cornerstone, back to homepage"
+          >
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-xs">
               <Rocket className="size-4.5" aria-hidden="true" />
             </span>
@@ -254,7 +258,19 @@ export function AppShell({
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-80 overflow-y-auto bg-sidebar p-4">
-                    <SheetTitle className="px-2 pb-3 font-display text-lg">Cornerstone</SheetTitle>
+                    <SheetTitle asChild className="px-2 pb-3 font-display text-lg">
+                      <Link
+                        to="/"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
+                        aria-label="Cornerstone, back to homepage"
+                      >
+                        <span className="flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
+                          <Rocket className="size-3.5" aria-hidden="true" />
+                        </span>
+                        <span>Cornerstone</span>
+                      </Link>
+                    </SheetTitle>
 
                     {/* Next step inside mobile menu */}
                     <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
@@ -304,7 +320,11 @@ export function AppShell({
                   </SheetContent>
                 </Sheet>
 
-                <Link to="/dashboard" className="font-display text-sm font-bold">
+                <Link
+                  to="/"
+                  className="font-display text-sm font-bold tracking-tight hover:opacity-90 transition-opacity"
+                  aria-label="Cornerstone, back to homepage"
+                >
                   Cornerstone
                 </Link>
               </div>
