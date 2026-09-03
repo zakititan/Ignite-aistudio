@@ -16,6 +16,7 @@ import {
   Star,
   Calculator,
   Wrench,
+  TrendingUp,
   BookOpen,
   LifeBuoy,
   UserRound,
