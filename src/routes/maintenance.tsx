@@ -68,7 +68,9 @@ function Maintenance() {
   });
 
   const exportJson = () => {
-    const blob = new Blob([JSON.stringify(state.maintenance, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(state.maintenance, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -82,7 +84,14 @@ function Maintenance() {
     const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Cornerstone//Maintenance//EN"];
     for (const m of state.maintenance) {
       const dt = m.nextDue.replace(/-/g, "");
-      lines.push("BEGIN:VEVENT", `UID:${m.id}@cornerstone.local`, `DTSTART;VALUE=DATE:${dt}`, `SUMMARY:${m.title} — ${m.recurrence}`, `DESCRIPTION:Maintenance reminder — ${m.title}\\nNotes: ${(m.notes || "").replace(/\n/g, "\\n")}`, "END:VEVENT");
+      lines.push(
+        "BEGIN:VEVENT",
+        `UID:${m.id}@cornerstone.local`,
+        `DTSTART;VALUE=DATE:${dt}`,
+        `SUMMARY:${m.title} — ${m.recurrence}`,
+        `DESCRIPTION:Maintenance reminder — ${m.title}\\nNotes: ${(m.notes || "").replace(/\n/g, "\\n")}`,
+        "END:VEVENT",
+      );
     }
     lines.push("END:VCALENDAR");
     const blob = new Blob([lines.join("\r\n")], { type: "text/calendar" });
@@ -96,7 +105,12 @@ function Maintenance() {
   };
 
   const copyDueDates = async () => {
-    const text = state.maintenance.map((m) => `${m.recurrence.toUpperCase()} — ${m.title} — Due ${m.nextDue}${m.notes ? ` — ${m.notes}` : ""} — ${m.status}`).join("\n");
+    const text = state.maintenance
+      .map(
+        (m) =>
+          `${m.recurrence.toUpperCase()} — ${m.title} — Due ${m.nextDue}${m.notes ? ` — ${m.notes}` : ""} — ${m.status}`,
+      )
+      .join("\n");
     await navigator.clipboard.writeText(text);
     toast.success("Copied due dates & notes to clipboard!");
   };
@@ -106,11 +120,17 @@ function Maintenance() {
     setReminderEnabled(next);
     try {
       window.localStorage.setItem("lmbo.maintenance.reminder", next ? "1" : "0");
-    } catch {}
+    } catch {
+      // Storage unavailable or disabled in browser
+    }
     if (next && "Notification" in window && Notification.permission !== "granted") {
       Notification.requestPermission().catch(() => {});
     }
-    toast.success(next ? "Local reminder enabled — we’ll nudge you when items are due." : "Local reminder disabled.");
+    toast.success(
+      next
+        ? "Local reminder enabled — we’ll nudge you when items are due."
+        : "Local reminder disabled.",
+    );
   };
 
   if (!hasPlan) {
@@ -143,7 +163,11 @@ function Maintenance() {
           <Button variant="outline" size="sm" onClick={exportJson} className="text-xs gap-1.5">
             <Download className="size-3.5" /> Export JSON
           </Button>
-          <Button size="sm" onClick={exportIcs} className="text-xs gap-1.5 bg-primary text-primary-foreground shadow">
+          <Button
+            size="sm"
+            onClick={exportIcs}
+            className="text-xs gap-1.5 bg-primary text-primary-foreground shadow"
+          >
             <Calendar className="size-3.5" /> Export .ics
           </Button>
         </div>
@@ -169,10 +193,18 @@ function Maintenance() {
             <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
               <Bell className="size-3.5 text-primary" /> Local reminder
             </span>
-            <p className="text-xs text-muted-foreground">Keep a local nudge in this browser + export to your calendar. No data leaves your device.</p>
+            <p className="text-xs text-muted-foreground">
+              Keep a local nudge in this browser + export to your calendar. No data leaves your
+              device.
+            </p>
           </div>
           <label className="flex items-center gap-2 text-xs cursor-pointer">
-            <input type="checkbox" checked={reminderEnabled} onChange={toggleReminder} className="size-4 rounded border-border" />
+            <input
+              type="checkbox"
+              checked={reminderEnabled}
+              onChange={toggleReminder}
+              className="size-4 rounded border-border"
+            />
             <span className="font-medium text-foreground">Enable local reminder</span>
           </label>
         </div>
@@ -245,7 +277,10 @@ function Maintenance() {
                         ) : null}
                       </div>
                       <div className="pl-7 space-y-1">
-                        <Label htmlFor={`m-note-${m.id}`} className="text-[11px] font-semibold text-muted-foreground">
+                        <Label
+                          htmlFor={`m-note-${m.id}`}
+                          className="text-[11px] font-semibold text-muted-foreground"
+                        >
                           Notes
                         </Label>
                         <Textarea

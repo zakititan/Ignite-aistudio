@@ -388,7 +388,9 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
               </div>
 
               <Callout tone="warning" title="Do not delete unknown DNS records">
-                Website records (A, CNAME) and mail records (MX, TXT for SPF/DKIM/DMARC) are separate. Changing website records should never require deleting mail records. If you don't recognise a record, leave it — it may be essential for email.
+                Website records (A, CNAME) and mail records (MX, TXT for SPF/DKIM/DMARC) are
+                separate. Changing website records should never require deleting mail records. If
+                you don't recognise a record, leave it — it may be essential for email.
               </Callout>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -495,15 +497,30 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
           <TabsContent value="fortress" className="space-y-6">
             <div className="surface-panel p-5 sm:p-6 space-y-4">
               <Callout tone="warning" title="Registrar Lock reminder">
-                Keep Registrar Lock / Transfer Lock ON at all times except during an intentional transfer. An unlocked domain can be hijacked with a single approval email.
+                Keep Registrar Lock / Transfer Lock ON at all times except during an intentional
+                transfer. An unlocked domain can be hijacked with a single approval email.
               </Callout>
               <div className="rounded-xl border border-primary/20 bg-primary-soft/30 p-4 space-y-2">
-                <h4 className="font-display text-sm font-bold flex items-center gap-1.5"><ShieldCheck className="size-4 text-primary" /> Domain Access & Recovery Checklist</h4>
+                <h4 className="font-display text-sm font-bold flex items-center gap-1.5">
+                  <ShieldCheck className="size-4 text-primary" /> Domain Access & Recovery Checklist
+                </h4>
                 <ul className="text-xs text-muted-foreground space-y-1 list-disc pl-5">
-                  <li>Registrar account uses a business-controlled email (not personal/freelancer) and recovery phone is current.</li>
-                  <li>2FA set with authenticator app; backup recovery codes stored offline (not in this ledger).</li>
-                  <li>Ownership record documents who holds registrar, DNS, hosting, email, and billing (see Ownership Record).</li>
-                  <li>If access is lost: use provider Account Recovery, never brute-force passwords — then re-enable 2FA and Registrar Lock.</li>
+                  <li>
+                    Registrar account uses a business-controlled email (not personal/freelancer) and
+                    recovery phone is current.
+                  </li>
+                  <li>
+                    2FA set with authenticator app; backup recovery codes stored offline (not in
+                    this ledger).
+                  </li>
+                  <li>
+                    Ownership record documents who holds registrar, DNS, hosting, email, and billing
+                    (see Ownership Record).
+                  </li>
+                  <li>
+                    If access is lost: use provider Account Recovery, never brute-force passwords —
+                    then re-enable 2FA and Registrar Lock.
+                  </li>
                 </ul>
               </div>
               <div className="flex items-center justify-between">
@@ -618,7 +635,9 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
               </div>
 
               <Callout tone="info" title="DNS export guidance — no auto changes">
-                Copy or download this file and store it offline before any DNS edits. To restore: paste the contents into your DNS provider's import / zone file feature. This app does not modify DNS for you — you control when and where to apply it.
+                Copy or download this file and store it offline before any DNS edits. To restore:
+                paste the contents into your DNS provider's import / zone file feature. This app
+                does not modify DNS for you — you control when and where to apply it.
               </Callout>
 
               <div className="rounded-xl border border-border bg-muted/40 p-4 font-mono text-[11px] text-foreground overflow-x-auto">

@@ -43,11 +43,7 @@ async function getRdapBaseUrl(domain: string) {
 }
 
 export type DomainAvailabilityStatus =
-  | "available"
-  | "registered"
-  | "unknown"
-  | "unsupported"
-  | "rate_limited";
+  "available" | "registered" | "unknown" | "unsupported" | "rate_limited";
 
 /**
  * RDAP checker — 5 explicit outcomes, no registrant data, no purchase.
@@ -108,7 +104,8 @@ export const checkDomainAvailability = createServerFn({ method: "GET" })
         return {
           domain,
           status: "registered" as DomainAvailabilityStatus,
-          message: "Registered — this domain is already registered according to the registry's RDAP service.",
+          message:
+            "Registered — this domain is already registered according to the registry's RDAP service.",
         };
       }
       if (response.status === 429) {
@@ -129,7 +126,8 @@ export const checkDomainAvailability = createServerFn({ method: "GET" })
       return {
         domain,
         status: "unknown" as DomainAvailabilityStatus,
-        message: "Could not verify — the registry could not be reached. Try again shortly or check with a registrar.",
+        message:
+          "Could not verify — the registry could not be reached. Try again shortly or check with a registrar.",
       };
     }
   });

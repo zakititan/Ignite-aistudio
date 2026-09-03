@@ -191,7 +191,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             pageType,
             fields,
             updatedAt: new Date().toISOString(),
-            status: existing?.status ?? (Object.values(fields).some((v) => v.trim().length > 0) ? "draft" : "not_started"),
+            status:
+              existing?.status ??
+              (Object.values(fields).some((v) => v.trim().length > 0) ? "draft" : "not_started"),
           };
           return { ...s, drafts: { ...s.drafts, [pageType]: draft } };
         }),

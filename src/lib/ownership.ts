@@ -7,9 +7,7 @@ export function getOwnershipHealth(record: OwnershipRecord): {
   summary: string;
 } {
   const criticalMissing =
-    !record.domainRegistrar.trim() ||
-    !record.renewalDate.trim() ||
-    !record.recoveryOwner.trim();
+    !record.domainRegistrar.trim() || !record.renewalDate.trim() || !record.recoveryOwner.trim();
 
   if (criticalMissing) {
     return {

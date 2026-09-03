@@ -61,10 +61,7 @@ import {
 import { useStore } from "@/lib/store";
 import { checkDomainAvailability } from "@/lib/domain-availability.functions";
 import type { DomainShortlistStatus, SavedDomainIdea } from "@/lib/types";
-import {
-  buildDomainSuggestions as buildSuggestions,
-  scoreDomain,
-} from "@/lib/domain";
+import { buildDomainSuggestions as buildSuggestions, scoreDomain } from "@/lib/domain";
 
 export const Route = createFileRoute("/domains")({
   head: () => ({

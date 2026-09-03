@@ -52,7 +52,11 @@ function TroubleshootingPage() {
       description="Work through the checks in order. Most launch problems are caused by caching, a missing record, or a change that has not finished spreading yet."
     >
       <SafetyWarningBanner title="Do not delete unknown DNS records">
-        Before editing DNS, save a copy of your current records. Do not delete DNS records you do not recognise — mail records (MX, TXT including SPF/DKIM/DMARC) often look unfamiliar but are essential. Website records (A, CNAME) and mail records are separate; changing one should never require deleting the other. Make one change at a time and allow up to 48 hours to spread.
+        Before editing DNS, save a copy of your current records. Do not delete DNS records you do
+        not recognise — mail records (MX, TXT including SPF/DKIM/DMARC) often look unfamiliar but
+        are essential. Website records (A, CNAME) and mail records are separate; changing one should
+        never require deleting the other. Make one change at a time and allow up to 48 hours to
+        spread.
       </SafetyWarningBanner>
 
       <section className="surface-panel space-y-3 p-5 sm:p-6">

@@ -480,12 +480,9 @@ function OwnershipRecordPage() {
               "flex flex-wrap items-center justify-between gap-3 rounded-xl border px-4 py-3",
               ownershipHealth.health === "at_risk" &&
                 "border-destructive/30 bg-destructive-soft/40",
-              ownershipHealth.health === "needs_attention" &&
-                "border-amber-500/30 bg-amber-500/10",
-              ownershipHealth.health === "review_due" &&
-                "border-amber-500/30 bg-amber-500/10",
-              ownershipHealth.health === "documented" &&
-                "border-emerald-500/30 bg-emerald-500/10",
+              ownershipHealth.health === "needs_attention" && "border-amber-500/30 bg-amber-500/10",
+              ownershipHealth.health === "review_due" && "border-amber-500/30 bg-amber-500/10",
+              ownershipHealth.health === "documented" && "border-emerald-500/30 bg-emerald-500/10",
             )}
           >
             <div className="flex items-center gap-2">
@@ -502,7 +499,9 @@ function OwnershipRecordPage() {
                 <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
               )}
               <div>
-                <span className="text-sm font-semibold">Ownership health: {ownershipHealth.label}</span>
+                <span className="text-sm font-semibold">
+                  Ownership health: {ownershipHealth.label}
+                </span>
                 <p className="text-xs text-muted-foreground">{ownershipHealth.summary}</p>
               </div>
             </div>
@@ -511,7 +510,8 @@ function OwnershipRecordPage() {
                 variant="outline"
                 className={cn(
                   "text-xs font-semibold",
-                  ownershipHealth.health === "at_risk" && "bg-destructive text-destructive-foreground",
+                  ownershipHealth.health === "at_risk" &&
+                    "bg-destructive text-destructive-foreground",
                   ownershipHealth.health === "needs_attention" && "bg-amber-500 text-white",
                   ownershipHealth.health === "review_due" && "bg-amber-500 text-white",
                   ownershipHealth.health === "documented" && "bg-emerald-500 text-white",

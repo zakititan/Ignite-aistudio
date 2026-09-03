@@ -63,6 +63,10 @@ function Learn() {
     [q],
   );
 
+  const glossaryMidpoint = Math.ceil(glossaryEntries.length / 2);
+  const glossaryCol1 = glossaryEntries.slice(0, glossaryMidpoint);
+  const glossaryCol2 = glossaryEntries.slice(glossaryMidpoint);
+
   const visualResources = useMemo(
     () =>
       VISUAL_RESOURCES.filter((resource) => {
@@ -278,24 +282,44 @@ function Learn() {
         <section aria-labelledby="glossary">
           <h2 id="glossary" className="font-display text-xl font-bold">
             Glossary
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
+              ({glossaryEntries.length})
+            </span>
           </h2>
-          <Accordion type="single" collapsible className="surface-panel mt-4 px-5">
-            {glossaryEntries.map(([term, def]) => (
-              <AccordionItem key={term} value={term}>
-                <AccordionTrigger className="text-left font-display font-semibold">
-                  {term}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                  {def}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-          {!glossaryEntries.length ? (
+          {glossaryEntries.length ? (
+            <Accordion type="multiple" className="mt-4 grid gap-4 items-start md:grid-cols-2">
+              <div className="surface-panel px-5">
+                {glossaryCol1.map(([term, def]) => (
+                  <AccordionItem key={term} value={term} className="last:border-b-0">
+                    <AccordionTrigger className="text-left font-display font-semibold">
+                      {term}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                      {def}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </div>
+              {glossaryCol2.length ? (
+                <div className="surface-panel px-5">
+                  {glossaryCol2.map(([term, def]) => (
+                    <AccordionItem key={term} value={term} className="last:border-b-0">
+                      <AccordionTrigger className="text-left font-display font-semibold">
+                        {term}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                        {def}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </div>
+              ) : null}
+            </Accordion>
+          ) : (
             <p className="surface-panel mt-4 p-6 text-sm text-muted-foreground">
               No glossary terms match that search.
             </p>
-          ) : null}
+          )}
         </section>
       </div>
     </AppShell>

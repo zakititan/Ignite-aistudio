@@ -325,7 +325,13 @@ const RECOMMENDATIONS = {
       "Will I pair this with a headless CMS for non-technical editing?",
       "Is free email routing sufficient or do I need a dedicated inbox?",
     ],
-    features: ["Global Edge CDN", "Free SSL", "Git Deploys", "Unlimited Bandwidth", "DDoS Protection"],
+    features: [
+      "Global Edge CDN",
+      "Free SSL",
+      "Git Deploys",
+      "Unlimited Bandwidth",
+      "DDoS Protection",
+    ],
     topProviders: ["Cloudflare Pages", "Vercel", "Netlify"],
     examples: "Cloudflare Pages, Vercel, Netlify, GitHub Pages.",
   },
@@ -931,7 +937,12 @@ const COMPARISON_ARCHETYPES = [
 function recommend(a: Record<string, string | undefined>): Recommendation {
   if (a["ecommerce"] === "yes") return RECOMMENDATIONS.ecommerce;
   if (a["growth"] === "yes" && a["help"] !== "no") return RECOMMENDATIONS.cms;
-  if (a["help"] === "yes" && a["budget"] === "low" && a["ecommerce"] === "no" && a["booking"] === "no")
+  if (
+    a["help"] === "yes" &&
+    a["budget"] === "low" &&
+    a["ecommerce"] === "no" &&
+    a["booking"] === "no"
+  )
     return RECOMMENDATIONS.static;
   if (a["design"] === "max" && a["budget"] === "high") return RECOMMENDATIONS.pro;
   if (a["speed"] === "yes" && a["budget"] === "low" && a["updates"] === "rare")
