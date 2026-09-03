@@ -122,6 +122,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Domains", "Website", "Hosting"],
   },
   {
+    title: "Google Analytics for beginners",
+    kind: "Video",
+    description:
+      "A short, highly viewed introduction to understanding who visits your site, what they do and which pages need attention.",
+    analogy:
+      "Analytics is like a shopkeeper’s notebook: it shows which displays attract people and where they leave without buying.",
+    url: "https://www.youtube.com/watch?v=GG5xBwbje1E",
+    topics: ["Analytics", "Traffic", "Conversions"],
+  },
+  {
+    title: "Google Search Console: getting started",
+    kind: "Video",
+    description:
+      "An official Google Search Central introduction to checking how your website appears in search and spotting visibility issues.",
+    analogy:
+      "It is like getting a report from the town map-maker showing which roads lead people to your shop and which signs need fixing.",
+    url: "https://www.youtube.com/watch?v=ONr5Z7VhNFI",
+    topics: ["SEO", "Search", "Diagnostics"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
