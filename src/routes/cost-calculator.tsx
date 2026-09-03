@@ -879,6 +879,14 @@ export function CostCalculatorPage() {
                   <Link to="/launch-wizard">Return to Launch Wizard</Link>
                 </Button>
               </div>
+
+              <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 text-[11px] text-muted-foreground">
+                <strong className="text-foreground">Pricing disclaimer:</strong> Estimates use
+                starting rates as of May 2026 and include renewal hikes, plugin/maintenance, and
+                transaction fees. Actual 3-year TCO may vary — verify current pricing on each
+                provider’s official page before purchasing. We receive no affiliate commissions;
+                numbers are shown honestly to avoid hidden Year 2 shocks.
+              </div>
             </div>
           </div>
         </div>
