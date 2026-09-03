@@ -56,6 +56,7 @@ function ArticleCard({ article }: { article: HelpArticle }) {
 
 function HelpPage() {
   const [query, setQuery] = useState("");
+  const [showAllVisualHelp, setShowAllVisualHelp] = useState(false);
   const q = query.trim().toLowerCase();
 
   const results = useMemo(() => {
@@ -68,6 +69,8 @@ function HelpPage() {
   }, [q]);
 
   const popular = HELP_ARTICLES.filter((a) => a.popular);
+  const visualHelp = VISUAL_RESOURCES.filter((resource) => resource.kind === "Video");
+  const visibleVisualHelp = showAllVisualHelp ? visualHelp : visualHelp.slice(0, 6);
 
   return (
     <ContentPageLayout
@@ -123,17 +126,20 @@ function HelpPage() {
                 Prefer watching or skimming?
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Start with one of these trusted visual guides. You do not need to understand every
-                technical word before you begin.
+                Start with a few trusted visual guides. You do not need to understand every
+                technical word before you begin, and the full collection is one click away.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {VISUAL_RESOURCES.filter((resource) => resource.kind === "Video")
-                .slice(0, 25)
-                .map((resource) => (
-                  <VisualResourceCard key={resource.title} resource={resource} />
-                ))}
+              {visibleVisualHelp.map((resource) => (
+                <VisualResourceCard key={resource.title} resource={resource} />
+              ))}
             </div>
+            {visualHelp.length > 6 ? (
+              <Button variant="outline" onClick={() => setShowAllVisualHelp((visible) => !visible)}>
+                {showAllVisualHelp ? "Show fewer videos" : `Show all ${visualHelp.length} videos`}
+              </Button>
+            ) : null}
           </section>
 
           <section className="space-y-4">

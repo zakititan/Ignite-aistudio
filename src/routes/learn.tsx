@@ -42,6 +42,7 @@ function Learn() {
   const { state, toggleArticle } = useStore();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const [showAllVisualResources, setShowAllVisualResources] = useState(false);
 
   const q = query.trim().toLowerCase();
   const articles = useMemo(
@@ -84,6 +85,9 @@ function Learn() {
       }),
     [q, category],
   );
+  const visibleVisualResources = showAllVisualResources
+    ? visualResources
+    : visualResources.slice(0, 6);
 
   return (
     <AppShell
@@ -125,15 +129,25 @@ function Learn() {
               Watch or skim instead
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Prefer pictures to paragraphs? These trusted videos and guides explain the same ideas
-              with diagrams, stories and practical examples. Videos can play right here.
+              Prefer pictures to paragraphs? Start with a few trusted videos and guides; you can
+              open the full collection whenever you need it. Videos play right here.
             </p>
           </div>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {visualResources.map((resource) => (
+            {visibleVisualResources.map((resource) => (
               <VisualResourceCard key={resource.title} resource={resource} />
             ))}
           </div>
+          {visualResources.length > 6 ? (
+            <Button
+              variant="outline"
+              onClick={() => setShowAllVisualResources((visible) => !visible)}
+            >
+              {showAllVisualResources
+                ? "Show fewer resources"
+                : `Show all ${visualResources.length} resources`}
+            </Button>
+          ) : null}
           {!visualResources.length ? (
             <p className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
               No visual resources match this search yet. Try a simpler word or choose “All”.
