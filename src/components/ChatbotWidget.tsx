@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useStore } from "@/lib/store";
 import { getReadiness } from "@/lib/readiness";
 import { getNextBestStep } from "@/lib/navigation-data";
+import { getDnsImpactPreview } from "@/lib/online-presence";
 import {
   STARTER_QUESTIONS,
   getBotResponse,
@@ -14,7 +15,152 @@ import {
 } from "@/lib/chatbot-kb";
 import { cn } from "@/lib/utils";
 
-type ChatMode = "local" | "ai";
+type AssistantErrorCode =
+  | "INVALID_REQUEST"
+  | "AI_DISABLED"
+  | "RATE_LIMITED"
+  | "AI_CAPACITY_LIMITED"
+  | "UPSTREAM_RATE_LIMITED"
+  | "UPSTREAM_TIMEOUT"
+  | "UPSTREAM_UNAVAILABLE"
+  | "SAFETY_BLOCKED"
+  | "INTERNAL_ERROR";
+
+type AssistantErrorState = {
+  code: AssistantErrorCode;
+  message: string;
+  retryAfterSeconds?: number;
+};
+
+function isAssistantErrorCode(value: unknown): value is AssistantErrorCode {
+  return [
+    "INVALID_REQUEST",
+    "AI_DISABLED",
+    "RATE_LIMITED",
+    "AI_CAPACITY_LIMITED",
+    "UPSTREAM_RATE_LIMITED",
+    "UPSTREAM_TIMEOUT",
+    "UPSTREAM_UNAVAILABLE",
+    "SAFETY_BLOCKED",
+    "INTERNAL_ERROR",
+  ].includes(String(value));
+}
+
+const ASSISTANT_ERROR_COPY: Record<
+  AssistantErrorCode,
+  { title: string; fallbackDescription: string; allowRetry: boolean; isRateLimit: boolean }
+> = {
+  INVALID_REQUEST: {
+    title: "Please check your question",
+    fallbackDescription:
+      "We could not process that request. Try shortening or rewording your message.",
+    allowRetry: true,
+    isRateLimit: false,
+  },
+  RATE_LIMITED: {
+    title: "Assistant limit reached",
+    fallbackDescription: "You have reached the assistant limit for now. Please try again shortly.",
+    allowRetry: false,
+    isRateLimit: true,
+  },
+  AI_DISABLED: {
+    title: "AI assistance unavailable",
+    fallbackDescription:
+      "AI help is not available in this environment. Cornerstone's local guides are still available.",
+    allowRetry: false,
+    isRateLimit: false,
+  },
+  AI_CAPACITY_LIMITED: {
+    title: "AI assistant temporarily unavailable",
+    fallbackDescription:
+      "AI help is paused while service capacity is protected. You can still use the local guides.",
+    allowRetry: false,
+    isRateLimit: false,
+  },
+  UPSTREAM_RATE_LIMITED: {
+    title: "Assistant is busy",
+    fallbackDescription: "The AI provider is temporarily busy. Please try again shortly.",
+    allowRetry: false,
+    isRateLimit: true,
+  },
+  UPSTREAM_TIMEOUT: {
+    title: "The assistant took too long",
+    fallbackDescription: "Try again in a moment, or continue with local guides.",
+    allowRetry: true,
+    isRateLimit: false,
+  },
+  UPSTREAM_UNAVAILABLE: {
+    title: "Assistant temporarily unavailable",
+    fallbackDescription:
+      "The AI service is unavailable right now. You can still use Cornerstone's local guides.",
+    allowRetry: true,
+    isRateLimit: false,
+  },
+  SAFETY_BLOCKED: {
+    title: "Let's keep this safe",
+    fallbackDescription:
+      "Do not enter passwords, recovery codes, API keys, payment details, or private account information.",
+    allowRetry: true,
+    isRateLimit: false,
+  },
+  INTERNAL_ERROR: {
+    title: "Something went wrong",
+    fallbackDescription: "Try again, or continue with the local guides.",
+    allowRetry: true,
+    isRateLimit: false,
+  },
+};
+
+type BusinessEmailState = "yes" | "no" | "unknown";
+function normalizeBusinessEmailValue(value: unknown): BusinessEmailState {
+  if (value === true) return "yes";
+  if (value === false) return "no";
+  const normalized = String(value ?? "")
+    .trim()
+    .toLowerCase();
+  if (
+    ["yes", "y", "true", "needed", "active", "in_use", "in use", "uses email"].includes(normalized)
+  )
+    return "yes";
+  if (
+    ["no", "n", "false", "not_needed", "not needed", "none", "does not use email"].includes(
+      normalized,
+    )
+  )
+    return "no";
+  return "unknown";
+}
+
+type BusinessModel = "local" | "online" | "hybrid";
+function normalizeBusinessModel(value: unknown): BusinessModel | undefined {
+  const normalized = String(value ?? "")
+    .trim()
+    .toLowerCase();
+  if (["local", "local business", "storefront", "service area"].includes(normalized))
+    return "local";
+  if (["online", "online only", "ecommerce", "digital"].includes(normalized)) return "online";
+  if (["hybrid", "both", "local and online", "online and local"].includes(normalized))
+    return "hybrid";
+  return undefined;
+}
+
+type WebsiteStatus = "not_started" | "draft" | "live" | "unknown";
+function normalizeWebsiteStatus(value: unknown): WebsiteStatus | undefined {
+  const normalized = String(value ?? "")
+    .trim()
+    .toLowerCase();
+  if (["not_started", "not started", "none", "no website"].includes(normalized))
+    return "not_started";
+  if (["draft", "in progress", "building", "temporary"].includes(normalized)) return "draft";
+  if (["live", "published", "online"].includes(normalized)) return "live";
+  if (["unknown", "not sure", "unsure", ""].includes(normalized)) return "unknown";
+  return undefined;
+}
+
+type DnsImpactLevel = "low" | "medium" | "high";
+function normalizeDnsImpactLevel(value: unknown): DnsImpactLevel | undefined {
+  return value === "low" || value === "medium" || value === "high" ? value : undefined;
+}
 
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,8 +176,9 @@ export function ChatbotWidget() {
       return "unset";
     }
   });
-  const [aiError, setAiError] = useState<string | null>(null);
+  const [aiError, setAiError] = useState<AssistantErrorState | null>(null);
   const [rateLimitedUntil, setRateLimitedUntil] = useState<number | null>(null);
+  const [inlineValidation, setInlineValidation] = useState<string | null>(null);
 
   const { state } = useStore();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -43,27 +190,33 @@ export function ChatbotWidget() {
 
   const chatbotContext: ChatbotContext = useMemo(
     () => ({
-      businessName: state.business.name || undefined,
-      domain: state.business.domain || undefined,
+      businessName: state.business.businessName || undefined,
+      domain: state.business.ownedDomain || state.business.preferredDomain || undefined,
       completionPercent: readiness.requiredCompletionPercent,
       blockersCount: readiness.blockers.length,
       nextStepTitle: nextStep.name,
       nextStepRoute: nextStep.route,
     }),
-    [state.business.name, state.business.domain, readiness, nextStep],
+    [
+      state.business.businessName,
+      state.business.ownedDomain,
+      state.business.preferredDomain,
+      readiness,
+      nextStep,
+    ],
   );
 
   const initialMessage: ChatMessage = useMemo(
     () => ({
       id: "welcome-1",
       sender: "bot",
-      text: state.business.name
-        ? `Hi! I'm your launch assistant for **${state.business.name}**. I can answer basic questions about connecting domains, DNS records, business email, website platforms, or preparing to launch.`
+      text: state.business.businessName
+        ? `Hi! I'm your launch assistant for **${state.business.businessName}**. I can answer basic questions about connecting domains, DNS records, business email, website platforms, or preparing to launch.`
         : "Hi! I'm your launch assistant. I can answer basic questions about getting your business online, connecting domains, DNS records, business email, or pre-launch checks.",
       timestamp: new Date(),
       suggestedQuestions: STARTER_QUESTIONS.slice(0, 4),
     }),
-    [state.business.name],
+    [state.business.businessName],
   );
 
   const [messages, setMessages] = useState<ChatMessage[]>([initialMessage]);
@@ -82,7 +235,6 @@ export function ChatbotWidget() {
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 150);
   }, [isOpen]);
 
-  // countdown for rate limit
   const [nowTick, setNowTick] = useState(Date.now());
   useEffect(() => {
     if (!rateLimitedUntil) return;
@@ -103,38 +255,59 @@ export function ChatbotWidget() {
 
   const buildAiContext = () => {
     const business = state.business as unknown as Record<string, unknown>;
+    let dnsImpact: DnsImpactLevel | undefined;
+    try {
+      const preview = getDnsImpactPreview(
+        state as unknown as Parameters<typeof getDnsImpactPreview>[0],
+      );
+      dnsImpact = normalizeDnsImpactLevel(preview.level);
+    } catch {
+      dnsImpact = undefined;
+    }
+
+    const websiteStatusRaw =
+      (business.websiteUrlStatus as string) ||
+      (business.existingWebsiteStatus as string) ||
+      (business.websiteStatus as string);
+    const hasBusinessEmailRaw = business.needsBusinessEmail ?? business.hasBusinessEmail;
+
     return {
       currentRoute: pathname,
-      pageTitle: typeof document !== "undefined" ? document.title : undefined,
+      pageTitle: typeof document !== "undefined" ? document.title.slice(0, 200) : undefined,
       business: {
-        category: state.business.category || undefined,
-        model: state.business.customerModel || undefined,
-        primaryGoal: state.business.primaryGoal || undefined,
-        primaryCustomerAction: (business.primaryCustomerAction as string) || undefined,
-        locationProvided: !!state.business.location,
-        hasBusinessEmail: (state.business.needsBusinessEmail as string) || undefined,
-        websiteStatus: (business.websiteUrlStatus as string) || undefined,
-        websiteProvider:
-          (business.websiteProvider as string) || state.ownership.websitePlatform || undefined,
-        emailProvider: state.ownership.emailProvider || undefined,
+        category: (state.business.category as string)?.slice(0, 100) || undefined,
+        model: normalizeBusinessModel(state.business.customerModel),
+        primaryGoal: (state.business.primaryGoal as string)?.slice(0, 100) || undefined,
+        primaryCustomerAction:
+          (business.primaryCustomerAction as string)?.slice(0, 100) || undefined,
+        locationProvided: Boolean(state.business.location),
+        hasBusinessEmail: normalizeBusinessEmailValue(hasBusinessEmailRaw),
+        websiteStatus: normalizeWebsiteStatus(websiteStatusRaw),
+        websiteProvider: (
+          (business.websiteProvider as string) ||
+          state.ownership.websitePlatform ||
+          undefined
+        )?.slice(0, 100),
+        emailProvider: (state.ownership.emailProvider as string)?.slice(0, 100) || undefined,
         domainStatus: state.business.preferredDomain
           ? "preferred"
           : state.business.ownedDomain
             ? "owned"
-            : state.business.domain
+            : (business.domain as string)
               ? "owned"
               : "none",
       },
       readiness: {
-        status: readiness.status,
-        requiredCompletionPercent: readiness.requiredCompletionPercent,
-        blockerTitles: readiness.blockers.slice(0, 5).map((b) => b.title),
+        status: readiness.status?.slice(0, 50),
+        requiredCompletionPercent: Math.max(0, Math.min(100, readiness.requiredCompletionPercent)),
+        blockerTitles: readiness.blockers.slice(0, 5).map((b) => b.title.slice(0, 120)),
       },
       dns: state.dnsPlanning
         ? {
-            impactLevel: undefined as unknown as "low" | "medium" | "high" | undefined,
-            websiteChangePlanned: state.dnsPlanning.websiteChangeType !== undefined,
-            businessEmailAtRisk: state.dnsPlanning.usesBusinessEmail === "yes",
+            impactLevel: dnsImpact,
+            websiteChangePlanned: Boolean(state.dnsPlanning.websiteChangeType),
+            businessEmailAtRisk:
+              normalizeBusinessEmailValue(state.dnsPlanning.usesBusinessEmail) === "yes",
           }
         : undefined,
       customerJourney: state.customerJourneyTest
@@ -153,25 +326,41 @@ export function ChatbotWidget() {
   };
 
   const handleSendMessage = async (textToSend?: string) => {
-    const query = (textToSend ?? inputValue).trim();
-    if (!query || isTyping || isRateLimited) return;
+    const rawQuery = textToSend ?? inputValue;
+    const query = rawQuery.trim();
 
-    // Safety: block password-like content client-side quickly
+    // Pre-submit client validation
+    if (!query) {
+      setInlineValidation("Enter a question before sending.");
+      return;
+    }
+    if (query.length > 2000) {
+      setInlineValidation("Keep your question under 2,000 characters.");
+      return;
+    }
+    setInlineValidation(null);
+
+    if (isTyping || isRateLimited) return;
+
     const lower = query.toLowerCase();
     if (
       ["password", "recovery code", "api key", "card number", "cvv"].some((k) => lower.includes(k))
     ) {
-      setMessages((prev) => [
-        ...prev,
-        { id: `user-${Date.now()}`, sender: "user", text: query, timestamp: new Date() },
-        {
-          id: `bot-${Date.now()}`,
-          sender: "bot",
-          text: "Please do not enter passwords, recovery codes, payment details, or API keys. I'm here to help with domains, DNS, email, and launch steps.",
-          timestamp: new Date(),
-        },
-      ]);
-      if (!textToSend) setInputValue("");
+      const userMsg: ChatMessage = {
+        id: `user-${Date.now()}`,
+        sender: "user",
+        text: query,
+        timestamp: new Date(),
+      };
+      const botMsg: ChatMessage = {
+        id: `bot-${Date.now()}`,
+        sender: "bot",
+        text: "Please do not enter passwords, recovery codes, payment details, or API keys. I'm here to help with domains, DNS, email, and launch steps.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, userMsg, botMsg]);
+      // Preserve draft for retry - do not clear input on safety block, keep original
+      setHasInteracted(true);
       return;
     }
 
@@ -183,10 +372,15 @@ export function ChatbotWidget() {
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMsg]);
-    if (!textToSend) setInputValue("");
+    // Preserve draft until success - only clear after confirmed send
+    const draftToRestore = query;
+    if (!textToSend) {
+      // Keep input for validation failures, clear only on actual send attempt
+      // We will clear on success, restore on failure
+      setInputValue("");
+    }
     setAiError(null);
 
-    // If local mode or consent unset and user hasn't chosen AI, use local KB
     const useAi = aiConsent === "ai";
     if (!useAi) {
       setIsTyping(true);
@@ -214,7 +408,6 @@ export function ChatbotWidget() {
       return;
     }
 
-    // AI path
     setIsTyping(true);
     try {
       const context = buildAiContext();
@@ -229,59 +422,64 @@ export function ChatbotWidget() {
         body,
       });
 
-      const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+      const data = (await res.json().catch(() => null)) as Record<string, unknown> | null;
 
       if (!res.ok) {
-        const err = data.error as
-          { code?: string; message?: string; retryAfterSeconds?: number } | undefined;
-        if (res.status === 429) {
-          const retry = err?.retryAfterSeconds ?? 60;
-          setRateLimitedUntil(Date.now() + retry * 1000);
-          setAiError(
-            err?.message ??
-              "You have reached the assistant limit for now. Please try again shortly, or use the related guide while you wait.",
-          );
-          // Fallback to local KB
-          const fallback = getBotResponse(query, chatbotContext);
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: `bot-${Date.now()}`,
-              sender: "bot",
-              text: `${fallback.text}\n\n*AI temporarily limited — showing local guide.*`,
-              timestamp: new Date(),
-              actions: fallback.actions,
-              suggestedQuestions: fallback.suggestedQuestions,
-            },
-          ]);
-        } else if (err?.code === "AI_DISABLED") {
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: `bot-${Date.now()}`,
-              sender: "bot",
-              text: "AI help is not available in this environment. You can still use Cornerstone's local guides.",
-              timestamp: new Date(),
-              actions: [{ label: "Open local help →", to: "/help" }],
-            },
-          ]);
-        } else {
-          setAiError(
-            err?.message ?? "The AI service is temporarily unavailable. Please try again shortly.",
-          );
-          const fallback = getBotResponse(query, chatbotContext);
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: `bot-${Date.now()}`,
-              sender: "bot",
-              text: fallback.text,
-              timestamp: new Date(),
-              actions: fallback.actions,
-              suggestedQuestions: fallback.suggestedQuestions,
-            },
-          ]);
+        const apiError =
+          data && typeof data === "object" && "error" in data
+            ? (data.error as { code?: unknown; message?: unknown; retryAfterSeconds?: unknown })
+            : undefined;
+
+        const code: AssistantErrorCode = isAssistantErrorCode(apiError?.code)
+          ? (apiError?.code as AssistantErrorCode)
+          : res.status === 429
+            ? "RATE_LIMITED"
+            : "INTERNAL_ERROR";
+
+        const retryAfterSeconds =
+          typeof apiError?.retryAfterSeconds === "number" &&
+          Number.isFinite(apiError.retryAfterSeconds) &&
+          (apiError.retryAfterSeconds as number) > 0
+            ? (apiError.retryAfterSeconds as number)
+            : undefined;
+
+        const messageText =
+          typeof apiError?.message === "string" && (apiError.message as string).trim()
+            ? (apiError.message as string)
+            : ASSISTANT_ERROR_COPY[code].fallbackDescription;
+
+        setAiError({ code, message: messageText, retryAfterSeconds });
+
+        // Only set cooldown for true rate limits
+        if (code === "RATE_LIMITED" || code === "UPSTREAM_RATE_LIMITED") {
+          const retry = retryAfterSeconds ?? 60;
+          // Prefer Retry-After header for 429 if body not present
+          const headerRetry = res.headers.get("Retry-After");
+          const headerSeconds = headerRetry ? parseInt(headerRetry, 10) : NaN;
+          const finalRetry =
+            Number.isFinite(headerSeconds) && headerSeconds > 0 ? headerSeconds : retry;
+          setRateLimitedUntil(Date.now() + finalRetry * 1000);
         }
+
+        // Restore draft for validation failures
+        if (code === "INVALID_REQUEST" || code === "SAFETY_BLOCKED") {
+          setInputValue(draftToRestore);
+          setTimeout(() => inputRef.current?.focus(), 50);
+        }
+
+        // Fallback to local KB for display
+        const fallback = getBotResponse(query, chatbotContext);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `bot-${Date.now()}`,
+            sender: "bot",
+            text: fallback.text,
+            timestamp: new Date(),
+            actions: fallback.actions,
+            suggestedQuestions: fallback.suggestedQuestions,
+          },
+        ]);
         setConversation((prev) => [...prev.slice(-5), { role: "user", content: query }].slice(-6));
         return;
       }
@@ -313,7 +511,12 @@ export function ChatbotWidget() {
           { role: "assistant", content: aiData.answer },
         ].slice(-6),
       );
+      // Clear input on success (already cleared)
     } catch {
+      setAiError({
+        code: "INTERNAL_ERROR",
+        message: ASSISTANT_ERROR_COPY.INTERNAL_ERROR.fallbackDescription,
+      });
       const fallback = getBotResponse(query, chatbotContext);
       setMessages((prev) => [
         ...prev,
@@ -326,12 +529,14 @@ export function ChatbotWidget() {
           suggestedQuestions: fallback.suggestedQuestions,
         },
       ]);
+      // Restore draft on generic failure
+      setInputValue(draftToRestore);
     } finally {
       setIsTyping(false);
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     handleSendMessage();
   };
@@ -343,6 +548,7 @@ export function ChatbotWidget() {
     setConversation([]);
     setAiError(null);
     setRateLimitedUntil(null);
+    setInlineValidation(null);
   };
 
   const retrySeconds = rateLimitedUntil
@@ -451,26 +657,54 @@ export function ChatbotWidget() {
             </div>
           )}
 
-          {aiError && (
-            <div className="mx-3 mt-3 rounded-lg border border-warning/30 bg-warning-soft px-3 py-2 text-xs text-foreground">
-              <p className="font-medium">
-                Assistant limit reached{retrySeconds > 0 ? ` — retry in ${retrySeconds}s` : ""}
-              </p>
-              <p className="text-muted-foreground mt-1">{aiError}</p>
-              <div className="mt-2 flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-7 text-xs"
-                  onClick={() => setAiError(null)}
+          {aiError &&
+            (() => {
+              const copy = ASSISTANT_ERROR_COPY[aiError.code];
+              const isRate = copy.isRateLimit;
+              return (
+                <div
+                  className="mx-3 mt-3 rounded-lg border border-warning/30 bg-warning-soft px-3 py-2 text-xs text-foreground"
+                  role="alert"
+                  aria-live="polite"
                 >
-                  Continue with local guides
-                </Button>
-              </div>
-            </div>
-          )}
+                  <p className="font-medium">
+                    {copy.title}
+                    {isRate && retrySeconds > 0 ? ` — retry in ${retrySeconds}s` : ""}
+                  </p>
+                  <p className="mt-1 text-muted-foreground">
+                    {aiError.message || copy.fallbackDescription}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {copy.allowRetry ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-7 text-xs"
+                        onClick={() => {
+                          setAiError(null);
+                          inputRef.current?.focus();
+                        }}
+                      >
+                        Edit and retry
+                      </Button>
+                    ) : null}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-7 text-xs"
+                      onClick={() => {
+                        setAiError(null);
+                        persistConsent("local");
+                      }}
+                    >
+                      Continue with local guides
+                    </Button>
+                  </div>
+                </div>
+              );
+            })()}
 
-          {isRateLimited && (
+          {isRateLimited && !aiError && (
             <div className="mx-3 mt-3 rounded-lg border border-warning/30 bg-warning-soft px-3 py-2 text-xs">
               <p className="font-medium">Please wait — retry in {retrySeconds}s</p>
               <p className="text-muted-foreground">
@@ -568,26 +802,42 @@ export function ChatbotWidget() {
 
           <form
             onSubmit={handleFormSubmit}
-            className="flex items-center gap-2 border-t border-border p-2.5 bg-card/60"
+            className="flex flex-col gap-1 border-t border-border p-2.5 bg-card/60"
           >
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask about domains, DNS, email, launch..."
-              className="flex-1 rounded-xl border border-input bg-background px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1.5 focus:ring-primary"
-              disabled={isTyping || isRateLimited}
-            />
-            <Button
-              type="submit"
-              size="icon"
-              disabled={!inputValue.trim() || isTyping || isRateLimited}
-              className="size-8 rounded-xl shrink-0"
-              aria-label="Send question"
-            >
-              <Send className="size-3.5" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                  if (inlineValidation) setInlineValidation(null);
+                }}
+                placeholder="Ask about domains, DNS, email, launch..."
+                className="flex-1 rounded-xl border border-input bg-background px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1.5 focus:ring-primary"
+                disabled={isTyping || isRateLimited}
+                aria-invalid={Boolean(inlineValidation)}
+                aria-describedby={inlineValidation ? "ai-input-error" : undefined}
+              />
+              <Button
+                type="submit"
+                size="icon"
+                disabled={!inputValue.trim() || isTyping || isRateLimited}
+                className="size-8 rounded-xl shrink-0"
+                aria-label="Send question"
+              >
+                <Send className="size-3.5" />
+              </Button>
+            </div>
+            {inlineValidation && (
+              <p
+                id="ai-input-error"
+                role="alert"
+                className="text-xs font-medium text-destructive px-1"
+              >
+                {inlineValidation}
+              </p>
+            )}
           </form>
 
           <div className="border-t border-border/50 px-3 py-1.5 flex items-center justify-between text-[10px] text-muted-foreground bg-muted/20">

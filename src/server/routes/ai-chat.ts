@@ -60,10 +60,45 @@ export async function handleAiChat(request: Request): Promise<Response> {
 
   const parsed = aiChatRequestSchema.safeParse(json);
   if (!parsed.success) {
-    return Response.json(
-      errorResponse("INVALID_REQUEST", "Invalid request. Please check your message and try again."),
-      { status: 400 },
+    const issue = parsed.error.issues[0];
+    const path = issue?.path.join(".") ?? "";
+    const message =
+      path === "message"
+        ? "Enter a short question before sending."
+        : path.startsWith("conversation")
+          ? "Start a shorter conversation and try again."
+          : path === "context.currentRoute"
+            ? "We could not identify the current page. Refresh and try again."
+            : path.startsWith("context")
+              ? "We could not process the page context. Refresh and try again."
+              : "We could not process that request. Refresh and try again.";
+
+    console.info(
+      JSON.stringify({
+        event: "ai_chat_rejected",
+        requestId,
+        code: "INVALID_REQUEST",
+        reason: path || "schema",
+        messageLength:
+          json && typeof json === "object" && "message" in json
+            ? String((json as { message?: unknown }).message ?? "").length
+            : 0,
+        conversationCount:
+          json &&
+          typeof json === "object" &&
+          Array.isArray((json as { conversation?: unknown }).conversation)
+            ? (json as { conversation: unknown[] }).conversation.length
+            : 0,
+      }),
     );
+
+    return Response.json(errorResponse("INVALID_REQUEST", message), {
+      status: 400,
+      headers: {
+        "Cache-Control": "no-store",
+        "X-Request-Id": requestId,
+      },
+    });
   }
 
   const { message, conversation, context } = parsed.data;
