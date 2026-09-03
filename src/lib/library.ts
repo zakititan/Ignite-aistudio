@@ -162,6 +162,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Email", "Marketing", "Customer retention"],
   },
   {
+    title: "Google PageSpeed Insights for beginners",
+    kind: "Video",
+    description:
+      "A visual walkthrough of checking a website’s speed and understanding the fixes that make pages feel faster on phones.",
+    analogy:
+      "It is like timing how long a shop takes to open its doors, then moving the boxes blocking the entrance.",
+    url: "https://www.youtube.com/watch?v=ti3QIfHSfN0",
+    topics: ["Website", "Speed", "Mobile"],
+  },
+  {
+    title: "Write website content that sounds human",
+    kind: "Video",
+    description:
+      "A friendly conversation about making online writing clear, personal and useful instead of sounding like a brochure.",
+    analogy:
+      "Good website copy feels like a helpful shop assistant answering a real question, not a loudspeaker shouting a slogan.",
+    url: "https://www.youtube.com/watch?v=ll4-jS4Qkec",
+    topics: ["Content", "Copywriting", "Trust"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
