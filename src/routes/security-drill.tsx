@@ -201,16 +201,46 @@ export function SecurityDrillPage() {
 
     if (triageSymptom === "mail_bouncing") {
       return {
-        title: "🚨 Outgoing Business Email Flagged as Spam / Bouncing",
+        title: "🚨 Business Email Not Receiving / Not Sending / Bouncing",
         probableCause:
-          "Missing SPF TXT record, missing DKIM key, or DMARC reject policy misconfiguration.",
+          "Missing or overwritten MX records, missing SPF/DKIM, or DMARC reject policy misconfiguration. Email not receiving = inbound MX missing; not sending/bouncing = SPF/DKIM failing.",
         immediateSteps: [
-          "1. Open your DNS management console.",
-          "2. Check SPF record: Ensure TXT @ contains 'v=spf1 include:spf.yourprovider.com ~all'.",
+          "1. Check inbound (not receiving): Verify MX records still list your email provider (e.g. mx1.titan.email). Compare with provider's setup guide.",
+          "2. Check outbound (not sending/bouncing): Ensure TXT @ contains 'v=spf1 include:spf.yourprovider.com ~all'.",
           "3. Check DKIM: Verify the CNAME or TXT selector provided by your email host is published.",
-          "4. Send a test email to https://mail-tester.com to check spam score.",
+          "4. Send a test email to https://mail-tester.com and reply from outside to confirm both directions.",
         ],
-        supportTicketSnippet: `Subject: Business Email Deliverability / SPF Record Assistance for ${domain}\n\nHello Mail Support,\n\nEmails sent from our business address (${primaryEmail}) are bouncing or going to junk. Please confirm the authoritative MX, SPF, and DKIM DNS records required for our mailbox setup.\n\nDomain: ${domain}`,
+        supportTicketSnippet: `Subject: Business Email Not Receiving / Not Sending for ${domain}\n\nHello Mail Support,\n\nEmails on ${domain} are not receiving (inbound) and/or bouncing when sending from ${primaryEmail}. Please confirm the authoritative MX, SPF, and DKIM DNS records required for our mailbox setup.\n\nDomain: ${domain}`,
+      };
+    }
+
+    if (triageSymptom === "site_unavailable") {
+      return {
+        title: "🚨 Website Unavailable — Site Not Loading (No Specific Error)",
+        probableCause:
+          "Domain expired, DNS propagation delay after recent change, or website platform shows site as draft/unpublished.",
+        immediateSteps: [
+          "1. Check the address for typos, including http:// vs https://. Try on mobile data as well as Wi-Fi.",
+          "2. Sign in to your registrar and confirm the domain has not expired (renew immediately if lapsed).",
+          "3. Confirm your website platform shows the site as Published, not Draft.",
+          "4. If you changed DNS in the last 48 hours, wait and re-check in a private/incognito window.",
+        ],
+        supportTicketSnippet: `Subject: URGENT: Website Unavailable on https://${domain}\n\nHello Support Team,\n\nOur website https://${domain} is unavailable / not loading for visitors (no specific error code). Please verify the domain is active, DNS is correctly pointed, and the hosting platform shows the site as published.\n\nDomain: ${domain}`,
+      };
+    }
+
+    if (triageSymptom === "account_lockout") {
+      return {
+        title: "🚨 Account Access Loss — Cannot Sign In to Domain / Registrar / Hosting",
+        probableCause:
+          "Account uses an old email, password reset failing, or ownership held by former contractor/agency.",
+        immediateSteps: [
+          "1. Search your email for renewal receipts to identify the registrar/hosting provider.",
+          "2. Use the provider's Account Recovery (not repeated password guesses) and check spam for reset links.",
+          "3. If a former contractor set it up, request a formal transfer/auth-code in writing and update the account email to your business-controlled address.",
+          "4. Once recovered, enable 2FA (authenticator app), store recovery codes offline, and enable Registrar Lock.",
+        ],
+        supportTicketSnippet: `Subject: URGENT: Account Access Recovery for ${domain}\n\nHello Support Team,\n\nWe have lost access to the registrar/hosting account managing ${domain}. The account may be under a previous contractor's email. Please advise the verified recovery and transfer process to restore ownership to ${primaryEmail}.\n\nDomain: ${domain}\nRequesting contact: ${primaryEmail}`,
       };
     }
 
@@ -357,27 +387,41 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Callout tone="warning" title="Do not delete unknown DNS records">
+                Website records (A, CNAME) and mail records (MX, TXT for SPF/DKIM/DMARC) are separate. Changing website records should never require deleting mail records. If you don't recognise a record, leave it — it may be essential for email.
+              </Callout>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {[
                   {
+                    id: "site_unavailable",
+                    title: "Website Unavailable",
+                    desc: "Site simply won't load or shows blank — no HTTPS or DNS error details.",
+                  },
+                  {
                     id: "browser_red_warning",
-                    title: "Red Security Warning / SSL Error",
+                    title: "HTTPS Warning / SSL Error",
                     desc: "Browser blocks site with 'Your connection is not private' or certificate expired.",
                   },
                   {
                     id: "domain_not_found",
-                    title: "Server Not Found (NXDOMAIN)",
+                    title: "DNS Error / NXDOMAIN",
                     desc: "Browser says 'This site can't be reached' or domain fails to resolve.",
                   },
                   {
                     id: "error_500_502",
-                    title: "500 Internal Error / 502 Bad Gateway",
+                    title: "Hosting Error 500 / 502",
                     desc: "White screen or server error message while domain resolves fine.",
                   },
                   {
                     id: "mail_bouncing",
-                    title: "Emails Bouncing / Marked as Spam",
-                    desc: "Customers aren't receiving quotes or your outgoing emails land in Junk.",
+                    title: "Email Not Receiving / Sending",
+                    desc: "Inbound mail missing, outbound bouncing, or messages land in Junk/Spam.",
+                  },
+                  {
+                    id: "account_lockout",
+                    title: "Account Access Loss",
+                    desc: "Can't sign in to registrar, DNS, hosting, or business email account.",
                   },
                 ].map((sym) => (
                   <button
@@ -450,6 +494,18 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
           {/* TAB 2: 2FA & ACCOUNT FORTRESS AUDIT */}
           <TabsContent value="fortress" className="space-y-6">
             <div className="surface-panel p-5 sm:p-6 space-y-4">
+              <Callout tone="warning" title="Registrar Lock reminder">
+                Keep Registrar Lock / Transfer Lock ON at all times except during an intentional transfer. An unlocked domain can be hijacked with a single approval email.
+              </Callout>
+              <div className="rounded-xl border border-primary/20 bg-primary-soft/30 p-4 space-y-2">
+                <h4 className="font-display text-sm font-bold flex items-center gap-1.5"><ShieldCheck className="size-4 text-primary" /> Domain Access & Recovery Checklist</h4>
+                <ul className="text-xs text-muted-foreground space-y-1 list-disc pl-5">
+                  <li>Registrar account uses a business-controlled email (not personal/freelancer) and recovery phone is current.</li>
+                  <li>2FA set with authenticator app; backup recovery codes stored offline (not in this ledger).</li>
+                  <li>Ownership record documents who holds registrar, DNS, hosting, email, and billing (see Ownership Record).</li>
+                  <li>If access is lost: use provider Account Recovery, never brute-force passwords — then re-enable 2FA and Registrar Lock.</li>
+                </ul>
+              </div>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-display text-lg font-bold text-foreground">
@@ -536,7 +592,7 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
                   <p className="text-xs text-muted-foreground">
                     Standard BIND zone file snapshot. If DNS records are ever accidentally erased,
                     import this file into Cloudflare or your registrar to restore everything
-                    instantly.
+                    instantly. Guidance only — we never change your DNS automatically.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -560,6 +616,10 @@ _dmarc  IN  TXT     "v=DMARC1; p=none; sp=none; rua=mailto:dmarc@${domain}"
                   </Button>
                 </div>
               </div>
+
+              <Callout tone="info" title="DNS export guidance — no auto changes">
+                Copy or download this file and store it offline before any DNS edits. To restore: paste the contents into your DNS provider's import / zone file feature. This app does not modify DNS for you — you control when and where to apply it.
+              </Callout>
 
               <div className="rounded-xl border border-border bg-muted/40 p-4 font-mono text-[11px] text-foreground overflow-x-auto">
                 <pre className="whitespace-pre">{zoneFileContent}</pre>
