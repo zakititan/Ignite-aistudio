@@ -202,6 +202,45 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Payments", "Ecommerce", "Checkout"],
   },
   {
+    title: "Domain names and hosting explained",
+    kind: "Video",
+    description:
+      "A quick visual explanation of the two things every website needs: an address people remember and a home for its files.",
+    analogy: "Your domain is the street address; hosting is the building where your website lives.",
+    url: "https://www.youtube.com/watch?v=cKNMsb40WzY",
+    topics: ["Domains", "Hosting", "Website basics"],
+  },
+  {
+    title: "Internet basics: domain, hosting and SSL",
+    kind: "Video",
+    description:
+      "A gentle introduction to domain names, hosting, DNS and the padlock visitors see in their browser.",
+    analogy:
+      "Think of a website as a shop: the domain is the sign, hosting is the premises, and SSL is the lock on the front door.",
+    url: "https://www.youtube.com/watch?v=sfmm6x1OhME",
+    topics: ["Domains", "Hosting", "HTTPS", "DNS"],
+  },
+  {
+    title: "Google Workspace business email setup",
+    kind: "Video",
+    description:
+      "A step-by-step introduction to creating a professional email address on your own domain with Google Workspace.",
+    analogy:
+      "It is like moving from a free mailbox to a branded mailbox attached to your business address.",
+    url: "https://www.youtube.com/watch?v=JlszyJlyXgo",
+    topics: ["Business email", "Gmail", "Domains"],
+  },
+  {
+    title: "SPF, DKIM, DMARC and MX records explained",
+    kind: "Video",
+    description:
+      "A visual guide to the email records that help messages reach inboxes and stop scammers pretending to be your business.",
+    analogy:
+      "They work like a return address, staff ID, tamper seal and delivery route for each letter.",
+    url: "https://www.youtube.com/watch?v=B5OneMr3pNg",
+    topics: ["Business email", "DNS", "SPF", "DKIM", "DMARC"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
