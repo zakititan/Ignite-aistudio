@@ -163,6 +163,60 @@ function Settings() {
         </section>
 
         <section className="surface-panel space-y-3 p-5 sm:p-6">
+          <h2 className="font-display text-xl font-bold">AI assistance</h2>
+          <p className="text-sm text-muted-foreground">
+            AI assistance is optional. When enabled, your question, short chat context, and selected
+            non-sensitive setup context are sent to our AI service (OpenAI GPT-5.6 Luna) to create a
+            response. Chat history stays local and limited.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Do not enter passwords, recovery codes, payment details, API keys, DNS credentials, or
+            private customer information.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                try {
+                  localStorage.setItem("cornerstone_ai_consent", "ai");
+                  toast.success("AI assistance enabled on this device.");
+                } catch {
+                  toast.error("Could not save preference.");
+                }
+              }}
+            >
+              Allow AI assistance on this device
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                try {
+                  localStorage.setItem("cornerstone_ai_consent", "local");
+                  toast.success("Local guides only enabled.");
+                } catch {
+                  toast.error("Could not save preference.");
+                }
+              }}
+            >
+              Use local guides only
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                try {
+                  localStorage.removeItem("cornerstone_ai_consent");
+                  toast.success("Local chat history cleared.");
+                } catch {
+                  toast.error("Could not clear.");
+                }
+              }}
+            >
+              Clear local chat history
+            </Button>
+          </div>
+        </section>
+
+        <section className="surface-panel space-y-3 p-5 sm:p-6">
           <h2 className="font-display text-xl font-bold">Private product insights</h2>
           <p className="text-sm text-muted-foreground">
             You can allow anonymous completion signals to be kept only in this browser. Nothing is

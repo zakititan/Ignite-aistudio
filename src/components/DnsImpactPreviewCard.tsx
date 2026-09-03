@@ -19,11 +19,7 @@ export function DnsImpactPreviewCard({ preview }: Props) {
 
   const Icon = level === "high" ? AlertTriangle : level === "medium" ? ShieldCheck : CheckCircle2;
   const iconClass =
-    level === "high"
-      ? "text-destructive"
-      : level === "medium"
-        ? "text-warning"
-        : "text-success";
+    level === "high" ? "text-destructive" : level === "medium" ? "text-warning" : "text-success";
 
   return (
     <div

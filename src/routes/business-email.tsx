@@ -2367,9 +2367,7 @@ function BusinessEmail() {
                             Step {idx + 1}: {step.label}
                           </span>
                           {isChecked && (
-                            <Badge className="bg-success text-success text-[10px]">
-                              Passed
-                            </Badge>
+                            <Badge className="bg-success text-success text-[10px]">Passed</Badge>
                           )}
                         </div>
                         <p className="text-xs text-muted-foreground leading-relaxed">
