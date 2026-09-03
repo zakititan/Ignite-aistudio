@@ -182,6 +182,26 @@ export const VISUAL_RESOURCES: VisualResource[] = [
     topics: ["Content", "Copywriting", "Trust"],
   },
   {
+    title: "WordPress: backup and restore your website",
+    kind: "Video",
+    description:
+      "A practical walkthrough of making a copy of a website and restoring it if an update or change goes wrong.",
+    analogy:
+      "A backup is like keeping a spare key and a recent photograph of your shop, so you can reopen after an accident.",
+    url: "https://www.youtube.com/watch?v=8SQKgCKJrYI",
+    topics: ["Backup", "Security", "Maintenance"],
+  },
+  {
+    title: "Stripe: accept online payments",
+    kind: "Video",
+    description:
+      "A beginner tutorial explaining the basics of taking payments online for products, services or simple checkout links.",
+    analogy:
+      "Stripe is like adding a card machine to your digital counter, so customers can pay without calling you first.",
+    url: "https://www.youtube.com/watch?v=tr1ZUkAqpdM",
+    topics: ["Payments", "Ecommerce", "Checkout"],
+  },
+  {
     title: "ICANN: registering a domain name",
     kind: "Guide",
     description:
