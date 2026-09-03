@@ -379,7 +379,7 @@ AI features assist—not replace—the business owner’s judgment. **Live:** Co
 
 Every generated result should offer edit, regenerate, and copy controls, plus a reminder to review content for accuracy before publishing.
 
-### Cornerstone AI Launch Assistant (GPT-5.6 Luna) — live on `test/ai-launch-assistant-vercel`, planned for `main`
+### Cornerstone AI Launch Assistant (GPT-5.6 Luna) — live on `main`
 
 Cornerstone includes an optional AI Launch Assistant powered by **OpenAI GPT-5.6 Luna**. The assistant helps explain domains, DNS, business email, and launch steps in plain English and links to the relevant workflow page.
 
@@ -420,7 +420,7 @@ The assistant is configured server-side with `AI_MODEL=gpt-5.6-luna`. Confirm th
 - [ ] Add authentication and saved plans backed by a production database (not live in this sprint)
 - [ ] Add real-time domain availability lookup via provider integration (RDAP helper present, registrar confirms price)
 - [ ] Add provider-specific DNS setup flows
-- [x] Add AI Launch Assistant (GPT-5.6 Luna, server-side `POST /api/ai/chat`, Vercel KV rate limiting, local KB fallback, opt-in) — `test/ai-launch-assistant-vercel`
+- [x] Add AI Launch Assistant (GPT-5.6 Luna, server-side `POST /api/ai/chat`, Vercel KV rate limiting, local KB fallback, opt-in) — live on `main`
 - [ ] Add live AI generation and review workflows for content/page drafts (beyond assistant Q&A)
 - [ ] Add analytics, search-monitoring, reminder, and PDF-export backend integrations (browser print only today)
 - [ ] Add automated route/link validation and end-to-end theme tests
