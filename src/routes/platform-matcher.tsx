@@ -303,6 +303,32 @@ const RECOMMENDATIONS = {
     topProviders: ["Carrd", "Neo AI Site", "Hostinger One-Page"],
     examples: "Carrd Pro, Neo AI Website, Hostinger One-Page.",
   },
+  static: {
+    key: "static",
+    title: "Static / Jamstack with global edge hosting",
+    bestFor:
+      "Technical founders and developers who want blazing-fast load times, unlimited bandwidth, and $0 hosting on a global edge CDN.",
+    categoryFilter: "static",
+    advantages: [
+      "Zero monthly hosting fees with unlimited bandwidth and free SSL",
+      "Fastest possible load times via 300+ global edge data centers",
+      "Automated Git deploys, version control, and instant rollbacks",
+    ],
+    tradeoffs: [
+      "Requires static build knowledge (React, Astro, Hugo, or plain HTML)",
+      "No visual drag-and-drop editor; content changes need a code deploy or headless CMS",
+    ],
+    complexity: "High (Developer)",
+    maintenance: "Low (Serverless, no server patching)",
+    questions: [
+      "Do I have a developer or comfort with Git-based deployments?",
+      "Will I pair this with a headless CMS for non-technical editing?",
+      "Is free email routing sufficient or do I need a dedicated inbox?",
+    ],
+    features: ["Global Edge CDN", "Free SSL", "Git Deploys", "Unlimited Bandwidth", "DDoS Protection"],
+    topProviders: ["Cloudflare Pages", "Vercel", "Netlify"],
+    examples: "Cloudflare Pages, Vercel, Netlify, GitHub Pages.",
+  },
 } satisfies Record<string, Recommendation>;
 
 export interface HostingProvider {
@@ -905,6 +931,8 @@ const COMPARISON_ARCHETYPES = [
 function recommend(a: Record<string, string | undefined>): Recommendation {
   if (a["ecommerce"] === "yes") return RECOMMENDATIONS.ecommerce;
   if (a["growth"] === "yes" && a["help"] !== "no") return RECOMMENDATIONS.cms;
+  if (a["help"] === "yes" && a["budget"] === "low" && a["ecommerce"] === "no" && a["booking"] === "no")
+    return RECOMMENDATIONS.static;
   if (a["design"] === "max" && a["budget"] === "high") return RECOMMENDATIONS.pro;
   if (a["speed"] === "yes" && a["budget"] === "low" && a["updates"] === "rare")
     return RECOMMENDATIONS.onepage;
@@ -1366,6 +1394,46 @@ function PlatformMatcher() {
                         {provider.businessEmailIncluded}
                       </span>
                     </div>
+                    <div className="rounded-md border border-border/70 bg-card p-2">
+                      <span className="text-muted-foreground block font-medium">Storage</span>
+                      <span className="font-semibold mt-0.5 block">{provider.storage}</span>
+                    </div>
+                    <div className="rounded-md border border-border/70 bg-card p-2">
+                      <span className="text-muted-foreground block font-medium">
+                        Transaction Fee
+                      </span>
+                      <span className="font-semibold mt-0.5 block">{provider.transactionFee}</span>
+                    </div>
+                  </div>
+
+                  {/* Pros / Trade-offs */}
+                  <div className="grid gap-2 sm:grid-cols-2 text-xs">
+                    <div className="rounded-md border border-success/20 bg-success-soft/40 p-3">
+                      <span className="font-semibold text-success flex items-center gap-1.5">
+                        <Check className="size-3.5" /> Pros
+                      </span>
+                      <ul className="mt-1.5 space-y-1 text-muted-foreground">
+                        {provider.pros.map((p) => (
+                          <li key={p} className="flex items-start gap-1.5">
+                            <span className="text-success font-bold">•</span>
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="rounded-md border border-warning/20 bg-warning-soft/30 p-3">
+                      <span className="font-semibold text-warning flex items-center gap-1.5">
+                        <X className="size-3.5" /> Trade-offs
+                      </span>
+                      <ul className="mt-1.5 space-y-1 text-muted-foreground">
+                        {provider.cons.map((c) => (
+                          <li key={c} className="flex items-start gap-1.5">
+                            <span className="text-warning font-bold">•</span>
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
                   {/* Plan Breakdown Table */}
@@ -1445,6 +1513,14 @@ function PlatformMatcher() {
               </Button>
             </div>
           )}
+
+          <Callout tone="warning" title="Pricing Disclaimer — Verify Before You Buy">
+            Prices shown are starting rates gathered May 2026 and may change without notice. Always
+            confirm the current Year 1, Year 2 renewal, and transaction-fee terms on the official
+            pricing page linked in each card. Promotional teasers (e.g. $2.99/mo) often renew 2–5×
+            higher — check the “Year 2+ Renewal” badge before committing and use the 3-Year TCO
+            Calculator to compare total ownership honestiy.
+          </Callout>
         </section>
 
         {/* Section 3: High-Level Architecture & Cost Comparison Matrix */}

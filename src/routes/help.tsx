@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HELP_ARTICLES, HELP_CATEGORIES, type HelpArticle } from "@/lib/support-data";
+import { VISUAL_RESOURCES } from "@/lib/library";
+import { VisualResourceCard } from "@/components/VisualResourceCard";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -38,6 +40,12 @@ function ArticleCard({ article }: { article: HelpArticle }) {
       </span>
       <span className="font-display text-base font-semibold">{article.title}</span>
       <span className="text-sm text-muted-foreground">{article.summary}</span>
+      {article.analogy ? (
+        <span className="mt-1 text-sm text-primary/80">Think of it like: {article.analogy}</span>
+      ) : null}
+      {article.example ? (
+        <span className="text-xs text-muted-foreground">Example: {article.example}</span>
+      ) : null}
       <span className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
         <Clock className="size-3.5" aria-hidden="true" />
         {article.minutes} min read
@@ -48,16 +56,21 @@ function ArticleCard({ article }: { article: HelpArticle }) {
 
 function HelpPage() {
   const [query, setQuery] = useState("");
+  const [showAllVisualHelp, setShowAllVisualHelp] = useState(false);
   const q = query.trim().toLowerCase();
 
   const results = useMemo(() => {
     if (!q) return [];
     return HELP_ARTICLES.filter((a) =>
-      `${a.title} ${a.summary} ${a.category}`.toLowerCase().includes(q),
+      `${a.title} ${a.summary} ${a.category} ${a.analogy ?? ""} ${a.example ?? ""}`
+        .toLowerCase()
+        .includes(q),
     );
   }, [q]);
 
   const popular = HELP_ARTICLES.filter((a) => a.popular);
+  const visualHelp = VISUAL_RESOURCES.filter((resource) => resource.kind === "Video");
+  const visibleVisualHelp = showAllVisualHelp ? visualHelp : visualHelp.slice(0, 6);
 
   return (
     <ContentPageLayout
@@ -107,6 +120,28 @@ function HelpPage() {
         )
       ) : (
         <>
+          <section className="surface-panel space-y-4 p-5 sm:p-6" aria-labelledby="visual-help">
+            <div>
+              <h2 id="visual-help" className="font-display text-xl font-bold">
+                Prefer watching or skimming?
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Start with a few trusted visual guides. You do not need to understand every
+                technical word before you begin, and the full collection is one click away.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {visibleVisualHelp.map((resource) => (
+                <VisualResourceCard key={resource.title} resource={resource} />
+              ))}
+            </div>
+            {visualHelp.length > 6 ? (
+              <Button variant="outline" onClick={() => setShowAllVisualHelp((visible) => !visible)}>
+                {showAllVisualHelp ? "Show fewer videos" : `Show all ${visualHelp.length} videos`}
+              </Button>
+            ) : null}
+          </section>
+
           <section className="space-y-4">
             <h2 className="font-display text-xl font-bold">Browse by topic</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

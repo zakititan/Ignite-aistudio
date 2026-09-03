@@ -61,6 +61,10 @@ import {
 import { useStore } from "@/lib/store";
 import { checkDomainAvailability } from "@/lib/domain-availability.functions";
 import type { DomainShortlistStatus, SavedDomainIdea } from "@/lib/types";
+import {
+  buildDomainSuggestions as buildSuggestions,
+  scoreDomain,
+} from "@/lib/domain";
 
 export const Route = createFileRoute("/domains")({
   head: () => ({
@@ -103,109 +107,6 @@ function normaliseDomain(value: string) {
   return value.trim().toLowerCase().replace(/\.$/, "");
 }
 
-function buildSuggestions(name: string, category: string, city: string): Suggestion[] {
-  const base = slug(name);
-  if (!base) return [];
-  const short = base.length > 14 ? base.slice(0, 14) : base;
-  const loc = slug(city.split(",")[0] ?? "");
-  const trade = category.toLowerCase().includes("bakery")
-    ? "bakery"
-    : category.toLowerCase().includes("trades")
-      ? "services"
-      : category.toLowerCase().includes("salon")
-        ? "studio"
-        : category.toLowerCase().includes("clinic")
-          ? "clinic"
-          : category.toLowerCase().includes("retail")
-            ? "shop"
-            : "co";
-
-  const out: Suggestion[] = [
-    {
-      domain: `${base}.com`,
-      why: "Exact business name. Easiest to say on the phone and print on a card.",
-      bestFor: "Any business that already uses this name",
-    },
-    {
-      domain: `${short}${trade}.com`,
-      why: "Adds what you do, which helps people guess your address correctly.",
-      bestFor: "Businesses with a common or abstract name",
-    },
-  ];
-  if (loc)
-    out.push({
-      domain: `${short}${loc}.com`,
-      why: "A location word can help when you serve one town or neighbourhood.",
-      bestFor: "Local service businesses",
-    });
-  out.push(
-    {
-      domain: `${base}.co`,
-      why: "A shorter alternative if the .com is taken. Still widely recognised.",
-      bestFor: "Modern brands comfortable with a shorter ending",
-    },
-    {
-      domain: `get${short}.com`,
-      why: "An action word can rescue a taken name without hyphens or numbers.",
-      bestFor: "Product or service brands",
-    },
-    {
-      domain: `${short}${trade}.${loc ? "in" : "net"}`,
-      why: "A country or general ending, useful when you mainly serve one market.",
-      bestFor: "Businesses serving a single country",
-    },
-  );
-  return out;
-}
-
-function scoreDomain(domain: string, city: string) {
-  const name = domain.split(".")[0] ?? "";
-  const len = name.length;
-  const hasHyphenOrNumber = /[-0-9]/.test(name);
-  const loc = slug(city.split(",")[0] ?? "");
-  const clarity = Math.max(2, Math.min(10, 12 - Math.floor(len / 3)));
-  const memorability = Math.max(
-    2,
-    Math.min(10, 11 - Math.floor(len / 3) - (hasHyphenOrNumber ? 3 : 0)),
-  );
-  const spelling = hasHyphenOrNumber ? 4 : /(ph|kn|qu|xx|zz)/.test(name) ? 6 : 9;
-  const local = loc && name.includes(loc) ? 9 : 5;
-  const flexibility = /shop|store|cakes|plumb/.test(name) ? 5 : 8;
-  const confusion = hasHyphenOrNumber ? 4 : len > 20 ? 5 : 9;
-  return [
-    {
-      label: "Clarity",
-      value: clarity,
-      hint: "Can someone guess what your business does or is called?",
-    },
-    {
-      label: "Memorability",
-      value: memorability,
-      hint: "Will a customer still remember it tomorrow?",
-    },
-    {
-      label: "Ease of spelling",
-      value: spelling,
-      hint: "Can you say it once on the phone and be typed correctly?",
-    },
-    {
-      label: "Local relevance",
-      value: local,
-      hint: "Does it signal the area you serve, when that helps?",
-    },
-    {
-      label: "Brand flexibility",
-      value: flexibility,
-      hint: "Will it still fit if you add services later?",
-    },
-    {
-      label: "Low confusion risk",
-      value: confusion,
-      hint: "Is it easy to mix up with another business or spelling?",
-    },
-  ];
-}
-
 function buildScoreForSave(domain: string, city: string): SavedDomainIdea["score"] {
   const scores = scoreDomain(domain, city);
   const find = (label: string) => scores.find((s) => s.label === label)?.value ?? 5;
@@ -237,7 +138,9 @@ function formatCheckedAt(iso?: string) {
 function availabilityBadge(status?: string) {
   if (status === "available") return "Possibly available — confirm with a registrar";
   if (status === "registered") return "Registered";
-  return "Could not confirm";
+  if (status === "unsupported") return "Unsupported — check with a registrar";
+  if (status === "rate_limited") return "Rate-limited — try again shortly";
+  return "Could not verify";
 }
 
 function statusLabel(status: DomainShortlistStatus) {

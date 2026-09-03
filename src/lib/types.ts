@@ -98,10 +98,20 @@ export interface MaintenanceTask {
   notes: string;
 }
 
+export type ContentDraftStatus = "not_started" | "draft" | "needs_review" | "ready_to_publish";
+
+export const CONTENT_DRAFT_STATUS_LABEL: Record<ContentDraftStatus, string> = {
+  not_started: "Not started",
+  draft: "Draft",
+  needs_review: "Needs review",
+  ready_to_publish: "Ready to publish",
+};
+
 export interface ContentDraft {
   pageType: string;
   fields: Record<string, string>;
   updatedAt: string;
+  status?: ContentDraftStatus;
 }
 
 export interface DomainRecordEntry {
@@ -123,8 +133,19 @@ export interface OwnershipRecord {
   paymentProcessor: string;
   socialOwners: string;
   recoveryOwner: string;
+  registrarAccountEmail: string;
+  lastReviewedAt: string;
   notes: string;
 }
+
+export type OwnershipHealth = "at_risk" | "needs_attention" | "documented" | "review_due";
+
+export const OWNERSHIP_HEALTH_LABEL: Record<OwnershipHealth, string> = {
+  at_risk: "At risk",
+  needs_attention: "Needs attention",
+  documented: "Documented",
+  review_due: "Review due",
+};
 
 export type ReadinessStatus = "not_started" | "blocked" | "nearly_ready" | "ready_for_review";
 export type LaunchBlockerSeverity = "critical" | "important";
@@ -201,7 +222,7 @@ export interface SavedDomainIdea {
     | undefined;
   availability?:
     | {
-        status: "available" | "registered" | "unknown";
+        status: "available" | "registered" | "unknown" | "unsupported" | "rate_limited";
         checkedAt: string;
         message?: string | undefined;
       }

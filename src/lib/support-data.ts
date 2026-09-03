@@ -6,6 +6,8 @@ export interface HelpArticle {
   minutes: number;
   to: string;
   popular?: boolean;
+  analogy?: string;
+  example?: string;
 }
 
 export const HELP_CATEGORIES: { id: string; label: string; description: string; to: string }[] = [
@@ -52,10 +54,35 @@ export const HELP_CATEGORIES: { id: string; label: string; description: string; 
     to: "/checklist",
   },
   {
+    id: "journey",
+    label: "Customer journey tests",
+    description:
+      "Test calls, messages, forms, bookings, purchases and visits like a real customer.",
+    to: "/customer-journey",
+  },
+  {
+    id: "online-setup",
+    label: "Online setup map",
+    description: "See how your domain, DNS, website and business email fit together.",
+    to: "/online-setup",
+  },
+  {
     id: "visibility",
     label: "Search and local visibility",
     description: "Be findable on search engines and maps.",
     to: "/get-found",
+  },
+  {
+    id: "growth",
+    label: "Growth toolkit",
+    description: "Create campaign links and record simple monthly health checks.",
+    to: "/growth-toolkit",
+  },
+  {
+    id: "ownership",
+    label: "Ownership and handoff",
+    description: "Keep accounts in the right hands and share a professional launch dossier.",
+    to: "/launch-dossier",
   },
   {
     id: "account",
@@ -66,6 +93,66 @@ export const HELP_CATEGORIES: { id: string; label: string; description: string; 
 ];
 
 export const HELP_ARTICLES: HelpArticle[] = [
+  {
+    slug: "readiness-score-explained",
+    title: "What does my launch readiness score mean?",
+    category: "Launch checklist",
+    summary:
+      "Understand what the score checks, what a blocker means and why it is guidance rather than a guarantee.",
+    minutes: 4,
+    to: "/dashboard",
+    popular: true,
+    analogy:
+      "Think of it like a pre-flight checklist: useful for known risks, but not a weather forecast.",
+    example: "A broken booking button remains a blocker even if your domain is connected.",
+  },
+  {
+    slug: "test-customer-action",
+    title: "How do I test a call, form, booking or purchase?",
+    category: "Launch checklist",
+    summary:
+      "Follow the same five-step path a customer would use and record the result without storing passwords or card details.",
+    minutes: 5,
+    to: "/customer-journey",
+    popular: true,
+    analogy: "It is a secret-shopper visit for your website.",
+    example: "Place a test cake order on your phone and confirm the bakery receives it.",
+  },
+  {
+    slug: "dns-impact-and-safety",
+    title: "How do I know whether a DNS change is safe?",
+    category: "DNS and domain connection",
+    summary:
+      "Use the impact preview, save your current records and protect mail records before changing website settings.",
+    minutes: 5,
+    to: "/online-setup",
+    analogy:
+      "DNS is the building directory; replacing the directory company affects every room, not just one sign.",
+    example:
+      "An A record change may affect the website, while nameserver changes can also affect email.",
+  },
+  {
+    slug: "backup-before-device-change",
+    title: "How do I move my plan to another device?",
+    category: "Account and settings",
+    summary: "Export your local plan as JSON, then restore it on the new browser.",
+    minutes: 3,
+    to: "/settings",
+    analogy: "It is a photocopy of your project folder kept in a safe drawer.",
+    example: "Import the backup after replacing a laptop instead of starting onboarding again.",
+  },
+  {
+    slug: "campaign-links",
+    title: "How do I tell which post or flyer brought visitors?",
+    category: "Search and local visibility",
+    summary:
+      "Create consistent UTM labels in the Growth Toolkit and compare the results in your analytics tool.",
+    minutes: 4,
+    to: "/growth-toolkit",
+    analogy:
+      "Put a different colored sticker on identical envelopes so you know which mailbox they came from.",
+    example: "Compare source=instagram with source=flyer for the same spring offer.",
+  },
   {
     slug: "build-first-plan",
     title: "How do I build my first launch plan?",

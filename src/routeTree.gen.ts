@@ -30,6 +30,7 @@ import { Route as EmailSignatureRouteImport } from './routes/email-signature'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GetFoundRouteImport } from './routes/get-found'
 import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as GrowthToolkitRouteImport } from './routes/growth-toolkit'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as HireHelpRouteImport } from './routes/hire-help'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
@@ -155,6 +156,11 @@ const GetFoundRoute = GetFoundRouteImport.update({
 const GlossaryRoute = GlossaryRouteImport.update({
   id: '/glossary',
   path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrowthToolkitRoute = GrowthToolkitRouteImport.update({
+  id: '/growth-toolkit',
+  path: '/growth-toolkit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelpRoute = HelpRouteImport.update({
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
+  '/growth-toolkit': typeof GrowthToolkitRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
+  '/growth-toolkit': typeof GrowthToolkitRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/get-found': typeof GetFoundRoute
   '/glossary': typeof GlossaryRoute
+  '/growth-toolkit': typeof GrowthToolkitRoute
   '/help': typeof HelpRoute
   '/hire-help': typeof HireHelpRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
+    | '/growth-toolkit'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
+    | '/growth-toolkit'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/get-found'
     | '/glossary'
+    | '/growth-toolkit'
     | '/help'
     | '/hire-help'
     | '/how-it-works'
@@ -553,6 +565,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   GetFoundRoute: typeof GetFoundRoute
   GlossaryRoute: typeof GlossaryRoute
+  GrowthToolkitRoute: typeof GrowthToolkitRoute
   HelpRoute: typeof HelpRoute
   HireHelpRoute: typeof HireHelpRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -723,6 +736,13 @@ declare module '@tanstack/react-router' {
       path: '/glossary'
       fullPath: '/glossary'
       preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/growth-toolkit': {
+      id: '/growth-toolkit'
+      path: '/growth-toolkit'
+      fullPath: '/growth-toolkit'
+      preLoaderRoute: typeof GrowthToolkitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/help': {
@@ -897,6 +917,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   GetFoundRoute: GetFoundRoute,
   GlossaryRoute: GlossaryRoute,
+  GrowthToolkitRoute: GrowthToolkitRoute,
   HelpRoute: HelpRoute,
   HireHelpRoute: HireHelpRoute,
   HowItWorksRoute: HowItWorksRoute,

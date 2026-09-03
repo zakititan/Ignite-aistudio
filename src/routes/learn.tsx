@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { BookOpen, Check, Search } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
@@ -13,9 +14,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES } from "@/lib/library";
+import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES, VISUAL_RESOURCES } from "@/lib/library";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { VisualResourceCard } from "@/components/VisualResourceCard";
 
 export const Route = createFileRoute("/learn")({
   head: () => ({
@@ -40,6 +42,7 @@ function Learn() {
   const { state, toggleArticle } = useStore();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const [showAllVisualResources, setShowAllVisualResources] = useState(false);
 
   const q = query.trim().toLowerCase();
   const articles = useMemo(
@@ -60,12 +63,98 @@ function Learn() {
     [q],
   );
 
+  const visualResources = useMemo(
+    () =>
+      VISUAL_RESOURCES.filter((resource) => {
+        const matchesCategory =
+          category === "All" ||
+          category
+            .split(" & ")
+            .some((part) =>
+              resource.topics.some((topic) => topic.toLowerCase().includes(part.toLowerCase())),
+            );
+        const searchable = [
+          resource.title,
+          resource.description,
+          resource.analogy,
+          ...resource.topics,
+        ]
+          .join(" ")
+          .toLowerCase();
+        return matchesCategory && (!q || searchable.includes(q));
+      }),
+    [q, category],
+  );
+  const visibleVisualResources = showAllVisualResources
+    ? visualResources
+    : visualResources.slice(0, 6);
+
   return (
     <AppShell
       title="Learning library"
       description="Understand the jargon once, and it stops being scary."
     >
       <div className="space-y-6">
+        <section className="surface-panel p-5 sm:p-6" aria-labelledby="start-here">
+          <div>
+            <h2 id="start-here" className="font-display text-xl font-bold">
+              Start here if this is all new
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Follow the same order you would use to open a real shop: choose the address, put up
+              the website, then set up a way for customers to reach you.
+            </p>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {[
+              { step: "1", label: "Choose your address", to: "/domains" as const },
+              { step: "2", label: "Connect your website", to: "/connect-domain" as const },
+              { step: "3", label: "Set up business email", to: "/business-email" as const },
+            ].map((item) => (
+              <Link
+                key={item.step}
+                to={item.to}
+                className="rounded-lg border p-3 transition-colors hover:bg-muted"
+              >
+                <span className="text-xs font-bold text-primary">STEP {item.step}</span>
+                <span className="mt-1 block font-display font-semibold">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="surface-panel space-y-4 p-5 sm:p-6" aria-labelledby="watch-and-see">
+          <div>
+            <h2 id="watch-and-see" className="font-display text-xl font-bold">
+              Watch or skim instead
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Prefer pictures to paragraphs? Start with a few trusted videos and guides; you can
+              open the full collection whenever you need it. Videos play right here.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {visibleVisualResources.map((resource) => (
+              <VisualResourceCard key={resource.title} resource={resource} />
+            ))}
+          </div>
+          {visualResources.length > 6 ? (
+            <Button
+              variant="outline"
+              onClick={() => setShowAllVisualResources((visible) => !visible)}
+            >
+              {showAllVisualResources
+                ? "Show fewer resources"
+                : `Show all ${visualResources.length} resources`}
+            </Button>
+          ) : null}
+          {!visualResources.length ? (
+            <p className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
+              No visual resources match this search yet. Try a simpler word or choose “All”.
+            </p>
+          ) : null}
+        </section>
+
         <section className="surface-panel space-y-4 p-5">
           <div className="space-y-1.5">
             <Label htmlFor="lib-search">Search the library</Label>
@@ -140,6 +229,18 @@ function Learn() {
                       <dt className="font-semibold">What to do next</dt>
                       <dd className="text-muted-foreground">{a.nextAction}</dd>
                     </div>
+                    {a.analogy ? (
+                      <div className="rounded-md bg-primary-soft/50 p-3">
+                        <dt className="font-semibold">Think of it like this</dt>
+                        <dd className="text-muted-foreground">{a.analogy}</dd>
+                      </div>
+                    ) : null}
+                    {a.example ? (
+                      <div>
+                        <dt className="font-semibold">A real-world example</dt>
+                        <dd className="text-muted-foreground">{a.example}</dd>
+                      </div>
+                    ) : null}
                   </dl>
 
                   {a.terms.length ? (
