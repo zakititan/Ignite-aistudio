@@ -40,10 +40,10 @@ export function MarketingNavbar() {
         <div className="ml-auto flex items-center gap-2 md:ml-2">
           <ThemeToggle />
           <Button asChild variant="ghost" className="hidden sm:inline-flex">
-            <Link to="/sign-in">Sign In</Link>
+            <Link to="/sign-in">Open saved plan</Link>
           </Button>
           <Button asChild className="hidden sm:inline-flex">
-            <Link to="/create-account">Create Account</Link>
+            <Link to="/onboarding">Create my free plan</Link>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -82,12 +82,12 @@ export function MarketingNavbar() {
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
                 >
-                  Sign In
+                  Open saved plan
                 </Link>
               </nav>
               <ThemeMenu className="mt-6" />
               <Button asChild className="mt-6 w-full">
-                <Link to="/create-account" onClick={() => setOpen(false)}>
+                <Link to="/onboarding" onClick={() => setOpen(false)}>
                   Create My Free Plan
                 </Link>
               </Button>

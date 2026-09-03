@@ -12,12 +12,12 @@ import { useStore } from "@/lib/store";
 export const Route = createFileRoute("/sign-in")({
   head: () => ({
     meta: [
-      { title: "Sign in — Cornerstone" },
+      { title: "Open your saved plan — Launch My Business Online" },
       {
         name: "description",
         content: "Come back to your saved launch plan and pick up where you left off.",
       },
-      { property: "og:title", content: "Sign in to your launch plan" },
+      { property: "og:title", content: "Open your saved launch plan" },
       {
         property: "og:description",
         content: "Return to your personalised roadmap for getting your business online.",
@@ -41,9 +41,10 @@ function SignIn() {
           <span className="flex size-11 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Rocket className="size-5" aria-hidden="true" />
           </span>
-          <h1 className="mt-4 font-display text-2xl font-bold">Welcome back</h1>
+          <h1 className="mt-4 font-display text-2xl font-bold">Open your saved plan</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Your plan is saved on this device. Add your details to label it as yours.
+            Your plan is saved on this device. This does not open an online account or restore a
+            plan from another device.
           </p>
 
           <form
@@ -56,7 +57,7 @@ function SignIn() {
                 return;
               }
               signIn(name.trim().slice(0, 100), trimmed.slice(0, 255));
-              toast.success("You're signed in.");
+              toast.success("Your saved plan is ready.");
               navigate({ to: "/dashboard" });
             }}
           >
