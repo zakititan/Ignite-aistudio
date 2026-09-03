@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { BookOpen, Check, Search } from "lucide-react";
+import { BookOpen, Check, ExternalLink, PlayCircle, Search } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { GlossaryTooltip } from "@/components/GlossaryTooltip";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES } from "@/lib/library";
+import { ARTICLES, GLOSSARY, LIBRARY_CATEGORIES, VISUAL_RESOURCES } from "@/lib/library";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -66,6 +66,49 @@ function Learn() {
       description="Understand the jargon once, and it stops being scary."
     >
       <div className="space-y-6">
+        <section className="surface-panel space-y-4 p-5 sm:p-6" aria-labelledby="watch-and-see">
+          <div>
+            <h2 id="watch-and-see" className="font-display text-xl font-bold">
+              Watch or skim instead
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Prefer pictures to paragraphs? These trusted videos and guides explain the same ideas
+              with diagrams, stories and practical examples. They open in a new tab.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {VISUAL_RESOURCES.map((resource) => (
+              <a
+                key={resource.title}
+                href={resource.url}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg border p-4 transition-colors hover:bg-muted"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <Badge variant="outline">
+                    <span className="mr-1 inline-flex">
+                      {resource.kind === "Video" ? (
+                        <PlayCircle className="size-3" />
+                      ) : (
+                        <BookOpen className="size-3" />
+                      )}
+                    </span>
+                    {resource.kind}
+                  </Badge>
+                  <ExternalLink className="size-4 text-muted-foreground" aria-hidden="true" />
+                </div>
+                <h3 className="mt-3 font-display font-semibold">{resource.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{resource.description}</p>
+                <p className="mt-2 text-xs text-primary/80">Think of it like: {resource.analogy}</p>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Topics: {resource.topics.join(" · ")}
+                </p>
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="surface-panel space-y-4 p-5">
           <div className="space-y-1.5">
             <Label htmlFor="lib-search">Search the library</Label>
@@ -140,6 +183,18 @@ function Learn() {
                       <dt className="font-semibold">What to do next</dt>
                       <dd className="text-muted-foreground">{a.nextAction}</dd>
                     </div>
+                    {a.analogy ? (
+                      <div className="rounded-md bg-primary-soft/50 p-3">
+                        <dt className="font-semibold">Think of it like this</dt>
+                        <dd className="text-muted-foreground">{a.analogy}</dd>
+                      </div>
+                    ) : null}
+                    {a.example ? (
+                      <div>
+                        <dt className="font-semibold">A real-world example</dt>
+                        <dd className="text-muted-foreground">{a.example}</dd>
+                      </div>
+                    ) : null}
                   </dl>
 
                   {a.terms.length ? (

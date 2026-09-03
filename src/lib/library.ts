@@ -9,6 +9,8 @@ export interface Article {
   nextAction: string;
   terms: string[];
   minutes: number;
+  analogy?: string;
+  example?: string;
 }
 
 export const LIBRARY_CATEGORIES = [
@@ -29,7 +31,249 @@ export const LIBRARY_CATEGORIES = [
   "Hiring a professional",
 ];
 
+export interface VisualResource {
+  title: string;
+  kind: "Video" | "Guide";
+  description: string;
+  analogy: string;
+  url: string;
+  topics: string[];
+}
+
+/** Optional visual learning for people who prefer watching or skimming. */
+export const VISUAL_RESOURCES: VisualResource[] = [
+  {
+    title: "Google Search Central: SEO basics",
+    kind: "Video",
+    description:
+      "Short, official videos from the Google Search team about how search works and how to improve a site.",
+    analogy:
+      "Think of it as a friendly tour guide explaining how a library files and recommends books.",
+    url: "https://www.youtube.com/watch?v=lutawRrVTHw",
+    topics: ["SEO", "Search", "Content"],
+  },
+  {
+    title: "Google Workspace: SPF, DKIM and DMARC",
+    kind: "Video",
+    description:
+      "A short Google Workspace video showing how email authentication helps legitimate messages arrive safely.",
+    analogy:
+      "These checks are like a return address, tamper seal and guest list for every letter you send.",
+    url: "https://www.youtube.com/watch?v=qA-MVF2ve10",
+    topics: ["Email", "SPF", "DKIM", "DMARC"],
+  },
+  {
+    title: "How to choose a domain name (Wes McDowell)",
+    kind: "Video",
+    description:
+      "A practical, highly viewed walkthrough of short, memorable domain names and the mistakes to avoid.",
+    analogy:
+      "Choosing a domain is like choosing a shop sign: people should remember it after hearing it once.",
+    url: "https://www.youtube.com/watch?v=RUFV897DAGg",
+    topics: ["Domains", "Branding", "Naming"],
+  },
+  {
+    title: "SEO for beginners (Ahrefs)",
+    kind: "Video",
+    description:
+      "A popular beginner tutorial covering search intent, useful pages and realistic ways to earn visibility.",
+    analogy: "SEO is helping the right customer find the right shelf in a very large library.",
+    url: "https://www.youtube.com/watch?v=DvwS7cV9GmQ",
+    topics: ["SEO", "Search", "Content"],
+  },
+  {
+    title: "W3C: introduction to web accessibility",
+    kind: "Video",
+    description:
+      "A captioned introduction from the Web Accessibility Initiative, with examples of how inclusive design helps everyone.",
+    analogy:
+      "It is like adding a ramp and clear signs to a shop: more people can enter, and everyone finds their way more easily.",
+    url: "https://www.youtube.com/watch?v=20SHvU2PKsM",
+    topics: ["Accessibility", "Mobile", "Design"],
+  },
+  {
+    title: "Shopify: ecommerce setup for beginners",
+    kind: "Video",
+    description:
+      "A step-by-step tour of setting up a simple online store, adding products and getting ready to accept orders.",
+    analogy:
+      "It is like setting up a small market stall: choose what you sell, label it clearly and make the checkout easy to use.",
+    url: "https://www.youtube.com/watch?v=roM3wlSqk1c",
+    topics: ["Ecommerce", "Payments", "Products"],
+  },
+  {
+    title: "WordPress: build your first website",
+    kind: "Video",
+    description:
+      "A beginner-friendly walkthrough of creating pages, choosing a theme and publishing a first WordPress site.",
+    analogy:
+      "WordPress is like a room-by-room DIY kit: pick the layout, add your furniture and open the door when it feels ready.",
+    url: "https://www.youtube.com/watch?v=UT3No6nswz8",
+    topics: ["Website", "Content", "Platforms"],
+  },
+  {
+    title: "Wix: connect a custom domain",
+    kind: "Video",
+    description:
+      "A visual guide to connecting a custom web address to a website builder and understanding what changes behind the scenes.",
+    analogy:
+      "It is like putting your own street sign outside a rented shop so visitors can find the right door.",
+    url: "https://www.youtube.com/watch?v=jyXnNlcEZH0&t=1s",
+    topics: ["Domains", "Website", "Hosting"],
+  },
+  {
+    title: "ICANN: registering a domain name",
+    kind: "Guide",
+    description:
+      "An independent, beginner-friendly guide to registrars, renewals, fees and keeping control of your domain.",
+    analogy: "It is like reading the lease before signing for your shop’s street address.",
+    url: "https://www.icann.org/en/system/files/files/registering-domain-name-15feb23-en.pdf",
+    topics: ["Domains", "Ownership", "Renewals"],
+  },
+  {
+    title: "Google: DNS basics",
+    kind: "Guide",
+    description:
+      "A simple explanation of how names turn into the computer address hosting a website.",
+    analogy: "DNS works like a phone book: people remember a name, while computers use a number.",
+    url: "https://support.google.com/a/answer/48090",
+    topics: ["DNS", "Website", "Hosting"],
+  },
+  {
+    title: "Google Workspace: SPF setup",
+    kind: "Guide",
+    description:
+      "Official steps and examples for protecting business email from spoofing and spam folders.",
+    analogy:
+      "SPF is a guest list telling the inbox which mail carriers are allowed through the door.",
+    url: "https://support.google.com/a/answer/33786",
+    topics: ["Email", "SPF", "Deliverability"],
+  },
+  {
+    title: "Google email sender guidelines",
+    kind: "Guide",
+    description:
+      "Plain requirements for senders, including authentication, spam rates and reliable delivery.",
+    analogy:
+      "It is the postal service’s rulebook for getting letters delivered instead of returned.",
+    url: "https://support.google.com/mail/answer/81126",
+    topics: ["Email", "DKIM", "DMARC"],
+  },
+  {
+    title: "Cloudflare Learning Center",
+    kind: "Guide",
+    description:
+      "Visual explainers for DNS, HTTPS, caching and security from a major infrastructure provider.",
+    analogy:
+      "It is a picture-led toolkit for understanding the roads and signs behind your website.",
+    url: "https://www.cloudflare.com/learning/",
+    topics: ["DNS", "HTTPS", "Security"],
+  },
+];
+
 export const ARTICLES: Article[] = [
+  {
+    slug: "launch-readiness-score",
+    title: "What does launch readiness really mean?",
+    category: "Maintenance",
+    summary:
+      "A readiness score is a checklist thermometer, not a promise that everything will be perfect.",
+    meaning:
+      "Cornerstone checks the essentials you recorded: ownership, website connection, HTTPS, business details and the primary customer action.",
+    whenToCare:
+      "Before launch, after a major change, and whenever a customer says something is not working.",
+    mistake:
+      "Treating a green score as a guarantee. It is guidance based on the information you entered.",
+    nextAction: "Open your dashboard, fix the highest-severity blocker, then run the check again.",
+    terms: ["Readiness", "HTTPS", "Customer journey"],
+    minutes: 4,
+    analogy:
+      "It is like a pre-flight checklist: it catches known risks, but it cannot predict every cloud in the sky.",
+    example:
+      "If your booking button is broken, the score stays blocked even when your domain and website are connected.",
+  },
+  {
+    slug: "customer-journey-test",
+    title: "How to test the way a customer reaches you",
+    category: "Website basics",
+    summary:
+      "Walk through one real customer goal—call, message, form, booking, purchase or visit—from start to finish.",
+    meaning:
+      "You choose a goal, follow the exact steps a customer would take, record what happened and note any evidence.",
+    whenToCare:
+      "Before launch and once a month afterward, especially after changing forms, phones or booking tools.",
+    mistake:
+      "Checking only that a button exists. A button can look fine while sending messages to the wrong inbox.",
+    nextAction:
+      "Use the five-step Customer Journey Tester and mark each step Passed, Needs improvement or Blocked.",
+    terms: ["Customer journey", "Conversion"],
+    minutes: 5,
+    analogy:
+      "It is a secret-shopper visit for your website, using a real route instead of trusting the shop window.",
+    example:
+      "For a bakery, place a test cake order on your phone, confirm the bakery receives it, then reply to the confirmation.",
+  },
+  {
+    slug: "dns-impact-preview",
+    title: "Why some DNS changes are riskier than others",
+    category: "DNS",
+    summary:
+      "Changing a first website record is usually low risk; replacing a site while using business email needs extra care.",
+    meaning:
+      "The DNS Impact Preview combines what you are changing, whether email matters, who manages DNS and whether you saved the current records.",
+    whenToCare: "Before every DNS change or provider migration.",
+    mistake:
+      "Assuming every DNS screen is the same, or deleting records because their names look unfamiliar.",
+    nextAction:
+      "Save a screenshot and exact record list, identify the provider and follow the pre-change checklist.",
+    terms: ["DNS", "MX record", "Zone file"],
+    minutes: 5,
+    analogy:
+      "DNS is the building directory. Changing one entry is like updating one room; changing the directory company moves the whole filing cabinet.",
+    example:
+      "Adding an A record for a new site can be low risk, while replacing nameservers can also affect email and verification records.",
+  },
+  {
+    slug: "backup-and-restore",
+    title: "How to protect your plan with a backup",
+    category: "Security & recovery",
+    summary: "Download a copy of your plan before switching browsers, devices or providers.",
+    meaning:
+      "A backup is a portable JSON file containing your answers, tasks, drafts, domains and ownership notes—not passwords.",
+    whenToCare:
+      "Before clearing browser data, changing devices, loading demo data or making a major launch decision.",
+    mistake:
+      "Assuming browser storage is the same as a cloud account. Clearing site data can remove it.",
+    nextAction:
+      "Use Settings → Download my plan, keep the file somewhere private and restore it only when you intend to replace the current plan.",
+    terms: ["Backup", "Local storage"],
+    minutes: 3,
+    analogy:
+      "It is a photocopy of your project folder kept in a safe drawer—not a second person who can log in for you.",
+    example:
+      "If your laptop is replaced, import the JSON backup on the new browser and continue where you left off.",
+  },
+  {
+    slug: "utm-campaign-links",
+    title: "What is a campaign link?",
+    category: "SEO & local search",
+    summary:
+      "A campaign link adds a small label to a URL so you can see which post, email or flyer brought a visitor.",
+    meaning:
+      "The destination stays the same; the labels record source, medium and campaign for analytics.",
+    whenToCare:
+      "When sharing the same offer in more than one place and you want to compare results.",
+    mistake:
+      "Using private customer information in a link or creating dozens of inconsistent labels.",
+    nextAction:
+      "Use the Growth Toolkit, keep labels lowercase and use one naming pattern for every campaign.",
+    terms: ["Analytics", "Conversion"],
+    minutes: 4,
+    analogy:
+      "It is like putting a different colored sticker on identical envelopes so you know which mailbox they came from.",
+    example:
+      "Use source=instagram and source=flyer for the same spring offer, then compare visits and enquiries.",
+  },
   {
     slug: "domain-vs-hosting",
     title: "Domain vs hosting: what is the difference?",

@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Clock, Search } from "lucide-react";
+import { BookOpen, Clock, ExternalLink, PlayCircle, Search } from "lucide-react";
 import { ContentPageLayout } from "@/components/ContentPage";
 import { EmptyState } from "@/components/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HELP_ARTICLES, HELP_CATEGORIES, type HelpArticle } from "@/lib/support-data";
+import { VISUAL_RESOURCES } from "@/lib/library";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -38,6 +39,12 @@ function ArticleCard({ article }: { article: HelpArticle }) {
       </span>
       <span className="font-display text-base font-semibold">{article.title}</span>
       <span className="text-sm text-muted-foreground">{article.summary}</span>
+      {article.analogy ? (
+        <span className="mt-1 text-sm text-primary/80">Think of it like: {article.analogy}</span>
+      ) : null}
+      {article.example ? (
+        <span className="text-xs text-muted-foreground">Example: {article.example}</span>
+      ) : null}
       <span className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
         <Clock className="size-3.5" aria-hidden="true" />
         {article.minutes} min read
@@ -53,7 +60,9 @@ function HelpPage() {
   const results = useMemo(() => {
     if (!q) return [];
     return HELP_ARTICLES.filter((a) =>
-      `${a.title} ${a.summary} ${a.category}`.toLowerCase().includes(q),
+      `${a.title} ${a.summary} ${a.category} ${a.analogy ?? ""} ${a.example ?? ""}`
+        .toLowerCase()
+        .includes(q),
     );
   }, [q]);
 
@@ -107,6 +116,50 @@ function HelpPage() {
         )
       ) : (
         <>
+          <section className="surface-panel space-y-4 p-5 sm:p-6" aria-labelledby="visual-help">
+            <div>
+              <h2 id="visual-help" className="font-display text-xl font-bold">
+                Prefer watching or skimming?
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Start with one of these trusted visual guides. You do not need to understand every
+                technical word before you begin.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {VISUAL_RESOURCES.filter((resource) => resource.kind === "Video")
+                .slice(0, 8)
+                .map((resource) => (
+                  <a
+                    key={resource.title}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-lg border p-4 transition-colors hover:bg-muted"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                        <span>
+                          {resource.kind === "Video" ? (
+                            <PlayCircle className="size-3" />
+                          ) : (
+                            <BookOpen className="size-3" />
+                          )}
+                        </span>
+                        {resource.kind}
+                      </span>
+                      <ExternalLink className="size-4 text-muted-foreground" aria-hidden="true" />
+                    </div>
+                    <h3 className="mt-2 font-display font-semibold">{resource.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{resource.description}</p>
+                    <p className="mt-2 text-xs text-primary/80">
+                      Think of it like: {resource.analogy}
+                    </p>
+                  </a>
+                ))}
+            </div>
+          </section>
+
           <section className="space-y-4">
             <h2 className="font-display text-xl font-bold">Browse by topic</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
