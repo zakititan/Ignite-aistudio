@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/dialog";
 import { useStore } from "@/lib/store";
 import type { OwnershipRecord } from "@/lib/types";
+import { getOwnershipHealth } from "@/lib/ownership";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/ownership-record")({
@@ -137,6 +138,21 @@ const FIELDS: FieldDef[] = [
     hint: "The emergency recovery email and phone number used to rescue accounts.",
     placeholder: "e.g. founder-personal@gmail.com / +1 (555) 019-2831",
     critical: true,
+  },
+  {
+    key: "registrarAccountEmail",
+    label: "Registrar Account Email",
+    category: "Domain & DNS",
+    hint: "The email address that owns the registrar login — used for recovery and renewal notices.",
+    placeholder: "e.g. admin@yourdomain.com",
+    critical: true,
+  },
+  {
+    key: "lastReviewedAt",
+    label: "Last Reviewed Date",
+    category: "Finance & Recovery",
+    hint: "When you last verified custody, recovery access and renewal (YYYY-MM-DD). Review every 90 days.",
+    placeholder: "e.g. 2026-09-03",
   },
 ];
 
@@ -334,6 +350,7 @@ function OwnershipRecordPage() {
   const criticalFilled = FIELDS.filter(
     (f) => f.critical && (record[f.key] || "").toString().trim().length > 0,
   ).length;
+  const ownershipHealth = getOwnershipHealth(record);
 
   return (
     <AppShell
@@ -454,6 +471,67 @@ function OwnershipRecordPage() {
                 onChange={handleImportJson}
                 className="hidden"
               />
+            </div>
+          </div>
+
+          {/* Ownership Health View — 4 states: At risk / Needs attention / Documented / Review due */}
+          <div
+            className={cn(
+              "flex flex-wrap items-center justify-between gap-3 rounded-xl border px-4 py-3",
+              ownershipHealth.health === "at_risk" &&
+                "border-destructive/30 bg-destructive-soft/40",
+              ownershipHealth.health === "needs_attention" &&
+                "border-amber-500/30 bg-amber-500/10",
+              ownershipHealth.health === "review_due" &&
+                "border-amber-500/30 bg-amber-500/10",
+              ownershipHealth.health === "documented" &&
+                "border-emerald-500/30 bg-emerald-500/10",
+            )}
+          >
+            <div className="flex items-center gap-2">
+              {ownershipHealth.health === "at_risk" && (
+                <AlertTriangle className="size-4 text-destructive" aria-hidden="true" />
+              )}
+              {ownershipHealth.health === "needs_attention" && (
+                <AlertTriangle className="size-4 text-amber-600" aria-hidden="true" />
+              )}
+              {ownershipHealth.health === "review_due" && (
+                <Calendar className="size-4 text-amber-600" aria-hidden="true" />
+              )}
+              {ownershipHealth.health === "documented" && (
+                <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
+              )}
+              <div>
+                <span className="text-sm font-semibold">Ownership health: {ownershipHealth.label}</span>
+                <p className="text-xs text-muted-foreground">{ownershipHealth.summary}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-xs font-semibold",
+                  ownershipHealth.health === "at_risk" && "bg-destructive text-destructive-foreground",
+                  ownershipHealth.health === "needs_attention" && "bg-amber-500 text-white",
+                  ownershipHealth.health === "review_due" && "bg-amber-500 text-white",
+                  ownershipHealth.health === "documented" && "bg-emerald-500 text-white",
+                )}
+              >
+                {ownershipHealth.label}
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 text-xs gap-1"
+                onClick={() => {
+                  const today = new Date().toISOString().slice(0, 10);
+                  setOwnership({ lastReviewedAt: today } as Partial<OwnershipRecord>);
+                  toast.success(`Marked as reviewed today (${today}).`);
+                }}
+              >
+                <CheckCircle2 className="size-3.5" />
+                Mark reviewed today
+              </Button>
             </div>
           </div>
 

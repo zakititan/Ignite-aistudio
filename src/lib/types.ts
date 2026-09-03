@@ -123,8 +123,19 @@ export interface OwnershipRecord {
   paymentProcessor: string;
   socialOwners: string;
   recoveryOwner: string;
+  registrarAccountEmail: string;
+  lastReviewedAt: string;
   notes: string;
 }
+
+export type OwnershipHealth = "at_risk" | "needs_attention" | "documented" | "review_due";
+
+export const OWNERSHIP_HEALTH_LABEL: Record<OwnershipHealth, string> = {
+  at_risk: "At risk",
+  needs_attention: "Needs attention",
+  documented: "Documented",
+  review_due: "Review due",
+};
 
 export type ReadinessStatus = "not_started" | "blocked" | "nearly_ready" | "ready_for_review";
 export type LaunchBlockerSeverity = "critical" | "important";
@@ -201,7 +212,7 @@ export interface SavedDomainIdea {
     | undefined;
   availability?:
     | {
-        status: "available" | "registered" | "unknown";
+        status: "available" | "registered" | "unknown" | "unsupported" | "rate_limited";
         checkedAt: string;
         message?: string | undefined;
       }
